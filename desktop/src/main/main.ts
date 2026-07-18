@@ -1,0 +1,65 @@
+/**
+ * Electron main-process entry point. Wires the config + sweep services to the
+ * IPC handlers the renderer calls through window.api, and creates the single
+ * window. In dev it loads the Angular dev server (ELECTRON_RENDERER_URL) and
+ * opens DevTools; packaged it loads the built renderer/index.html from disk.
+ */
+import { app, BrowserWindow } from 'electron';
+import * as path from 'path';
+import { ConfigService } from './core/config.service';
+import { loadDemandIndex } from './core/demand';
+import { SweepService } from './core/sweep.service';
+import { registerIpc } from './ipc';
+
+// Consistent userData folder in dev ("gil-sweep-desktop" would be used otherwise).
+app.setName('gil-sweep');
+
+let win: BrowserWindow | null = null;
+
+async function createWindow(): Promise<void> {
+  win = new BrowserWindow({
+    width: 1440,
+    height: 900,
+    backgroundColor: '#ffffff',
+    autoHideMenuBar: true,
+    webPreferences: {
+      preload: path.join(__dirname, '../preload/preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+
+  const devUrl = process.env.ELECTRON_RENDERER_URL;
+  if (devUrl) {
+    await win.loadURL(devUrl);
+    win.webContents.openDevTools({ mode: 'detach' });
+  } else {
+    await win.loadFile(path.join(__dirname, '..', '..', 'renderer', 'index.html'));
+  }
+
+  win.on('closed', () => {
+    win = null;
+  });
+}
+
+app.whenReady().then(async () => {
+  if (process.platform === 'win32') app.setAppUserModelId('com.gilsweep.app');
+
+  const userDataDir = app.getPath('userData');
+  const dataDir = path.join(app.getAppPath(), 'data');
+  const services = {
+    config: new ConfigService(path.join(userDataDir, 'config.json')),
+    sweep: new SweepService(dataDir, path.join(userDataDir, 'snapshots'), loadDemandIndex(dataDir)),
+    userDataDir,
+  };
+  registerIpc(services);
+  await createWindow();
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});

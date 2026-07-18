@@ -1,0 +1,79 @@
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { SweepRow } from './models';
+
+/**
+ * The dense market table used by the farm/mover/watchlist sections: item,
+ * location, price (+Δ%), liquidity, trend state, and demand attribution.
+ * Pure presentational — rows arrive already filtered/ranked.
+ */
+@Component({
+  selector: 'app-market-table',
+  standalone: true,
+  imports: [DecimalPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Where</th>
+          @if (showReason()) {
+            <th>Locked by</th>
+          }
+          <th class="num">Avg gil</th>
+          <th class="num">Δ%</th>
+          <th class="num">Sold/day</th>
+          <th>Trend</th>
+          <th>Why it sells</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of rows(); track r.id) {
+          <tr>
+            <td>{{ r.name }}</td>
+            <td class="secondary">{{ r.where }}</td>
+            @if (showReason()) {
+              <td class="secondary">{{ reasonOf()(r) }}</td>
+            }
+            <td class="num">{{ r.avg | number: '1.0-0' }}</td>
+            <td class="num" [class.pos]="(r.avgChangePct ?? 0) > 0" [class.neg]="(r.avgChangePct ?? 0) < 0">
+              @if (r.avgChangePct !== null) {
+                {{ r.avgChangePct > 0 ? '+' : '' }}{{ r.avgChangePct | number: '1.0-1' }}%
+              } @else {
+                <span class="muted">—</span>
+              }
+            </td>
+            <td class="num">{{ r.velDay | number: '1.0-1' }}</td>
+            <td><span [class]="stateClass(r.sbState)">{{ r.sbState ?? '' }}</span></td>
+            <td class="why">{{ r.why || '—' }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td [attr.colspan]="showReason() ? 8 : 7" class="muted center">Nothing here at these settings.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  `,
+})
+export class MarketTableComponent {
+  readonly rows = input.required<SweepRow[]>();
+  readonly showReason = input(false);
+  readonly reasonOf = input<(r: SweepRow) => string>(() => '');
+
+  stateClass(state: string | null): string {
+    switch (state) {
+      case 'spiking':
+      case 'increasing':
+        return 'state-up';
+      case 'decreasing':
+      case 'crashing':
+        return 'state-down';
+      case 'out of stock':
+        return 'state-hot';
+      default:
+        return 'state-flat';
+    }
+  }
+}

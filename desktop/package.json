@@ -1,0 +1,40 @@
+{
+  "name": "gil-sweep-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "author": "hazeliscoding",
+  "description": "gil-sweep desktop app (Electron) — what to farm for gil in FFXIV, from live market data.",
+  "main": "dist/main/main/main.js",
+  "scripts": {
+    "build:main": "tsc -p tsconfig.json",
+    "start": "electron .",
+    "package": "electron-builder",
+    "package:win": "electron-builder --win"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "electron": "^31.7.7",
+    "electron-builder": "^25.1.8",
+    "playwright-core": "^1.61.1",
+    "typescript": "~5.5.0"
+  },
+  "build": {
+    "appId": "com.gilsweep.app",
+    "productName": "gil-sweep",
+    "npmRebuild": false,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "data/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    }
+  }
+}
