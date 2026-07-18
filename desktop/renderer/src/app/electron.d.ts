@@ -1,4 +1,11 @@
-import { GilConfig, GilConfigPatch, HealthResult, SweepSnapshot } from './models';
+import {
+  GilConfig,
+  GilConfigPatch,
+  HealthResult,
+  RetainerAdvice,
+  RetainerTarget,
+  SweepSnapshot,
+} from './models';
 
 /**
  * The IPC bridge exposed by the Electron preload as `window.api`. Every method
@@ -12,6 +19,7 @@ export interface GilApi {
   latestSweep(): Promise<SweepSnapshot | null>;
   runSweep(): Promise<SweepSnapshot>;
   listWorlds(): Promise<string[]>;
+  retainerPlan(targets: RetainerTarget[]): Promise<RetainerAdvice[]>;
   openDataFolder(): Promise<string>;
 }
 

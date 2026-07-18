@@ -100,6 +100,30 @@ export interface HealthResult {
   status: string;
 }
 
+/** What the renderer asks retainer advice for: id + kind (maps always stack 1). */
+export interface RetainerTarget {
+  id: number;
+  kind: string;
+}
+
+/** Live-listings selling advice for one item (see core/retainer.service.ts). */
+export interface RetainerAdvice {
+  id: number;
+  /** Cheapest current listing (0 = no listings). */
+  curMin: number;
+  /** Median price recent sales actually cleared at. */
+  medPPU: number;
+  /** Recommended list price (undercut, or hold near clearing price on a crashed floor). */
+  listPrice: number;
+  /** Recommended stack size (median sale quantity, rounded to a natural size). */
+  stack: number;
+  /** Listed quantity ÷ live sales rate; null when nothing is selling. */
+  daysInv: number | null;
+  /** Units/day from the recent-sales window (live, not the sweep aggregate). */
+  unitsPerDay: number;
+  verdict: string;
+}
+
 /**
  * The IPC bridge exposed by the Electron preload as `window.api`. Channel names
  * in ipc.ts map 1:1 to these methods — keep preload.ts, ipc.ts, and this
@@ -115,6 +139,8 @@ export interface GilApi {
   runSweep(): Promise<SweepSnapshot>;
   /** All public world names, for the world picker. */
   listWorlds(): Promise<string[]>;
+  /** Live listings + recent sales → per-item selling advice for the given targets. */
+  retainerPlan(targets: RetainerTarget[]): Promise<RetainerAdvice[]>;
   /** Reveals the snapshots/config folder in the OS file manager. */
   openDataFolder(): Promise<string>;
 }

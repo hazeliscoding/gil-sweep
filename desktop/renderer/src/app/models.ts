@@ -89,3 +89,21 @@ export interface GilConfigPatch {
 export interface HealthResult {
   status: string;
 }
+
+/** What the renderer asks retainer advice for: id + kind (maps always stack 1). */
+export interface RetainerTarget {
+  id: number;
+  kind: string;
+}
+
+/** Live-listings selling advice for one item. */
+export interface RetainerAdvice {
+  id: number;
+  curMin: number;
+  medPPU: number;
+  listPrice: number;
+  stack: number;
+  daysInv: number | null;
+  unitsPerDay: number;
+  verdict: string;
+}

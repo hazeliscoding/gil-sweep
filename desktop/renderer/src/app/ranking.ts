@@ -73,3 +73,18 @@ export function movers(rows: SweepRow[]): SweepRow[] {
 export function locked(rows: SweepRow[], cfg: GilConfig, limit = 12): SweepRow[] {
   return rows.filter((r) => !accessible(r, cfg) && r.throughput > 0).slice(0, limit);
 }
+
+/**
+ * What you'd realistically have on retainers: top 10 farmable mats, up to 3
+ * liquid maps, and crystals worth the slot (>100k gil/day market throughput).
+ */
+export function retainerTargets(rows: SweepRow[], cfg: GilConfig): SweepRow[] {
+  const f = farmable(rows, cfg);
+  const mats = f.filter((r) => r.kind !== 'map' && r.kind !== 'crystal').slice(0, 10);
+  const liquidMaps = f
+    .filter((r) => r.kind === 'map' && r.velDay >= 2)
+    .sort((a, b) => b.avg - a.avg)
+    .slice(0, 3);
+  const worthCrystals = f.filter((r) => r.kind === 'crystal' && r.throughput > 100_000);
+  return [...mats, ...liquidMaps, ...worthCrystals];
+}

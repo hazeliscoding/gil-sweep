@@ -8,9 +8,10 @@
  */
 import { ipcMain, shell } from 'electron';
 import { ConfigService } from './core/config.service';
+import { retainerPlan } from './core/retainer.service';
 import { SweepService } from './core/sweep.service';
 import { listWorlds } from './core/universalis';
-import { GilConfigPatch } from '../shared/types';
+import { GilConfigPatch, RetainerTarget } from '../shared/types';
 
 export interface Services {
   config: ConfigService;
@@ -28,6 +29,10 @@ export function registerIpc(services: Services): void {
   ipcMain.handle('sweep:run', () => services.sweep.run(services.config.get()));
 
   ipcMain.handle('worlds:list', () => listWorlds());
+
+  ipcMain.handle('retainer:plan', (_e, targets: RetainerTarget[]) =>
+    retainerPlan(services.config.get().world, targets ?? []),
+  );
 
   ipcMain.handle('data:openFolder', async () => {
     await shell.openPath(services.userDataDir);

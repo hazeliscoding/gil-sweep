@@ -56,6 +56,7 @@ import { SweepStore } from './sweep.store';
         <aside class="sidebar">
           <nav>
             <a routerLink="/sweep" routerLinkActive="active">Sweep</a>
+            <a routerLink="/retainers" routerLinkActive="active">Retainers</a>
             <a routerLink="/settings" routerLinkActive="active">Settings</a>
           </nav>
         </aside>
