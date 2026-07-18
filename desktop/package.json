@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "author": "hazeliscoding",
+  "license": "Apache-2.0",
   "description": "gil-sweep desktop app (Electron) — what to farm for gil in FFXIV, from live market data.",
   "main": "dist/main/main/main.js",
   "scripts": {
@@ -22,18 +23,25 @@
     "appId": "com.gilsweep.app",
     "productName": "gil-sweep",
     "npmRebuild": false,
+    "publish": {
+      "provider": "github",
+      "owner": "hazeliscoding",
+      "repo": "gil-sweep"
+    },
     "directories": {
       "output": "release"
     },
     "files": [
       "dist/**/*",
       "data/**/*",
+      "build/icon.png",
       "package.json"
     ],
     "win": {
       "target": [
         "portable"
       ],
+      "icon": "build/icon.png",
       "artifactName": "${productName}-${version}-portable.${ext}"
     }
   }

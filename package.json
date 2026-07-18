@@ -2,6 +2,7 @@
   "name": "gil-sweep",
   "version": "0.1.0",
   "private": true,
+  "license": "Apache-2.0",
   "description": "gil-sweep — a local desktop app (Electron) that tells you what to farm for gil in FFXIV, from live market data.",
   "scripts": {
     "setup": "cd desktop && npm install && cd renderer && npm install",
