@@ -8,6 +8,7 @@
  * renderer/index.html from disk.
  */
 import { app, BrowserWindow, Menu, Tray, nativeImage } from 'electron';
+import { autoUpdater } from 'electron-updater';
 import * as path from 'path';
 import { startNodeAlerts } from './alerts';
 import { ConfigService } from './core/config.service';
@@ -117,9 +118,23 @@ app.whenReady().then(async () => {
     userDataDir,
   };
   registerIpc(services);
-  setupTray();
+  // A tray failure (e.g. headless Linux without a system tray) must never take
+  // the app down — close-to-tray silently degrades to normal close behavior.
+  try {
+    setupTray();
+  } catch (e) {
+    console.warn('[gil-sweep] tray unavailable:', (e as Error).message);
+  }
   startNodeAlerts(services, showWindow);
   await createWindow();
+
+  // Auto-update: installed builds only. The portable exe has no update story
+  // (PORTABLE_EXECUTABLE_DIR is set by its launcher) — users re-download those.
+  if (app.isPackaged && !process.env.PORTABLE_EXECUTABLE_DIR) {
+    autoUpdater
+      .checkForUpdatesAndNotify()
+      .catch((err) => console.warn('[gil-sweep] update check failed:', err?.message ?? err));
+  }
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();

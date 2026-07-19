@@ -39,3 +39,53 @@ jobs:
       - name: Build main (tsc)
         working-directory: desktop
         run: npm run build:main
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            desktop/package-lock.json
+            desktop/renderer/package-lock.json
+
+      # E2E launches the real Electron binary — do NOT skip its download here.
+      - name: Install desktop deps
+        working-directory: desktop
+        run: npm ci
+
+      - name: Install renderer deps
+        working-directory: desktop/renderer
+        run: npm ci
+
+      - name: Install Electron system libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libnss3 libgbm1 libasound2t64 libgtk-3-0 \
+            libxss1 libxkbcommon0 libatk-bridge2.0-0 libcups2 libdrm2
+
+      - name: Build renderer (Angular)
+        working-directory: desktop/renderer
+        run: npm run build
+
+      - name: Build main (tsc)
+        working-directory: desktop
+        run: npm run build:main
+
+      # Drives the real app against live market APIs: onboarding, sweep,
+      # crafting, retainers, trends, drill-down — 29 behavioral checks.
+      - name: E2E (Playwright + Electron under Xvfb)
+        working-directory: desktop
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1600x1000x24" npm run e2e
+
+      - name: Upload screenshots
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-screenshots
+          path: desktop/e2e/shots
+          retention-days: 7
