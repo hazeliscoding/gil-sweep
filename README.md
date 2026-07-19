@@ -4,6 +4,24 @@ A local desktop app (Electron) that answers one question: **what should you farm
 
 Pulls live Universalis price/velocity aggregates and Saddlebag Exchange trends for a curated database of gatherable items, explains *why* each item sells (recipe consumers, leve turn-ins, GC supply — from Garland Tools data), re-ranks instantly as you drag your MIN/BTN level and expansion sliders, and turns your top farmables into a retainer selling plan (undercut price, stack size that actually sells, market saturation) from live listings. A live Eorzea clock ⏰ shows up-now / next-window timers on every timed node.
 
+## Screenshots 🖼️
+
+**The sweep dashboard** — sliders re-rank instantly; every item carries a price sparkline, node spawn window, and a "why it sells" demand breakdown:
+
+![Sweep dashboard](docs/screenshots/sweep.png)
+
+**Market drill-down** — click any row for live listing depth, days of stock, and the hours buyers actually buy:
+
+![Market drill-down](docs/screenshots/market-detail.png)
+
+**Craft value-add** — HQ-aware margins for recipes that use what you farm:
+
+![Crafting margins](docs/screenshots/crafting.png)
+
+**Trends** — week-over-week digest and per-item history charts from your local snapshot archive:
+
+![Trends](docs/screenshots/trends.png)
+
 ## Download 📦
 
 From [Releases](https://github.com/hazeliscoding/gil-sweep/releases):
