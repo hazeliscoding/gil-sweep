@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.0] — 2026-07-19
+
+- Auto-sweep on launch: when the loaded snapshot is the bundled seed, older than a day, or from another world, a background sweep refreshes it quietly (no spinner; auto-refresh failures stay silent offline).
+- Price sparklines: every item name carries an inline trend line built from your accumulated snapshots — they get richer with every sweep.
+- Folklore books: per-expansion checkboxes in Settings; legendary nodes without their book show a small "folklore" tag.
+
 ## [0.2.0] — 2026-07-19
 
 - Live Eorzea clock in the header (1 ET minute ≈ 2.9 real seconds — it ticks).
