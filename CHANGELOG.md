@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.0] — 2026-07-19
+
+- Watch stars: star any item in any table. Watched timed nodes fire a desktop notification the moment their window opens (with time remaining; click to open the app), respecting your levels and MSQ progress.
+- Price-spike alerts: after each sweep, a batched notification lists watched items that swung ≥25%.
+- Public roadmap to v1.0.0 in ROADMAP.md.
+
 ## [0.5.0] — 2026-07-19
 
 - Spawn-clock tray: the tray icon shows the Eorzea clock and the next timed-node windows for your character. Closing the window hides to the tray by default (Settings toggle; quit via the tray menu).
