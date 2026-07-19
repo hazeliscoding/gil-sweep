@@ -42,6 +42,8 @@ export class SweepStore {
   readonly running = signal(false);
   readonly error = signal<string | null>(null);
   readonly detail = signal<DetailState | null>(null);
+  /** True on the very first launch (no config file yet) — shows onboarding. */
+  readonly firstRun = signal(false);
 
   /**
    * Snapshot rows joined with the bundled item DB — snapshots persisted before
@@ -72,6 +74,7 @@ export class SweepStore {
   });
 
   async init(): Promise<void> {
+    this.api.isFirstRun().then((v) => this.firstRun.set(v)).catch(() => void 0);
     try {
       const [config, snapshot, items] = await Promise.all([
         this.api.getConfig(),
@@ -146,6 +149,18 @@ export class SweepStore {
 
   closeDetail(): void {
     this.detail.set(null);
+  }
+
+  /** Verify-and-track an item by name; refreshes the item list and sweeps if it's farmable. */
+  async trackItem(query: string) {
+    const { result, items } = await this.api.trackItem(query);
+    this.items.set(items);
+    if (result.gatherable) this.runSweep(); // price the newcomer
+    return result;
+  }
+
+  async removeCustomItem(id: number): Promise<void> {
+    this.items.set(await this.api.removeCustomItem(id));
   }
 
   /** Instant local update (re-ranks immediately); persistence is fire-and-forget. */

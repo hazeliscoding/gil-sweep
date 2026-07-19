@@ -13,6 +13,7 @@ import { marketDetail } from './core/market-detail';
 import { retainerPlan } from './core/retainer.service';
 import { SweepService } from './core/sweep.service';
 import { listWorlds } from './core/universalis';
+import { verifyItem } from './core/verify.service';
 import { GilConfigPatch, RetainerTarget } from '../shared/types';
 
 export interface Services {
@@ -28,6 +29,13 @@ export function registerIpc(services: Services): void {
   ipcMain.handle('config:set', (_e, patch: GilConfigPatch) => services.config.set(patch ?? {}));
 
   ipcMain.handle('items:list', () => services.sweep.items);
+  ipcMain.handle('items:track', async (_e, query: string) => {
+    const { result, item } = await verifyItem(String(query ?? '').trim(), new Set(services.sweep.items.map((i) => i.id)));
+    const items = item ? services.sweep.addItem(item) : services.sweep.items;
+    return { result, items };
+  });
+  ipcMain.handle('items:removeCustom', (_e, id: number) => services.sweep.removeCustom(id));
+  ipcMain.handle('config:exists', () => services.config.exists());
   ipcMain.handle('sweep:latest', () => services.sweep.latest());
   ipcMain.handle('sweep:run', async () => {
     const cfg = services.config.get();

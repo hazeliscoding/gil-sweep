@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { EXPANSIONS, Expansion, SnapshotStats } from '../models';
+import { EXPANSIONS, Expansion, SnapshotStats, VerifyResult } from '../models';
 import { SweepStore } from '../sweep.store';
 
 /**
@@ -94,6 +94,45 @@ import { SweepStore } from '../sweep.store';
       </div>
 
       <div class="section">
+        <h2>Tracked items</h2>
+        <div class="actions">
+          <input id="add-item" type="text" placeholder="item name, e.g. Dark Matter Cluster" style="width: 260px"
+                 [value]="addQuery()" (input)="addQuery.set($any($event.target).value)" (keydown.enter)="track()" />
+          <button class="btn-primary" id="btn-track" [disabled]="tracking() || !addQuery().trim()" (click)="track()">
+            {{ tracking() ? 'Verifying…' : 'Verify & track' }}
+          </button>
+        </div>
+        @if (trackResult(); as r) {
+          <div class="status track-result" [class.error]="!r.found" [class.ok]="r.gatherable">
+            {{ r.name ? r.name + ' — ' : '' }}{{ r.reason }}
+          </div>
+        }
+        @if (customItems().length) {
+          <table id="custom-items" style="max-width: 760px; margin-top: var(--space-4)">
+            <thead>
+              <tr><th>Item</th><th>Where</th><th>Kind</th><th></th></tr>
+            </thead>
+            <tbody>
+              @for (i of customItems(); track i.id) {
+                <tr>
+                  <td>{{ i.name }}</td>
+                  <td class="secondary">{{ i.where }}</td>
+                  <td class="secondary">{{ i.kind }}</td>
+                  <td class="center"><button (click)="store.removeCustomItem(i.id)">Remove</button></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+        <div class="meta">
+          Verification checks Garland Tools for the item's own gathering nodes (level, zone, spawn
+          hours come along for free). Top sellers that turn out to be crafted, vendor, or FC-voyage
+          items get tracked as non-farms so they never resurface as candidates. Gatherable additions
+          trigger a sweep to price them.
+        </div>
+      </div>
+
+      <div class="section">
         <h2>Data</h2>
         <div class="actions">
           <button (click)="openFolder()">Open data folder</button>
@@ -122,6 +161,26 @@ export class SettingsComponent {
   readonly folkloreExpansions = EXPANSIONS.filter((e) => e !== 'ARR');
 
   readonly crafterJobs = ['CRP', 'BSM', 'ARM', 'GSM', 'LTW', 'WVR', 'ALC', 'CUL'];
+
+  readonly addQuery = signal('');
+  readonly tracking = signal(false);
+  readonly trackResult = signal<VerifyResult | null>(null);
+  readonly customItems = computed(() => this.store.items().filter((i) => i.custom));
+
+  async track(): Promise<void> {
+    const q = this.addQuery().trim();
+    if (!q || this.tracking()) return;
+    this.tracking.set(true);
+    this.trackResult.set(null);
+    try {
+      this.trackResult.set(await this.store.trackItem(q));
+      this.addQuery.set('');
+    } catch (e) {
+      this.trackResult.set({ found: false, gatherable: false, reason: `verification failed: ${(e as Error).message}` });
+    } finally {
+      this.tracking.set(false);
+    }
+  }
 
   setCrafter(job: string, value: string): void {
     this.store.patchConfig({ crafters: { [job]: Math.min(100, Math.max(1, +value || 100)) } });

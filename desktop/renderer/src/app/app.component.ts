@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SweepStore } from './sweep.store';
 import { EorzeaClockService } from './eorzea-clock.service';
 import { DetailPanelComponent } from './detail-panel.component';
+import { OnboardingComponent } from './onboarding.component';
 
 /**
  * Root shell: persistent header (brand + world picker + Run sweep) and sidebar
@@ -12,7 +13,7 @@ import { DetailPanelComponent } from './detail-panel.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, DetailPanelComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, DetailPanelComponent, OnboardingComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="app">
@@ -71,6 +72,7 @@ import { DetailPanelComponent } from './detail-panel.component';
         </main>
       </div>
       <app-detail-panel />
+      <app-onboarding />
     </div>
   `,
 })

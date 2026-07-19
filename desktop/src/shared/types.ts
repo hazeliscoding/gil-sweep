@@ -24,6 +24,20 @@ export interface TrackedItem {
   spawns?: number[];
   /** Timed nodes: window length in Eorzea MINUTES (120 = 2 ET hours ≈ 5.8 real min). */
   uptime?: number;
+  /** True for user-added items (stored in userData, removable in Settings). */
+  custom?: boolean;
+}
+
+/** Outcome of the in-app verify-and-track pipeline (see main/core/verify.service.ts). */
+export interface VerifyResult {
+  found: boolean;
+  id?: number;
+  name?: string;
+  gatherable: boolean;
+  /** True when the item was already in the DB. */
+  alreadyTracked?: boolean;
+  /** Human explanation: node details, or why it's a trap / wasn't added. */
+  reason: string;
 }
 
 export interface DemandConsumer {
@@ -234,6 +248,12 @@ export interface GilApi {
   setConfig(patch: GilConfigPatch): Promise<GilConfig>;
   /** The bundled curated item DB (for spawn clocks etc. on older snapshots). */
   listItems(): Promise<TrackedItem[]>;
+  /** Verify an item by name (Garland nodes / trap detection) and track it if it checks out. */
+  trackItem(query: string): Promise<{ result: VerifyResult; items: TrackedItem[] }>;
+  /** Remove a user-added item; resolves with the updated item list. */
+  removeCustomItem(id: number): Promise<TrackedItem[]>;
+  /** True when no config file exists yet (first launch → onboarding). */
+  isFirstRun(): Promise<boolean>;
   /** Newest stored snapshot, else the bundled seed, else null. Never fetches. */
   latestSweep(): Promise<SweepSnapshot | null>;
   /** Runs a live sweep against Universalis/Saddlebag and persists the snapshot. */

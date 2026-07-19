@@ -10,6 +10,7 @@ import {
   SnapshotStats,
   SweepSnapshot,
   TrackedItem,
+  VerifyResult,
 } from './models';
 
 /**
@@ -22,6 +23,9 @@ export interface GilApi {
   getConfig(): Promise<GilConfig>;
   setConfig(patch: GilConfigPatch): Promise<GilConfig>;
   listItems(): Promise<TrackedItem[]>;
+  trackItem(query: string): Promise<{ result: VerifyResult; items: TrackedItem[] }>;
+  removeCustomItem(id: number): Promise<TrackedItem[]>;
+  isFirstRun(): Promise<boolean>;
   latestSweep(): Promise<SweepSnapshot | null>;
   runSweep(): Promise<SweepSnapshot>;
   sweepHistory(): Promise<Record<number, HistoryPoint[]>>;

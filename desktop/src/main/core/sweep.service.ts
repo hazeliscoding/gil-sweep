@@ -36,20 +36,53 @@ interface CraftRecipe {
 }
 
 export class SweepService {
-  readonly items: TrackedItem[];
+  private readonly bundledItems: TrackedItem[];
+  private customItems: TrackedItem[] = [];
   private readonly craftRecipes: Record<string, CraftRecipe>;
-  /** Tracked non-crystal ids — crystals are in every recipe, so they don't count as "uses my farmables". */
-  private readonly trackedMatIds: Set<number>;
 
   constructor(
     private readonly dataDir: string,
     private readonly snapshotsDir: string,
     private readonly demand: DemandIndex,
   ) {
-    this.items = JSON.parse(readFileSync(join(dataDir, 'items.json'), 'utf8'));
+    this.bundledItems = JSON.parse(readFileSync(join(dataDir, 'items.json'), 'utf8'));
     this.craftRecipes = JSON.parse(readFileSync(join(dataDir, 'crafts.json'), 'utf8'));
-    this.trackedMatIds = new Set(this.items.filter((i) => i.kind !== 'crystal').map((i) => i.id));
     mkdirSync(snapshotsDir, { recursive: true });
+    try {
+      if (existsSync(this.customFile)) {
+        this.customItems = JSON.parse(readFileSync(this.customFile, 'utf8'));
+      }
+    } catch {
+      this.customItems = [];
+    }
+  }
+
+  /** Bundled DB plus user-added items (flagged `custom` so the UI can offer removal). */
+  get items(): TrackedItem[] {
+    return [...this.bundledItems, ...this.customItems.map((i) => ({ ...i, custom: true }))];
+  }
+
+  private get customFile(): string {
+    return join(dirname(this.snapshotsDir), 'custom-items.json');
+  }
+
+  /** Tracked non-crystal ids — crystals are in every recipe, so they don't count as "uses my farmables". */
+  private get trackedMatIds(): Set<number> {
+    return new Set(this.items.filter((i) => i.kind !== 'crystal').map((i) => i.id));
+  }
+
+  addItem(item: TrackedItem): TrackedItem[] {
+    if (!this.items.some((i) => i.id === item.id)) {
+      this.customItems.push(item);
+      writeFileSync(this.customFile, JSON.stringify(this.customItems, null, 1));
+    }
+    return this.items;
+  }
+
+  removeCustom(id: number): TrackedItem[] {
+    this.customItems = this.customItems.filter((i) => i.id !== id);
+    writeFileSync(this.customFile, JSON.stringify(this.customItems, null, 1));
+    return this.items;
   }
 
   /** Newest stored snapshot; falls back to the bundled seed so first boot has data. */

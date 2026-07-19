@@ -233,8 +233,9 @@ import {
             </tbody>
           </table>
           <div class="meta">
-            Candidates for the item database — verify they're actually gatherable before chasing
-            (top sellers are often crafted, vendor, or FC-voyage items).
+            Candidates for the item database — top sellers are often crafted, vendor, or FC-voyage
+            items, so verify before chasing: Settings → Tracked items runs the Garland check and
+            tracks the real gatherables (traps get remembered as non-farms).
           </div>
         </div>
       }

@@ -203,6 +203,20 @@ tbody tr.selected td { background: var(--color-green-tint); }
 .hour-bars div.hot { background: var(--color-green); }
 .hour-labels { display: flex; justify-content: space-between; font-size: var(--fs-caption); color: var(--color-text-muted); }
 
+/* ===== modal (onboarding) ===== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(26, 26, 26, 0.45);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal {
+  background: var(--color-bg);
+  border: 2px solid var(--color-border-strong);
+  padding: var(--space-7);
+  width: 440px;
+}
+.modal .form-field { margin-bottom: var(--space-5); }
+
 /* ===== trend charts ===== */
 .trend-chart { margin-bottom: var(--space-6); max-width: 760px; }
 .trend-svg {

@@ -20,6 +20,11 @@ export const DEFAULT_CONFIG: GilConfig = {
 export class ConfigService {
   constructor(private readonly file: string) {}
 
+  /** False until the first save — drives the first-run onboarding. */
+  exists(): boolean {
+    return existsSync(this.file);
+  }
+
   get(): GilConfig {
     if (!existsSync(this.file)) return { ...DEFAULT_CONFIG };
     try {

@@ -21,6 +21,18 @@ export interface TrackedItem {
   spawns?: number[];
   /** Timed nodes: window length in Eorzea MINUTES (120 = 2 ET hours ≈ 5.8 real min). */
   uptime?: number;
+  /** True for user-added items (stored in userData, removable in Settings). */
+  custom?: boolean;
+}
+
+/** Outcome of the in-app verify-and-track pipeline. */
+export interface VerifyResult {
+  found: boolean;
+  id?: number;
+  name?: string;
+  gatherable: boolean;
+  alreadyTracked?: boolean;
+  reason: string;
 }
 
 export interface DemandConsumer {
