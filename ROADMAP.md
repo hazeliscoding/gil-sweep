@@ -24,6 +24,20 @@
 - End-to-end suite in CI: the packaged app driven headlessly (launch, sweep, every page), not just compiled.
 - README screenshots; config/snapshot schema migration safety.
 
-## Post-1.0
-- **Hybrid delivery: desktop app + live website.** The renderer already talks to the world through one interface (`window.api`), so a web build swaps that adapter for direct Universalis calls (their CORS is open) plus a thin proxy for the endpoints that need one (Saddlebag). Same Angular app, two targets; the desktop keeps the tray, notifications, and local snapshot archive as its edge.
-- Parked until there's data or demand: gil/hour route planner (needs yield-per-node data no API provides), cross-DC arbitrage, macOS builds.
+## v1.1.0 — Discord webhooks
+- Price-spike alerts and the weekly digest posted to a Discord webhook (reaches your phone — the alerts that matter while away from the PC). Node-window alerts stay desktop toasts by default, Discord delivery opt-in (a ~6-minute window isn't actionable from a phone).
+- Webhook-only, no bot: a single POST, zero hosting, per-alert-type toggles in Settings. Honest limitation: the app must be running to send.
+- Doubles as the notification story for the future web build, which can't do OS toasts.
+
+## v1.2.0 — Visual & input polish
+- In-game item icons (~22px) beside names in every table — McMaster tables have product thumbnails; this is ours. Icon ids ride the existing Garland data pipeline; lazy-loaded from Garland's CDN (consider bundling tracked-item icons later for offline).
+- Crafter-level slider on the Crafting page toolbar: one slider drags all eight jobs (instant re-rank); per-job fine-tuning stays in Settings for split-level characters.
+
+## v2.0.0 — Hybrid delivery: desktop app + live website
+- The renderer already talks to the world through one interface (`window.api`), so a web build swaps that adapter for direct Universalis calls (their CORS is open) plus a thin proxy for the endpoints that need one (Saddlebag). Same Angular app, two targets; the desktop keeps the tray, notifications, and local snapshot archive as its edge.
+
+## Parked (until there's data or demand)
+- Discord **bot** (slash commands, price queries from chat) — hosting + token surface; webhooks cover the need for now.
+- Gil/hour route planner — needs yield-per-node data no API provides.
+- Cross-DC arbitrage; macOS builds.
+- Bundled item icons for full offline rendering (if the CDN hotlinking ever chafes).
