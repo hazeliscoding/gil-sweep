@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.0] — 2026-07-19
+
+- HQ-aware craft margins: outputs price at HQ when the HQ market out-trades NQ (marked with an HQ tag). Materials stay NQ — gathered mats have no HQ since 6.0.
+- min(buy, craft) costing: each ingredient costs whichever is cheaper, the market listing or crafting it from its own mats (one level deep), so nugget→ingot chains cost honestly.
+- Crafter levels: per-job levels in Settings gate the Crafting page and the sweep digest.
+
 ## [0.7.0] — 2026-07-19
 
 - Trends page: week-over-week digest (latest snapshot vs a ~week-old baseline, ranked by market-throughput change) with prune suggestions for farm-rotation items under ~5 sold/day across the last three sweeps.
