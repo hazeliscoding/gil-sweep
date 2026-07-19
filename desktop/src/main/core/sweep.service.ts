@@ -7,13 +7,15 @@
  * renderer derives it from the raw rows so slider changes re-rank instantly
  * without re-fetching. Ported from the ffxiv-market-sweep CLI.
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, unlinkSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import {
   CraftValue,
+  DigestResult,
   GilConfig,
   HistoryPoint,
   SaddlebagUnknown,
+  SnapshotStats,
   SweepRow,
   SweepSnapshot,
   TrackedItem,
@@ -65,6 +67,119 @@ export class SweepService {
   /** Cached Universalis backfill lives beside (not inside) the snapshots dir. */
   private backfillFile(world: string): string {
     return join(dirname(this.snapshotsDir), `history-backfill-${world}.json`);
+  }
+
+  /** All snapshots (bundled seed first, then stored) for one world, oldest→newest. */
+  private loadSnapshots(world: string): SweepSnapshot[] {
+    const snaps: SweepSnapshot[] = [];
+    const seedFile = join(this.dataDir, 'seed-snapshot.json');
+    if (existsSync(seedFile)) snaps.push(JSON.parse(readFileSync(seedFile, 'utf8')));
+    if (existsSync(this.snapshotsDir)) {
+      for (const f of readdirSync(this.snapshotsDir).filter((f) => f.endsWith('.json')).sort()) {
+        snaps.push(JSON.parse(readFileSync(join(this.snapshotsDir, f), 'utf8')));
+      }
+    }
+    const ts = (s: SweepSnapshot): number => (s.timestamp ? Date.parse(s.timestamp) : Date.parse(s.date));
+    return snaps.filter((s) => s.world === world).sort((a, b) => ts(a) - ts(b));
+  }
+
+  /**
+   * Week-over-week digest: latest snapshot vs the newest baseline at least
+   * 5 days older (falling back to the oldest available while the archive is
+   * young). Purely local — no network.
+   */
+  digest(world: string): DigestResult {
+    const NEVER_FARM = new Set(['vendor', 'submarine', 'venture']);
+    const snaps = this.loadSnapshots(world);
+    const ts = (s: SweepSnapshot): number => (s.timestamp ? Date.parse(s.timestamp) : Date.parse(s.date));
+    const latest = snaps[snaps.length - 1];
+    const empty: DigestResult = {
+      world,
+      latestDate: latest?.date ?? '',
+      baselineDate: null,
+      daysApart: null,
+      changes: [],
+      prune: [],
+    };
+    if (!latest || snaps.length < 2) return empty;
+
+    let baseline: SweepSnapshot | null = null;
+    for (const s of snaps.slice(0, -1)) {
+      if (ts(latest) - ts(s) >= 5 * 86400000) baseline = s; // newest one old enough
+    }
+    baseline ??= snaps[0];
+
+    const thenById = new Map(baseline.rows.map((r) => [r.id, r]));
+    const changes = latest.rows
+      .filter((r) => !NEVER_FARM.has(r.kind) && thenById.has(r.id))
+      .map((r) => {
+        const then = thenById.get(r.id)!;
+        return {
+          id: r.id,
+          name: r.name,
+          avgThen: then.avg,
+          avgNow: r.avg,
+          avgPct: then.avg ? +((((r.avg - then.avg) / then.avg) * 100).toFixed(1)) : null,
+          velThen: then.velDay,
+          velNow: r.velDay,
+          delta: Math.abs(r.avg * r.velDay - then.avg * then.velDay),
+        };
+      })
+      .sort((a, b) => b.delta - a.delta)
+      .slice(0, 10)
+      .map(({ delta: _delta, ...c }) => c);
+
+    // Prune: farm-rotation kinds stuck under 5/day (world scope) for the last 3 sweeps.
+    const FARM_KINDS = new Set(['node', 'unspoiled', 'legendary', 'ephemeral', 'diadem', 'reduction']);
+    const prune: DigestResult['prune'] = [];
+    const recent = snaps.slice(-3);
+    if (recent.length >= 3) {
+      for (const item of latest.rows) {
+        if (!FARM_KINDS.has(item.kind)) continue;
+        const vels = recent.map((s) => s.rows.find((r) => r.id === item.id)).filter((r) => !!r);
+        if (vels.length === 3 && vels.every((r) => r!.velScope === 'world' && r!.velDay < 5)) {
+          prune.push({ id: item.id, name: item.name, recentVel: vels.map((r) => r!.velDay) });
+        }
+      }
+    }
+
+    return {
+      world,
+      latestDate: latest.date,
+      baselineDate: baseline.date,
+      daysApart: +(((ts(latest) - ts(baseline)) / 86400000).toFixed(1)),
+      changes,
+      prune,
+    };
+  }
+
+  snapshotStats(): SnapshotStats {
+    if (!existsSync(this.snapshotsDir)) return { count: 0, bytes: 0 };
+    const files = readdirSync(this.snapshotsDir).filter((f) => f.endsWith('.json'));
+    let bytes = 0;
+    for (const f of files) bytes += statSync(join(this.snapshotsDir, f)).size;
+    return { count: files.length, bytes };
+  }
+
+  /** Keeps the newest snapshot per world+day (filenames sort chronologically), deletes the rest. */
+  pruneSnapshots(): { deleted: number } {
+    if (!existsSync(this.snapshotsDir)) return { deleted: 0 };
+    const files = readdirSync(this.snapshotsDir).filter((f) => f.endsWith('.json')).sort();
+    const keep = new Map<string, string>(); // world+day -> newest file
+    for (const f of files) {
+      const m = f.match(/^sweep-(\d{4}-\d{2}-\d{2})T.*-(.+)\.json$/);
+      const key = m ? `${m[2]}|${m[1]}` : f;
+      keep.set(key, f); // later files overwrite → newest per day survives
+    }
+    const keepSet = new Set(keep.values());
+    let deleted = 0;
+    for (const f of files) {
+      if (!keepSet.has(f)) {
+        unlinkSync(join(this.snapshotsDir, f));
+        deleted++;
+      }
+    }
+    return { deleted };
   }
 
   /**

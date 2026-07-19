@@ -1,4 +1,5 @@
 import {
+  DigestResult,
   GilConfig,
   GilConfigPatch,
   HealthResult,
@@ -6,6 +7,7 @@ import {
   MarketDetail,
   RetainerAdvice,
   RetainerTarget,
+  SnapshotStats,
   SweepSnapshot,
   TrackedItem,
 } from './models';
@@ -24,6 +26,9 @@ export interface GilApi {
   runSweep(): Promise<SweepSnapshot>;
   sweepHistory(): Promise<Record<number, HistoryPoint[]>>;
   backfillHistory(): Promise<number>;
+  sweepDigest(): Promise<DigestResult>;
+  snapshotStats(): Promise<SnapshotStats>;
+  pruneSnapshots(): Promise<{ deleted: number }>;
   marketDetail(id: number): Promise<MarketDetail>;
   listWorlds(): Promise<string[]>;
   retainerPlan(targets: RetainerTarget[]): Promise<RetainerAdvice[]>;

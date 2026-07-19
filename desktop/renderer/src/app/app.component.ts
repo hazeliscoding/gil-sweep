@@ -61,6 +61,7 @@ import { DetailPanelComponent } from './detail-panel.component';
             <a routerLink="/sweep" routerLinkActive="active">Sweep</a>
             <a routerLink="/crafting" routerLinkActive="active">Crafting</a>
             <a routerLink="/retainers" routerLinkActive="active">Retainers</a>
+            <a routerLink="/trends" routerLinkActive="active">Trends</a>
             <a routerLink="/settings" routerLinkActive="active">Settings</a>
           </nav>
         </aside>

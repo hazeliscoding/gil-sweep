@@ -147,6 +147,34 @@ export interface HistoryPoint {
   velDay: number;
 }
 
+/** One item's week-over-week movement in the digest. */
+export interface DigestChange {
+  id: number;
+  name: string;
+  avgThen: number;
+  avgNow: number;
+  avgPct: number | null;
+  velThen: number;
+  velNow: number;
+}
+
+/** Week-over-week story: latest snapshot vs a ~week-old baseline. */
+export interface DigestResult {
+  world: string;
+  latestDate: string;
+  baselineDate: string | null;
+  daysApart: number | null;
+  /** Biggest market-throughput changes, largest first. */
+  changes: DigestChange[];
+  /** Farm-rotation items below ~5 sold/day (world scope) for 3+ consecutive sweeps. */
+  prune: { id: number; name: string; recentVel: number[] }[];
+}
+
+export interface SnapshotStats {
+  count: number;
+  bytes: number;
+}
+
 /** Live market drill-down for one item (fetched on demand, not cached). */
 export interface MarketDetail {
   curMin: number;
@@ -207,6 +235,12 @@ export interface GilApi {
   sweepHistory(): Promise<Record<number, HistoryPoint[]>>;
   /** One-time Universalis sale-history backfill for the configured world; resolves with items covered. */
   backfillHistory(): Promise<number>;
+  /** Week-over-week digest for the configured world (local snapshots only, instant). */
+  sweepDigest(): Promise<DigestResult>;
+  /** Snapshot archive size for the housekeeping UI. */
+  snapshotStats(): Promise<SnapshotStats>;
+  /** Keeps the newest snapshot per world+day, deletes the rest; resolves with count deleted. */
+  pruneSnapshots(): Promise<{ deleted: number }>;
   /** Live market drill-down (listings + recent sales) for one item. */
   marketDetail(id: number): Promise<MarketDetail>;
   /** All public world names, for the world picker. */

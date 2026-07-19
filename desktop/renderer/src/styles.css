@@ -195,6 +195,18 @@ tbody tr.selected td { background: var(--color-green-tint); }
 .hour-bars div.hot { background: var(--color-green); }
 .hour-labels { display: flex; justify-content: space-between; font-size: var(--fs-caption); color: var(--color-text-muted); }
 
+/* ===== trend charts ===== */
+.trend-chart { margin-bottom: var(--space-6); max-width: 760px; }
+.trend-svg {
+  width: 100%; height: 160px; display: block;
+  border: 1px solid var(--color-border); background: var(--color-bg);
+}
+.trend-svg .line { stroke: var(--color-green); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.trend-svg .dot { fill: var(--color-green); }
+.trend-svg .axis { stroke: var(--color-border); stroke-width: 1; }
+.trend-svg .grid { stroke: var(--color-border-light); stroke-width: 1; }
+.trend-x { display: flex; justify-content: space-between; font-size: var(--fs-caption); color: var(--color-text-muted); max-width: 760px; }
+
 .app-body { display: flex; flex: 1 1 auto; min-height: 0; }
 .sidebar {
   width: var(--sidebar-width);

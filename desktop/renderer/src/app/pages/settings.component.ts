@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { EXPANSIONS, Expansion } from '../models';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { EXPANSIONS, Expansion, SnapshotStats } from '../models';
 import { SweepStore } from '../sweep.store';
 
 /**
@@ -84,10 +84,18 @@ import { SweepStore } from '../sweep.store';
         <h2>Data</h2>
         <div class="actions">
           <button (click)="openFolder()">Open data folder</button>
+          <button (click)="prune()" [disabled]="pruning()">Prune to one snapshot per day</button>
+          <span class="muted" id="snap-stats">
+            {{ stats()?.count ?? '…' }} snapshots · {{ mb() }} MB
+            @if (pruneResult() !== null) {
+              · deleted {{ pruneResult() }}
+            }
+          </span>
         </div>
         <div class="meta">
           Sweep snapshots and this config live in your user-data folder. Snapshots accumulate so
-          week-over-week price changes work; nothing leaves your machine except the market API calls
+          week-over-week price changes work; pruning keeps the newest per day (trends keep their
+          shape, disk stays tidy). Nothing leaves your machine except the market API calls
           (Universalis, Saddlebag Exchange).
         </div>
       </div>
@@ -99,6 +107,30 @@ export class SettingsComponent {
   readonly expansions = EXPANSIONS;
   /** ARR has no folklore books — they start with Heavensward. */
   readonly folkloreExpansions = EXPANSIONS.filter((e) => e !== 'ARR');
+
+  readonly stats = signal<SnapshotStats | null>(null);
+  readonly pruning = signal(false);
+  readonly pruneResult = signal<number | null>(null);
+  readonly mb = computed(() => (((this.stats()?.bytes ?? 0) / 1048576).toFixed(1)));
+
+  constructor() {
+    this.refreshStats();
+  }
+
+  private refreshStats(): void {
+    window.api.snapshotStats().then((s) => this.stats.set(s)).catch(() => void 0);
+  }
+
+  async prune(): Promise<void> {
+    this.pruning.set(true);
+    try {
+      const r = await window.api.pruneSnapshots();
+      this.pruneResult.set(r.deleted);
+      this.refreshStats();
+    } finally {
+      this.pruning.set(false);
+    }
+  }
 
   toggleFolklore(expansion: Expansion, owned: boolean): void {
     const current = this.store.config()?.folklore ?? [];

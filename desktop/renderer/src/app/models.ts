@@ -132,6 +132,32 @@ export interface HistoryPoint {
   velDay: number;
 }
 
+/** One item's week-over-week movement in the digest. */
+export interface DigestChange {
+  id: number;
+  name: string;
+  avgThen: number;
+  avgNow: number;
+  avgPct: number | null;
+  velThen: number;
+  velNow: number;
+}
+
+/** Week-over-week story: latest snapshot vs a ~week-old baseline. */
+export interface DigestResult {
+  world: string;
+  latestDate: string;
+  baselineDate: string | null;
+  daysApart: number | null;
+  changes: DigestChange[];
+  prune: { id: number; name: string; recentVel: number[] }[];
+}
+
+export interface SnapshotStats {
+  count: number;
+  bytes: number;
+}
+
 /** Live market drill-down for one item (fetched on demand, not cached). */
 export interface MarketDetail {
   curMin: number;

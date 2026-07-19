@@ -37,6 +37,10 @@ export function registerIpc(services: Services): void {
   });
   ipcMain.handle('sweep:history', () => services.sweep.history(services.config.get().world));
   ipcMain.handle('sweep:backfill', () => services.sweep.backfill(services.config.get().world));
+  ipcMain.handle('sweep:digest', () => services.sweep.digest(services.config.get().world));
+
+  ipcMain.handle('snapshots:stats', () => services.sweep.snapshotStats());
+  ipcMain.handle('snapshots:prune', () => services.sweep.pruneSnapshots());
 
   ipcMain.handle('market:detail', (_e, id: number) => marketDetail(services.config.get().world, id));
 
