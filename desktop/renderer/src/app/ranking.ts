@@ -7,7 +7,7 @@
  *  - level gate: job level (max of both for job 'both')
  *  - farm tables demand world-scope velocity (dc/region = illiquid mirage)
  */
-import { EXPANSIONS, GilConfig, SweepRow } from './models';
+import { CraftValue, EXPANSIONS, GilConfig, SweepRow } from './models';
 
 const NEVER_FARM = new Set(['vendor', 'submarine', 'venture']);
 
@@ -72,6 +72,28 @@ export function movers(rows: SweepRow[]): SweepRow[] {
 
 export function locked(rows: SweepRow[], cfg: GilConfig, limit = 12): SweepRow[] {
   return rows.filter((r) => !accessible(r, cfg) && r.throughput > 0).slice(0, limit);
+}
+
+/**
+ * The sweep-page crafting digest: best trustworthy-margin crafts that consume
+ * something you can farm at the current sliders. crafts arrive pre-sorted by
+ * margin × daily sales (see the sweep service).
+ */
+export function topValueCrafts(
+  crafts: CraftValue[],
+  rows: SweepRow[],
+  cfg: GilConfig,
+  limit = 5,
+): CraftValue[] {
+  const mine = new Set(
+    farmable(rows, cfg)
+      .filter((r) => r.kind !== 'crystal' && r.kind !== 'map')
+      .map((r) => r.id),
+  );
+  return crafts
+    .filter((c) => c.costComplete && c.velScope === 'world' && c.margin > 0)
+    .filter((c) => c.usesTracked.some((id) => mine.has(id)))
+    .slice(0, limit);
 }
 
 /** Legendary nodes need their expansion's folklore book — annotate, don't gate (matches the CLI). */

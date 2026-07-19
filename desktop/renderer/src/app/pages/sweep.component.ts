@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { EXPANSIONS, SweepRow } from '../models';
+import { RouterLink } from '@angular/router';
+import { CraftValue, EXPANSIONS, SweepRow } from '../models';
 import { SweepStore } from '../sweep.store';
 import { MarketTableComponent } from '../market-table.component';
 import {
@@ -12,6 +13,7 @@ import {
   maps,
   miningFarms,
   movers,
+  topValueCrafts,
 } from '../ranking';
 
 /**
@@ -22,7 +24,7 @@ import {
 @Component({
   selector: 'app-sweep',
   standalone: true,
-  imports: [DecimalPipe, MarketTableComponent],
+  imports: [DecimalPipe, MarketTableComponent, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="breadcrumb">Sweep</div>
@@ -99,6 +101,17 @@ import {
           <div class="kpi-value">{{ mining().length + botany().length }}</div>
           <div class="kpi-sub">MIN {{ mining().length }} · BTN {{ botany().length }}</div>
         </div>
+        <div class="kpi">
+          <div class="kpi-label">Top craft value</div>
+          <div class="kpi-value">{{ topCrafts()[0]?.name ?? '—' }}</div>
+          <div class="kpi-sub">
+            @if (topCrafts()[0]; as t) {
+              +{{ t.margin | number: '1.0-0' }}/craft · {{ t.job }}
+            } @else {
+              run a sweep for margins
+            }
+          </div>
+        </div>
       </div>
 
       <div class="grid-2 section">
@@ -111,6 +124,36 @@ import {
           <app-market-table [rows]="botany()" />
         </div>
       </div>
+
+      @if (topCrafts().length) {
+        <div class="section">
+          <h2>Process before selling <a routerLink="/crafting" class="h-link">all crafts →</a></h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Craft</th>
+                <th>Job</th>
+                <th class="num">Margin/craft</th>
+                <th class="num">Margin %</th>
+                <th class="num">Sold/day</th>
+                <th>Uses from your farms</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (c of topCrafts(); track c.id) {
+                <tr>
+                  <td>{{ c.name }}</td>
+                  <td class="secondary">{{ c.job }} {{ c.lvl ?? '' }}</td>
+                  <td class="num pos"><strong>{{ c.margin | number: '1.0-0' }}</strong></td>
+                  <td class="num">{{ c.marginPct | number: '1.0-0' }}%</td>
+                  <td class="num">{{ c.velDay | number: '1.0-1' }}</td>
+                  <td class="secondary">{{ craftUses(c) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
 
       @if (moverRows().length) {
         <div class="section">
@@ -237,6 +280,19 @@ export class SweepComponent {
     const cfg = this.store.config();
     return (r: SweepRow) => (cfg ? lockReason(r, cfg) : '');
   });
+
+  readonly topCrafts = computed<CraftValue[]>(() => {
+    const cfg = this.store.config();
+    const crafts = this.store.snapshot()?.crafts ?? [];
+    return cfg ? topValueCrafts(crafts, this.rows(), cfg, 5) : [];
+  });
+
+  craftUses(c: CraftValue): string {
+    return c.ingredients
+      .filter((i) => c.usesTracked.includes(i.id))
+      .map((i) => i.name)
+      .join(', ');
+  }
 
   setLevel(job: 'MIN' | 'BTN', value: string): void {
     this.store.patchConfig({ levels: { [job]: +value } });
