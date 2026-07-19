@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0] — 2026-07-19
+
+- Live Eorzea clock in the header (1 ET minute ≈ 2.9 real seconds — it ticks).
+- "Node (ET)" column on every market table: up-now / next-window timers, shown in real minutes, for all 18 timed nodes (unspoiled, legendary, ephemeral).
+- Spawn data added to the bundled item DB: hours verified against Garland Tools node data, window durations from Teamcraft open data.
+- Header wordmark restyled to GilSweep; README polish.
+
 ## [0.1.0] — 2026-07-18
 
 Initial public release.
