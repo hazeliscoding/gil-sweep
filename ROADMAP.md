@@ -32,12 +32,21 @@
 ## v1.2.0 — Visual & input polish
 - In-game item icons (~22px) beside names in every table — McMaster tables have product thumbnails; this is ours. Icon ids ride the existing Garland data pipeline; lazy-loaded from Garland's CDN (consider bundling tracked-item icons later for offline).
 - Crafter-level slider on the Crafting page toolbar: one slider drags all eight jobs (instant re-rank); per-job fine-tuning stays in Settings for split-level characters.
+- Sortable table columns (click a header, re-sort) and CSV export of any table.
+
+## v1.3.0 — Your market (undercut watch)
+- Retainer names in config → the app spots *your* listings in the Universalis data it already fetches (listings carry retainer names) and alerts when you've been undercut, with the new floor and your delta. No game integration, pure public data.
+- Live watch on starred items via the Universalis websocket (or periodic re-checks): price-crash and undercut alerts in near-real-time instead of sweep cadence. Feeds toasts and Discord alike.
+
+## v1.4.0 — Scrip economy
+- Gil-per-scrip page: everything the purple/orange scrip vendors sell (gatherer and crafter), priced live on your world, ranked by gil per scrip — the "what do I spend my weekly scrips on" answer. Needs a curated scrip-item list in the data pipeline (Sphalerite was the prototype).
 
 ## v2.0.0 — Hybrid delivery: desktop app + live website
 - The renderer already talks to the world through one interface (`window.api`), so a web build swaps that adapter for direct Universalis calls (their CORS is open) plus a thin proxy for the endpoints that need one (Saddlebag). Same Angular app, two targets; the desktop keeps the tray, notifications, and local snapshot archive as its edge.
 
 ## Parked (until there's data or demand)
 - Discord **bot** (slash commands, price queries from chat) — hosting + token surface; webhooks cover the need for now.
+- Multi-character profiles (per-character levels/worlds) — plumbing without a proven need; revisit when alts show up.
 - Gil/hour route planner — needs yield-per-node data no API provides.
-- Cross-DC arbitrage; macOS builds.
+- Cross-DC arbitrage; macOS builds; localized item names (DE/FR/JP).
 - Bundled item icons for full offline rendering (if the CDN hotlinking ever chafes).
