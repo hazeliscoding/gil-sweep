@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0] — 2026-07-19
+
+- Crafting page: craft value-add margins for 635 recipes, computed at sweep time (sale price × yield − ingredient cost at cheapest listings, crystals included). Ranked by margin × daily sales, filtered by default to crafts using what your sliders say you can farm; recipes with vendor-only ingredients are excluded rather than mis-costed.
+- Market drill-down: click any row for live listing depth, recent sales, days-of-stock, and an hour-of-day posting-window histogram (local time).
+- Sparkline backfill: fresh installs pull one round of Universalis sale history per world (quantity-weighted daily averages), so trend lines have shape from the first minute.
+
 ## [0.3.0] — 2026-07-19
 
 - Auto-sweep on launch: when the loaded snapshot is the bundled seed, older than a day, or from another world, a background sweep refreshes it quietly (no spinner; auto-refresh failures stay silent offline).
