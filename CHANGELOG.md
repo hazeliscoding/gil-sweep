@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0] — 2026-07-19
+
+- Spawn-clock tray: the tray icon shows the Eorzea clock and the next timed-node windows for your character. Closing the window hides to the tray by default (Settings toggle; quit via the tray menu).
+- Crafts on the dashboard: a "Top craft value" KPI and a top-5 "Process before selling" table on the Sweep page, linking to the full Crafting page.
+- Retainer rows open the market drill-down panel, same as sweep rows.
+- Quick filter box on the Sweep page — narrows all tables by item or zone as you type.
+
 ## [0.4.0] — 2026-07-19
 
 - Crafting page: craft value-add margins for 635 recipes, computed at sweep time (sale price × yield − ingredient cost at cheapest listings, crystals included). Ranked by margin × daily sales, filtered by default to crafts using what your sliders say you can farm; recipes with vendor-only ingredients are excluded rather than mis-costed.
