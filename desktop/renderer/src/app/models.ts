@@ -59,12 +59,38 @@ export interface SaddlebagUnknown {
   state: string;
 }
 
+export interface CraftIngredient {
+  id: number;
+  name: string;
+  qty: number;
+  unitPrice: number;
+}
+
+/** Craft-margin analysis for one recipe, computed at sweep time from live prices. */
+export interface CraftValue {
+  id: number;
+  name: string;
+  job: string;
+  lvl: number | null;
+  yield: number;
+  salePrice: number;
+  velDay: number;
+  velScope: VelScope;
+  cost: number;
+  costComplete: boolean;
+  margin: number;
+  marginPct: number | null;
+  usesTracked: number[];
+  ingredients: CraftIngredient[];
+}
+
 export interface SweepSnapshot {
   date: string;
   timestamp: string | null;
   world: string;
   rows: SweepRow[];
   sbUnknown: SaddlebagUnknown[];
+  crafts?: CraftValue[];
   seed?: boolean;
 }
 

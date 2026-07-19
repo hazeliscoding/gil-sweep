@@ -10,6 +10,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import {
+  CraftValue,
   GilConfig,
   HistoryPoint,
   SaddlebagUnknown,
@@ -21,8 +22,22 @@ import { DemandIndex, summarizeDemand } from './demand';
 import { fetchAggregated, pick, scopeOf } from './universalis';
 import { fetchSaddlebag } from './saddlebag';
 
+/** One recipe from the bundled crafts.json (see the data pipeline repo). */
+interface CraftRecipe {
+  id: number;
+  name: string;
+  job: string;
+  rlvl: number | null;
+  lvl: number | null;
+  yield: number;
+  ingredients: { id: number; name: string; qty: number }[];
+}
+
 export class SweepService {
   readonly items: TrackedItem[];
+  private readonly craftRecipes: Record<string, CraftRecipe>;
+  /** Tracked non-crystal ids — crystals are in every recipe, so they don't count as "uses my farmables". */
+  private readonly trackedMatIds: Set<number>;
 
   constructor(
     private readonly dataDir: string,
@@ -30,6 +45,8 @@ export class SweepService {
     private readonly demand: DemandIndex,
   ) {
     this.items = JSON.parse(readFileSync(join(dataDir, 'items.json'), 'utf8'));
+    this.craftRecipes = JSON.parse(readFileSync(join(dataDir, 'crafts.json'), 'utf8'));
+    this.trackedMatIds = new Set(this.items.filter((i) => i.kind !== 'crystal').map((i) => i.id));
     mkdirSync(snapshotsDir, { recursive: true });
   }
 
@@ -74,8 +91,14 @@ export class SweepService {
   }
 
   async run(config: GilConfig): Promise<SweepSnapshot> {
-    // Consumers get priced in the same pass so demand ranking reflects this world.
-    const ids = [...new Set([...this.items.map((i) => i.id), ...this.demand.consumerIds()])];
+    // One pricing pass covers everything: tracked items, demand consumers
+    // (= the craftable goods), and every recipe ingredient for margin math.
+    const ingredientIds = Object.values(this.craftRecipes).flatMap((r) =>
+      r.ingredients.map((i) => i.id),
+    );
+    const ids = [
+      ...new Set([...this.items.map((i) => i.id), ...this.demand.consumerIds(), ...ingredientIds]),
+    ];
     const prices = await fetchAggregated(config.world, ids);
     const saddlebag = await fetchSaddlebag(config.world, config.saddlebag);
     const sbById = new Map((saddlebag ?? []).map((s) => [Number(s.itemID), s]));
@@ -123,6 +146,41 @@ export class SweepService {
         state: s.state,
       }));
 
+    // Craft margins: sale price × yield − Σ(qty × ingredient min listing).
+    const crafts: CraftValue[] = [];
+    for (const r of Object.values(this.craftRecipes)) {
+      const p = prices.get(r.id);
+      const salePrice = Math.round((pick(p?.nq?.averageSalePrice)?.price ?? 0) as number);
+      const craftVelDay = velOf(r.id);
+      if (!salePrice || !craftVelDay) continue; // dead market — not worth listing
+      let cost = 0;
+      let costComplete = true;
+      const ingredients = r.ingredients.map((ing) => {
+        const unitPrice = Math.round((pick(prices.get(ing.id)?.nq?.minListing)?.price ?? 0) as number);
+        if (!unitPrice) costComplete = false;
+        cost += unitPrice * ing.qty;
+        return { ...ing, unitPrice };
+      });
+      const margin = salePrice * r.yield - cost;
+      crafts.push({
+        id: r.id,
+        name: r.name,
+        job: r.job,
+        lvl: r.lvl,
+        yield: r.yield,
+        salePrice,
+        velDay: craftVelDay,
+        velScope: scopeOf(p?.nq?.dailySaleVelocity),
+        cost,
+        costComplete,
+        margin,
+        marginPct: cost > 0 ? +(((margin / cost) * 100).toFixed(1)) : null,
+        usesTracked: r.ingredients.filter((i) => this.trackedMatIds.has(i.id)).map((i) => i.id),
+        ingredients,
+      });
+    }
+    crafts.sort((a, b) => b.margin * b.velDay - a.margin * a.velDay);
+
     const now = new Date();
     const snapshot: SweepSnapshot = {
       date: now.toISOString().slice(0, 10),
@@ -130,6 +188,7 @@ export class SweepService {
       world: config.world,
       rows,
       sbUnknown,
+      crafts,
     };
     const file = `sweep-${now.toISOString().replace(/[:.]/g, '-')}-${config.world}.json`;
     writeFileSync(join(this.snapshotsDir, file), JSON.stringify(snapshot));
