@@ -6,7 +6,12 @@ Pulls live Universalis price/velocity aggregates and Saddlebag Exchange trends f
 
 ## Download 📦
 
-Grab the portable Windows exe from [Releases](https://github.com/hazeliscoding/gil-sweep/releases) — no install, run it from anywhere. The exe is unsigned, so SmartScreen will warn on first run.
+From [Releases](https://github.com/hazeliscoding/gil-sweep/releases):
+
+- **`gil-sweep-x.y.z-setup.exe`** — installer; **auto-updates** from GitHub releases.
+- **`gil-sweep-x.y.z-portable.exe`** — no install, run from anywhere; re-download to update.
+
+Both are unsigned, so SmartScreen will warn on first run (More info → Run anyway).
 
 ## Run it (dev) 🛠️
 

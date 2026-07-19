@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0] — 2026-07-19
+
+- NSIS installer alongside the portable exe. Installed builds auto-update from GitHub releases; the portable exe skips update checks (re-download to update).
+- End-to-end suite in CI: 28 behavioral checks drive the real app (onboarding, sweep, crafting, retainers, trends, drill-down, tray) under Xvfb on every push.
+- Hardening: tray-construction failures degrade gracefully instead of crashing the app.
+
 ## [0.9.0] — 2026-07-19
 
 - Verify & track (Settings): add any item by name — Garland's node data decides gatherability and brings level, zone, and spawn hours along. Crafted/vendor/voyage top sellers get classified and remembered as never-farm traps. Custom items live in userData and are removable.

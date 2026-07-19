@@ -1,24 +1,24 @@
 # Roadmap
 
-## v0.6.0 — Alerts
+## v0.6.0 — Alerts — shipped ✅
 - Watch (star) items in any table; Windows notification when a watched node's window opens, with time remaining.
 - Price-spike notification for watched items after a sweep (≥25% swing).
 
-## v0.7.0 — Trends & weekly digest
+## v0.7.0 — Trends & weekly digest — shipped ✅
 - Trends page: price/velocity charts per item from the local snapshot archive (the drill-down panel's big sibling).
 - "This week" digest: movers with context, new watchlist entrants, prune suggestions for farms below ~5 sold/day for 3+ consecutive sweeps.
 - Snapshot housekeeping in Settings (view, prune, export).
 
-## v0.8.0 — Crafting depth
+## v0.8.0 — Crafting depth — shipped ✅
 - HQ-aware margins: gear/consumables price at HQ, materials stay NQ (gathered mats have no HQ since 6.0).
 - One level of min(buy, craft) costing for intermediate ingredients (nugget → ingot chains).
 - Crafter job/level config gating the Crafting page.
 
-## v0.9.0 — Bring your own item DB
+## v0.9.0 — Bring your own item DB — shipped ✅
 - In-app "track new item": name search → node verification against Garland Tools → crafted/vendor/submarine trap detection, so top sellers that aren't gatherable never get recommended.
 - First-run onboarding: pick world and levels instead of inheriting defaults.
 
-## v1.0.0 — Distribution
+## v1.0.0 — Distribution — shipped ✅
 - NSIS installer with auto-update alongside the portable exe.
 - **Shipping unsigned** — the SmartScreen warning stays documented in the README instead of paying for code signing.
 - End-to-end suite in CI: the packaged app driven headlessly (launch, sweep, every page), not just compiled.
