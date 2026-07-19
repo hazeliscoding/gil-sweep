@@ -141,6 +141,19 @@ export interface HistoryPoint {
   velDay: number;
 }
 
+/** Live market drill-down for one item (fetched on demand, not cached). */
+export interface MarketDetail {
+  curMin: number;
+  medPPU: number;
+  listedQty: number;
+  unitsPerDay: number;
+  daysInv: number | null;
+  /** Cheapest 10 current listings. */
+  listings: { ppu: number; qty: number }[];
+  /** Recent sales, newest first (t in ms). Feeds the posting-window histogram. */
+  sales: { ppu: number; qty: number; t: number }[];
+}
+
 export interface HealthResult {
   status: string;
 }
@@ -186,6 +199,10 @@ export interface GilApi {
   runSweep(): Promise<SweepSnapshot>;
   /** Per-item avg/velocity series across all stored snapshots for the configured world. */
   sweepHistory(): Promise<Record<number, HistoryPoint[]>>;
+  /** One-time Universalis sale-history backfill for the configured world; resolves with items covered. */
+  backfillHistory(): Promise<number>;
+  /** Live market drill-down (listings + recent sales) for one item. */
+  marketDetail(id: number): Promise<MarketDetail>;
   /** All public world names, for the world picker. */
   listWorlds(): Promise<string[]>;
   /** Live listings + recent sales → per-item selling advice for the given targets. */

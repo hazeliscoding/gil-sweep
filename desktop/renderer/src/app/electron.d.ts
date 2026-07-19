@@ -3,6 +3,7 @@ import {
   GilConfigPatch,
   HealthResult,
   HistoryPoint,
+  MarketDetail,
   RetainerAdvice,
   RetainerTarget,
   SweepSnapshot,
@@ -22,6 +23,8 @@ export interface GilApi {
   latestSweep(): Promise<SweepSnapshot | null>;
   runSweep(): Promise<SweepSnapshot>;
   sweepHistory(): Promise<Record<number, HistoryPoint[]>>;
+  backfillHistory(): Promise<number>;
+  marketDetail(id: number): Promise<MarketDetail>;
   listWorlds(): Promise<string[]>;
   retainerPlan(targets: RetainerTarget[]): Promise<RetainerAdvice[]>;
   openDataFolder(): Promise<string>;

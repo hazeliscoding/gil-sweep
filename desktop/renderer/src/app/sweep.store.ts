@@ -3,10 +3,21 @@ import {
   GilConfig,
   GilConfigPatch,
   HistoryPoint,
+  MarketDetail,
   SweepRow,
   SweepSnapshot,
   TrackedItem,
 } from './models';
+
+/** State of the market drill-down panel (opened by clicking a row). */
+export interface DetailState {
+  id: number;
+  name: string;
+  row: SweepRow | null;
+  loading: boolean;
+  error: string | null;
+  data: MarketDetail | null;
+}
 
 /** A snapshot this old (or from another world, or the bundled seed) triggers a background refresh on boot. */
 const STALE_MS = 24 * 3600 * 1000;
@@ -30,6 +41,7 @@ export class SweepStore {
   readonly history = signal<Record<number, HistoryPoint[]>>({});
   readonly running = signal(false);
   readonly error = signal<string | null>(null);
+  readonly detail = signal<DetailState | null>(null);
 
   /**
    * Snapshot rows joined with the bundled item DB — snapshots persisted before
@@ -94,10 +106,46 @@ export class SweepStore {
 
   private async loadHistory(): Promise<void> {
     try {
-      this.history.set(await this.api.sweepHistory());
+      const hist = await this.api.sweepHistory();
+      this.history.set(hist);
+      // Thin history (fresh install / new world): backfill once from
+      // Universalis sale history so sparklines have shape from day one.
+      const maxLen = Object.values(hist).reduce((m, s) => Math.max(m, s.length), 0);
+      if (maxLen < 5 && !this.backfilled) {
+        this.backfilled = true;
+        await this.api.backfillHistory();
+        this.history.set(await this.api.sweepHistory());
+      }
     } catch {
       /* sparklines are decorative — never block on them */
     }
+  }
+  private backfilled = false;
+
+  async openDetail(row: SweepRow): Promise<void> {
+    this.detail.set({ id: row.id, name: row.name, row, loading: true, error: null, data: null });
+    try {
+      const data = await this.api.marketDetail(row.id);
+      // Only apply if the user hasn't clicked elsewhere meanwhile.
+      if (this.detail()?.id === row.id) {
+        this.detail.set({ id: row.id, name: row.name, row, loading: false, error: null, data });
+      }
+    } catch (e) {
+      if (this.detail()?.id === row.id) {
+        this.detail.set({
+          id: row.id,
+          name: row.name,
+          row,
+          loading: false,
+          error: `Failed to load listings: ${(e as Error).message}`,
+          data: null,
+        });
+      }
+    }
+  }
+
+  closeDetail(): void {
+    this.detail.set(null);
   }
 
   /** Instant local update (re-ranks immediately); persistence is fire-and-forget. */

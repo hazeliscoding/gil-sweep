@@ -37,7 +37,7 @@ import { SparklineComponent } from './sparkline.component';
       </thead>
       <tbody>
         @for (r of rows(); track r.id) {
-          <tr>
+          <tr class="clickable" (click)="store.openDetail(r)" [class.selected]="store.detail()?.id === r.id">
             <td>
               {{ r.name }}
               @if (folk(r)) {
@@ -85,7 +85,7 @@ import { SparklineComponent } from './sparkline.component';
 })
 export class MarketTableComponent {
   private readonly clock = inject(EorzeaClockService);
-  private readonly store = inject(SweepStore);
+  readonly store = inject(SweepStore);
 
   readonly rows = input.required<SweepRow[]>();
   readonly showReason = input(false);

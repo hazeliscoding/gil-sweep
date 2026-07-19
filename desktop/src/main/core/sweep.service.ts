@@ -8,7 +8,7 @@
  * without re-fetching. Ported from the ffxiv-market-sweep CLI.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import { dirname, join } from 'path';
 import {
   CraftValue,
   GilConfig,
@@ -62,10 +62,55 @@ export class SweepService {
     return existsSync(seedFile) ? JSON.parse(readFileSync(seedFile, 'utf8')) : null;
   }
 
+  /** Cached Universalis backfill lives beside (not inside) the snapshots dir. */
+  private backfillFile(world: string): string {
+    return join(dirname(this.snapshotsDir), `history-backfill-${world}.json`);
+  }
+
   /**
-   * Per-item price/velocity series across every stored snapshot (plus the
-   * bundled seed) for one world — the data behind the sparklines. Grows with
-   * every sweep; reads a handful of local JSON files, so it stays instant.
+   * One-time sale-history backfill from Universalis: quantity-weighted daily
+   * average prices for every tracked item, so sparklines have shape before the
+   * snapshot archive has had time to grow. Cached per world in userData.
+   */
+  async backfill(world: string): Promise<number> {
+    const ids = this.items.map((i) => i.id);
+    const series: Record<number, HistoryPoint[]> = {};
+    for (let i = 0; i < ids.length; i += 100) {
+      const chunk = ids.slice(i, i + 100);
+      const r = await fetch(
+        `https://universalis.app/api/v2/history/${world}/${chunk.join(',')}?entriesToReturn=300`,
+        { signal: AbortSignal.timeout(60000) },
+      );
+      if (!r.ok) throw new Error(`Universalis history HTTP ${r.status}`);
+      const j: any = await r.json();
+      const byId = j.items ?? { [j.itemID]: j };
+      for (const id of chunk) {
+        const entries = (byId[id]?.entries ?? []) as any[];
+        if (!entries.length) continue;
+        const days = new Map<number, { gil: number; qty: number }>();
+        for (const e of entries) {
+          const day = Math.floor((e.timestamp * 1000) / 86400000) * 86400000 + 43200000; // noon UTC
+          const d = days.get(day) ?? { gil: 0, qty: 0 };
+          d.gil += e.pricePerUnit * e.quantity;
+          d.qty += e.quantity;
+          days.set(day, d);
+        }
+        series[id] = [...days.entries()]
+          .map(([t, d]) => ({ t, avg: Math.round(d.gil / d.qty), velDay: d.qty }))
+          .sort((a, b) => a.t - b.t);
+      }
+    }
+    writeFileSync(
+      this.backfillFile(world),
+      JSON.stringify({ world, fetchedAt: new Date().toISOString(), series }),
+    );
+    return Object.keys(series).length;
+  }
+
+  /**
+   * Per-item price/velocity series: Universalis backfill (if fetched) plus
+   * every stored snapshot (plus the bundled seed) for one world — the data
+   * behind the sparklines. Reads a handful of local JSON files; stays instant.
    */
   history(world: string): Record<number, HistoryPoint[]> {
     const snaps: SweepSnapshot[] = [];
@@ -77,6 +122,17 @@ export class SweepService {
       }
     }
     const out: Record<number, HistoryPoint[]> = {};
+    const bf = this.backfillFile(world);
+    if (existsSync(bf)) {
+      try {
+        const cached = JSON.parse(readFileSync(bf, 'utf8'));
+        for (const [id, points] of Object.entries(cached.series ?? {})) {
+          out[Number(id)] = [...(points as HistoryPoint[])];
+        }
+      } catch {
+        /* corrupt backfill cache — snapshots still work */
+      }
+    }
     for (const s of snaps) {
       if (s.world !== world) continue;
       const t = s.timestamp ? Date.parse(s.timestamp) : Date.parse(s.date);

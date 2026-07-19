@@ -163,6 +163,29 @@ td.node-window { white-space: nowrap; font-size: var(--fs-caption); font-variant
 .spark polyline { stroke: var(--color-text-muted); stroke-width: 1; }
 .spark circle { fill: var(--color-green); }
 
+/* ===== market drill-down panel ===== */
+app-market-table tbody tr.clickable { cursor: pointer; }
+app-market-table tbody tr.selected td { background: var(--color-green-tint); }
+.detail-panel {
+  position: fixed; top: var(--header-height); right: 0; bottom: 0;
+  width: 400px; z-index: 50;
+  background: var(--color-bg);
+  border-left: 2px solid var(--color-border-strong);
+  padding: var(--space-5) var(--space-6);
+  overflow: auto;
+}
+.detail-panel h3 { margin-top: var(--space-6); }
+.detail-panel .detail-header { display: flex; align-items: center; justify-content: space-between; }
+.detail-panel .detail-header h3 { margin: 0; }
+.detail-panel .kpi-row { margin-top: var(--space-4); }
+.hour-bars {
+  display: flex; align-items: flex-end; gap: 1px;
+  height: 36px; border-bottom: 1px solid var(--color-border);
+}
+.hour-bars div { flex: 1 1 0; background: var(--color-green-tint); min-height: 2px; }
+.hour-bars div.hot { background: var(--color-green); }
+.hour-labels { display: flex; justify-content: space-between; font-size: var(--fs-caption); color: var(--color-text-muted); }
+
 .app-body { display: flex; flex: 1 1 auto; min-height: 0; }
 .sidebar {
   width: var(--sidebar-width);

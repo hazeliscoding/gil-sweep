@@ -8,6 +8,7 @@
  */
 import { ipcMain, shell } from 'electron';
 import { ConfigService } from './core/config.service';
+import { marketDetail } from './core/market-detail';
 import { retainerPlan } from './core/retainer.service';
 import { SweepService } from './core/sweep.service';
 import { listWorlds } from './core/universalis';
@@ -29,6 +30,9 @@ export function registerIpc(services: Services): void {
   ipcMain.handle('sweep:latest', () => services.sweep.latest());
   ipcMain.handle('sweep:run', () => services.sweep.run(services.config.get()));
   ipcMain.handle('sweep:history', () => services.sweep.history(services.config.get().world));
+  ipcMain.handle('sweep:backfill', () => services.sweep.backfill(services.config.get().world));
+
+  ipcMain.handle('market:detail', (_e, id: number) => marketDetail(services.config.get().world, id));
 
   ipcMain.handle('worlds:list', () => listWorlds());
 

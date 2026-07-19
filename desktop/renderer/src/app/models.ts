@@ -126,6 +126,17 @@ export interface HistoryPoint {
   velDay: number;
 }
 
+/** Live market drill-down for one item (fetched on demand, not cached). */
+export interface MarketDetail {
+  curMin: number;
+  medPPU: number;
+  listedQty: number;
+  unitsPerDay: number;
+  daysInv: number | null;
+  listings: { ppu: number; qty: number }[];
+  sales: { ppu: number; qty: number; t: number }[];
+}
+
 export interface HealthResult {
   status: string;
 }

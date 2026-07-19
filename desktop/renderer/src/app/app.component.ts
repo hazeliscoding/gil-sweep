@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SweepStore } from './sweep.store';
 import { EorzeaClockService } from './eorzea-clock.service';
+import { DetailPanelComponent } from './detail-panel.component';
 
 /**
  * Root shell: persistent header (brand + world picker + Run sweep) and sidebar
@@ -11,7 +12,7 @@ import { EorzeaClockService } from './eorzea-clock.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, DetailPanelComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="app">
@@ -68,6 +69,7 @@ import { EorzeaClockService } from './eorzea-clock.service';
           <router-outlet />
         </main>
       </div>
+      <app-detail-panel />
     </div>
   `,
 })
