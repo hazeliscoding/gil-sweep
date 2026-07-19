@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CraftValue, EXPANSIONS, SweepRow } from '../models';
@@ -68,6 +68,11 @@ import {
           <input id="msq" type="range" min="0" max="5" [value]="expIndex()"
                  (input)="setExpansion($any($event.target).value)" />
           <b>{{ cfg.msqExpansion }}</b>
+        </div>
+        <div class="field">
+          <label for="q">Filter</label>
+          <input id="q" type="text" placeholder="item or zone…" [value]="q()"
+                 (input)="q.set($any($event.target).value)" />
         </div>
         <span class="muted">{{ rows().length }} items tracked · drag to re-rank instantly</span>
       </div>
@@ -241,6 +246,14 @@ export class SweepComponent {
   readonly store = inject(SweepStore);
 
   readonly rows = computed<SweepRow[]>(() => this.store.rows());
+  readonly q = signal('');
+
+  /** Case-insensitive name/zone filter, applied after ranking (tables keep their order). */
+  private match(list: SweepRow[]): SweepRow[] {
+    const q = this.q().trim().toLowerCase();
+    if (!q) return list;
+    return list.filter((r) => r.name.toLowerCase().includes(q) || r.where.toLowerCase().includes(q));
+  }
 
   readonly expIndex = computed(() => {
     const e = this.store.config()?.msqExpansion ?? 'DT';
@@ -249,11 +262,11 @@ export class SweepComponent {
 
   readonly mining = computed(() => {
     const cfg = this.store.config();
-    return cfg ? miningFarms(this.rows(), cfg) : [];
+    return cfg ? this.match(miningFarms(this.rows(), cfg)) : [];
   });
   readonly botany = computed(() => {
     const cfg = this.store.config();
-    return cfg ? botanyFarms(this.rows(), cfg) : [];
+    return cfg ? this.match(botanyFarms(this.rows(), cfg)) : [];
   });
   readonly topFarm = computed<SweepRow | null>(() => {
     const all = [...this.mining(), ...this.botany()].sort((a, b) => b.throughput - a.throughput);
@@ -271,10 +284,10 @@ export class SweepComponent {
     const cfg = this.store.config();
     return cfg ? crystals(this.rows(), cfg) : [];
   });
-  readonly moverRows = computed(() => movers(this.rows()));
+  readonly moverRows = computed(() => this.match(movers(this.rows())));
   readonly lockedRows = computed(() => {
     const cfg = this.store.config();
-    return cfg ? locked(this.rows(), cfg) : [];
+    return cfg ? this.match(locked(this.rows(), cfg)) : [];
   });
   readonly reasonFn = computed(() => {
     const cfg = this.store.config();

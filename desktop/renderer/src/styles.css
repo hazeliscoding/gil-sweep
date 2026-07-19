@@ -164,8 +164,8 @@ td.node-window { white-space: nowrap; font-size: var(--fs-caption); font-variant
 .spark circle { fill: var(--color-green); }
 
 /* ===== market drill-down panel ===== */
-app-market-table tbody tr.clickable { cursor: pointer; }
-app-market-table tbody tr.selected td { background: var(--color-green-tint); }
+tbody tr.clickable { cursor: pointer; }
+tbody tr.selected td { background: var(--color-green-tint); }
 .detail-panel {
   position: fixed; top: var(--header-height); right: 0; bottom: 0;
   width: 400px; z-index: 50;

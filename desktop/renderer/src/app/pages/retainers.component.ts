@@ -61,7 +61,7 @@ interface PlanRow extends SweepRow {
         </thead>
         <tbody>
           @for (p of plan(); track p.id) {
-            <tr>
+            <tr class="clickable" (click)="store.openDetail(p)" [class.selected]="store.detail()?.id === p.id">
               <td>{{ p.name }}</td>
               <td class="secondary">{{ p.kind }}</td>
               <td class="num">{{ p.advice.curMin | number: '1.0-0' }}</td>

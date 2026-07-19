@@ -66,6 +66,21 @@ import { SweepStore } from '../sweep.store';
       </div>
 
       <div class="section">
+        <h2>Behavior</h2>
+        <div class="actions">
+          <label>
+            <input type="checkbox" [checked]="cfg.closeToTray"
+                   (change)="store.patchConfig({ closeToTray: $any($event.target).checked })" />
+            Keep running in the tray when the window is closed
+          </label>
+        </div>
+        <div class="meta">
+          The tray icon shows the Eorzea clock and the next timed-node windows for your character —
+          right-click it to quit for real. Untick to make closing the window quit like a normal app.
+        </div>
+      </div>
+
+      <div class="section">
         <h2>Data</h2>
         <div class="actions">
           <button (click)="openFolder()">Open data folder</button>

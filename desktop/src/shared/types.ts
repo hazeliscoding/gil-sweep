@@ -122,6 +122,8 @@ export interface GilConfig {
   msqExpansion: Expansion;
   /** Expansions whose folklore books are owned (legendary nodes need them). */
   folklore: Expansion[];
+  /** Closing the window keeps the app (and its spawn-clock tray) running. */
+  closeToTray: boolean;
   saddlebag: SaddlebagParams;
 }
 
@@ -131,6 +133,7 @@ export interface GilConfigPatch {
   levels?: Partial<GilConfig['levels']>;
   msqExpansion?: Expansion;
   folklore?: Expansion[];
+  closeToTray?: boolean;
   saddlebag?: Partial<SaddlebagParams>;
 }
 
