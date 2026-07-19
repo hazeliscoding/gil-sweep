@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.9.0] — 2026-07-19
+
+- Verify & track (Settings): add any item by name — Garland's node data decides gatherability and brings level, zone, and spawn hours along. Crafted/vendor/voyage top sellers get classified and remembered as never-farm traps. Custom items live in userData and are removable.
+- First-run onboarding: world, gatherer levels, and MSQ progress asked up front instead of assuming defaults.
+
 ## [0.8.0] — 2026-07-19
 
 - HQ-aware craft margins: outputs price at HQ when the HQ market out-trades NQ (marked with an HQ tag). Materials stay NQ — gathered mats have no HQ since 6.0.
