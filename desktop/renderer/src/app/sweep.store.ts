@@ -156,6 +156,7 @@ export class SweepStore {
       ...current,
       ...patch,
       levels: { ...current.levels, ...(patch.levels ?? {}) },
+      crafters: { ...current.crafters, ...(patch.crafters ?? {}) },
       saddlebag: { ...current.saddlebag, ...(patch.saddlebag ?? {}) },
     };
     this.config.set(merged);

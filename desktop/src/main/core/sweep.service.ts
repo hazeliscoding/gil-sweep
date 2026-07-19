@@ -317,20 +317,50 @@ export class SweepService {
         state: s.state,
       }));
 
-    // Craft margins: sale price × yield − Σ(qty × ingredient min listing).
+    // Craft margins, two passes:
+    //  1) unit cost to craft each known recipe from bought mats (NQ min listings)
+    //  2) margins with min(buy, craft) per ingredient — one level deep, so
+    //     nugget→ingot chains price the nugget at whichever way is cheaper.
+    // Outputs price at HQ when the HQ market dominates (mats have no HQ since 6.0,
+    // so ingredient costs stay NQ).
+    const buyUnit = (id: number): number =>
+      Math.round((pick(prices.get(id)?.nq?.minListing)?.price ?? 0) as number);
+    const craftUnit = new Map<number, number>();
+    for (const r of Object.values(this.craftRecipes)) {
+      let cost = 0;
+      let ok = true;
+      for (const ing of r.ingredients) {
+        const u = buyUnit(ing.id);
+        if (!u) {
+          ok = false;
+          break;
+        }
+        cost += u * ing.qty;
+      }
+      if (ok) craftUnit.set(r.id, Math.ceil(cost / r.yield));
+    }
+
     const crafts: CraftValue[] = [];
     for (const r of Object.values(this.craftRecipes)) {
       const p = prices.get(r.id);
-      const salePrice = Math.round((pick(p?.nq?.averageSalePrice)?.price ?? 0) as number);
-      const craftVelDay = velOf(r.id);
+      const nqAvg = Math.round((pick(p?.nq?.averageSalePrice)?.price ?? 0) as number);
+      const nqVel = velOf(r.id);
+      const hqAvg = Math.round((pick(p?.hq?.averageSalePrice)?.price ?? 0) as number);
+      const hqVel = +(((pick(p?.hq?.dailySaleVelocity)?.quantity ?? 0) as number).toFixed(1));
+      const useHq = hqAvg > 0 && hqVel > nqVel;
+      const salePrice = useHq ? hqAvg : nqAvg;
+      const craftVelDay = useHq ? hqVel : nqVel;
       if (!salePrice || !craftVelDay) continue; // dead market — not worth listing
+
       let cost = 0;
       let costComplete = true;
       const ingredients = r.ingredients.map((ing) => {
-        const unitPrice = Math.round((pick(prices.get(ing.id)?.nq?.minListing)?.price ?? 0) as number);
+        const buy = buyUnit(ing.id);
+        const crafted = craftUnit.get(ing.id) ?? 0;
+        const unitPrice = buy && crafted ? Math.min(buy, crafted) : buy || crafted;
         if (!unitPrice) costComplete = false;
         cost += unitPrice * ing.qty;
-        return { ...ing, unitPrice };
+        return { ...ing, unitPrice, viaCraft: !!crafted && (!buy || crafted < buy) };
       });
       const margin = salePrice * r.yield - cost;
       crafts.push({
@@ -340,8 +370,9 @@ export class SweepService {
         lvl: r.lvl,
         yield: r.yield,
         salePrice,
+        hq: useHq,
         velDay: craftVelDay,
-        velScope: scopeOf(p?.nq?.dailySaleVelocity),
+        velScope: scopeOf(useHq ? p?.hq?.dailySaleVelocity : p?.nq?.dailySaleVelocity),
         cost,
         costComplete,
         margin,

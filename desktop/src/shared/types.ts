@@ -71,8 +71,10 @@ export interface CraftIngredient {
   id: number;
   name: string;
   qty: number;
-  /** Cheapest current listing per unit at sweep time (0 = not priceable). */
+  /** Effective unit cost at sweep time: min(buy, craft-from-mats). 0 = not costable. */
   unitPrice: number;
+  /** True when crafting this ingredient from its own mats beat buying it. */
+  viaCraft?: boolean;
 }
 
 /** Craft-margin analysis for one recipe, computed at sweep time from live prices. */
@@ -83,6 +85,8 @@ export interface CraftValue {
   lvl: number | null;
   yield: number;
   salePrice: number;
+  /** True when the HQ market dominates and salePrice/velDay are HQ figures. */
+  hq?: boolean;
   velDay: number;
   velScope: VelScope;
   /** Σ qty × ingredient min listing. Only trustworthy when costComplete. */
@@ -126,6 +130,8 @@ export interface GilConfig {
   closeToTray: boolean;
   /** Starred item ids — get node-window and price-spike notifications. */
   watched: number[];
+  /** Crafter job levels (CRP/BSM/ARM/GSM/LTW/WVR/ALC/CUL) — gate the Crafting page. */
+  crafters: Record<string, number>;
   saddlebag: SaddlebagParams;
 }
 
@@ -137,6 +143,7 @@ export interface GilConfigPatch {
   folklore?: Expansion[];
   closeToTray?: boolean;
   watched?: number[];
+  crafters?: Record<string, number>;
   saddlebag?: Partial<SaddlebagParams>;
 }
 

@@ -47,6 +47,19 @@ import { SweepStore } from '../sweep.store';
           </div>
         </div>
         <div class="form-field" style="max-width: none">
+          <label>Crafter levels (gate the Crafting page)</label>
+          <div class="actions">
+            @for (job of crafterJobs; track job) {
+              <label>
+                {{ job }}
+                <input type="number" min="1" max="100" class="cr-lvl" [id]="'cr-' + job"
+                       [value]="cfg.crafters[job] ?? 100"
+                       (change)="setCrafter(job, $any($event.target).value)" />
+              </label>
+            }
+          </div>
+        </div>
+        <div class="form-field" style="max-width: none">
           <label>Folklore books owned (legendary nodes without one get a tag)</label>
           <div class="actions">
             @for (e of folkloreExpansions; track e) {
@@ -107,6 +120,12 @@ export class SettingsComponent {
   readonly expansions = EXPANSIONS;
   /** ARR has no folklore books — they start with Heavensward. */
   readonly folkloreExpansions = EXPANSIONS.filter((e) => e !== 'ARR');
+
+  readonly crafterJobs = ['CRP', 'BSM', 'ARM', 'GSM', 'LTW', 'WVR', 'ALC', 'CUL'];
+
+  setCrafter(job: string, value: string): void {
+    this.store.patchConfig({ crafters: { [job]: Math.min(100, Math.max(1, +value || 100)) } });
+  }
 
   readonly stats = signal<SnapshotStats | null>(null);
   readonly pruning = signal(false);

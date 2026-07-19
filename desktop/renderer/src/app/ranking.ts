@@ -74,6 +74,16 @@ export function locked(rows: SweepRow[], cfg: GilConfig, limit = 12): SweepRow[]
   return rows.filter((r) => !accessible(r, cfg) && r.throughput > 0).slice(0, limit);
 }
 
+/** Can the configured crafters make this? 'any'-job recipes gate on the best crafter. */
+export function craftableBy(c: CraftValue, cfg: GilConfig): boolean {
+  if (c.lvl === null) return true;
+  const cap =
+    c.job === 'any'
+      ? Math.max(...Object.values(cfg.crafters ?? {}), 0) || 100
+      : (cfg.crafters?.[c.job] ?? 100);
+  return c.lvl <= cap;
+}
+
 /**
  * The sweep-page crafting digest: best trustworthy-margin crafts that consume
  * something you can farm at the current sliders. crafts arrive pre-sorted by
@@ -91,7 +101,7 @@ export function topValueCrafts(
       .map((r) => r.id),
   );
   return crafts
-    .filter((c) => c.costComplete && c.velScope === 'world' && c.margin > 0)
+    .filter((c) => c.costComplete && c.velScope === 'world' && c.margin > 0 && craftableBy(c, cfg))
     .filter((c) => c.usesTracked.some((id) => mine.has(id)))
     .slice(0, limit);
 }

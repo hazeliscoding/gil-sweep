@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { DecimalPipe } from '@angular/common';
 import { CraftValue } from '../models';
 import { SweepStore } from '../sweep.store';
-import { farmable } from '../ranking';
+import { craftableBy, farmable } from '../ranking';
 
 /**
  * Craft value-add: is it worth processing what you farm before selling it?
@@ -31,7 +31,7 @@ import { farmable } from '../ranking';
           Only crafts using what I can farm right now
         </label>
         <span class="muted">
-          {{ rows().length }} profitable crafts · NQ prices · mats at cheapest listing · crystals included
+          {{ rows().length }} profitable crafts you can make · HQ-aware · mats at min(buy, craft) · crystals included
         </span>
       </div>
 
@@ -53,7 +53,12 @@ import { farmable } from '../ranking';
             <tr>
               <td>{{ c.name }}{{ c.yield > 1 ? ' ×' + c.yield : '' }}</td>
               <td class="secondary">{{ c.job }} {{ c.lvl ?? '' }}</td>
-              <td class="num">{{ c.salePrice | number: '1.0-0' }}</td>
+              <td class="num">
+                {{ c.salePrice | number: '1.0-0' }}
+                @if (c.hq) {
+                  <span class="hq-tag" title="HQ market dominates — HQ price and velocity shown">HQ</span>
+                }
+              </td>
               <td class="num">{{ c.velDay | number: '1.0-1' }}</td>
               <td class="num">{{ c.cost | number: '1.0-0' }}</td>
               <td class="num pos"><strong>{{ c.margin | number: '1.0-0' }}</strong></td>
@@ -66,10 +71,11 @@ import { farmable } from '../ranking';
         </tbody>
       </table>
       <div class="meta">
-        Margin = sale price × yield − ingredient cost at the cheapest current listings (crystals
-        included). NQ prices only — HQ consumables/gear sell higher, so treat those as a floor.
-        Recipes with vendor-only ingredients are excluded (their cost can't be read off the market
-        board). Ranked by margin × daily sales.
+        Margin = sale price × yield − ingredient cost, where each ingredient costs
+        min(cheapest listing, crafting it from its own mats) — one level deep, crystals included.
+        Outputs marked <span class="hq-tag">HQ</span> price at HQ because that's where their sales
+        actually happen. Recipes with uncostable (vendor-only) ingredients are excluded, and only
+        recipes within your crafter levels (Settings) are shown. Ranked by margin × daily sales.
       </div>
     }
   `,
@@ -91,9 +97,11 @@ export class CraftingComponent {
 
   readonly rows = computed<CraftValue[]>(() => {
     const crafts = this.store.snapshot()?.crafts ?? [];
+    const cfg = this.store.config();
     const mine = this.myMatIds();
     return crafts
       .filter((c) => c.costComplete && c.velScope === 'world' && c.margin > 0)
+      .filter((c) => !cfg || craftableBy(c, cfg))
       .filter((c) => !this.onlyMine() || c.usesTracked.some((id) => mine.has(id)))
       .slice(0, 40);
   });

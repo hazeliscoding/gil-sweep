@@ -13,6 +13,7 @@ export const DEFAULT_CONFIG: GilConfig = {
   folklore: [],
   closeToTray: true,
   watched: [],
+  crafters: { CRP: 100, BSM: 100, ARM: 100, GSM: 100, LTW: 100, WVR: 100, ALC: 100, CUL: 100 },
   saddlebag: { timePeriod: 168, salesAmount: 2, averagePrice: 50, filters: [47, 48, 49] },
 };
 
@@ -27,6 +28,7 @@ export class ConfigService {
         ...DEFAULT_CONFIG,
         ...stored,
         levels: { ...DEFAULT_CONFIG.levels, ...(stored.levels ?? {}) },
+        crafters: { ...DEFAULT_CONFIG.crafters, ...(stored.crafters ?? {}) },
         saddlebag: { ...DEFAULT_CONFIG.saddlebag, ...(stored.saddlebag ?? {}) },
       };
     } catch {
@@ -40,6 +42,7 @@ export class ConfigService {
       ...current,
       ...patch,
       levels: { ...current.levels, ...(patch.levels ?? {}) },
+      crafters: { ...current.crafters, ...(patch.crafters ?? {}) },
       saddlebag: { ...current.saddlebag, ...(patch.saddlebag ?? {}) },
     };
     writeFileSync(this.file, JSON.stringify(merged, null, 2));

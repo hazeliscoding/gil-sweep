@@ -64,6 +64,7 @@ export interface CraftIngredient {
   name: string;
   qty: number;
   unitPrice: number;
+  viaCraft?: boolean;
 }
 
 /** Craft-margin analysis for one recipe, computed at sweep time from live prices. */
@@ -74,6 +75,7 @@ export interface CraftValue {
   lvl: number | null;
   yield: number;
   salePrice: number;
+  hq?: boolean;
   velDay: number;
   velScope: VelScope;
   cost: number;
@@ -111,6 +113,8 @@ export interface GilConfig {
   closeToTray: boolean;
   /** Starred item ids — get node-window and price-spike notifications. */
   watched: number[];
+  /** Crafter job levels (CRP/BSM/ARM/GSM/LTW/WVR/ALC/CUL) — gate the Crafting page. */
+  crafters: Record<string, number>;
   saddlebag: SaddlebagParams;
 }
 
@@ -122,6 +126,7 @@ export interface GilConfigPatch {
   folklore?: Expansion[];
   closeToTray?: boolean;
   watched?: number[];
+  crafters?: Record<string, number>;
   saddlebag?: Partial<SaddlebagParams>;
 }
 
