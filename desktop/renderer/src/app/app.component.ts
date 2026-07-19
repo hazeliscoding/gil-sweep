@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SweepStore } from './sweep.store';
+import { EorzeaClockService } from './eorzea-clock.service';
 
 /**
  * Root shell: persistent header (brand + world picker + Run sweep) and sidebar
@@ -15,11 +16,12 @@ import { SweepStore } from './sweep.store';
   template: `
     <div class="app">
       <header class="app-header">
-        <a class="brand" routerLink="/sweep" aria-label="gil-sweep — home">
+        <a class="brand" routerLink="/sweep" aria-label="GilSweep — home">
           <span class="brand-badge">G</span>
-          <span class="brand-name">gil<span>sweep</span></span>
+          <span class="brand-name">Gil<span>Sweep</span></span>
         </a>
         <div class="header-right">
+          <span class="et-clock" title="Eorzea time">ET {{ clock.etLabel() }}</span>
           @if (store.snapshot(); as snap) {
             <span class="header-status">
               @if (snap.seed) {
@@ -70,6 +72,7 @@ import { SweepStore } from './sweep.store';
 })
 export class AppComponent {
   readonly store = inject(SweepStore);
+  readonly clock = inject(EorzeaClockService);
 
   constructor() {
     this.store.init();

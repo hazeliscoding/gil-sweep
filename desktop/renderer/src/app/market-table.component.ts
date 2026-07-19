@@ -1,11 +1,14 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { SweepRow } from './models';
+import { EorzeaClockService } from './eorzea-clock.service';
+import { NodeWindow, nodeWindow } from './eorzea';
 
 /**
  * The dense market table used by the farm/mover/watchlist sections: item,
- * location, price (+Δ%), liquidity, trend state, and demand attribution.
- * Pure presentational — rows arrive already filtered/ranked.
+ * location, price (+Δ%), liquidity, trend state, node window, and demand
+ * attribution. Rows arrive already filtered/ranked; the "Node (ET)" cells tick
+ * live off the shared Eorzea clock signal.
  */
 @Component({
   selector: 'app-market-table',
@@ -25,6 +28,7 @@ import { SweepRow } from './models';
           <th class="num">Δ%</th>
           <th class="num">Sold/day</th>
           <th>Trend</th>
+          <th>Node (ET)</th>
           <th>Why it sells</th>
         </tr>
       </thead>
@@ -46,11 +50,22 @@ import { SweepRow } from './models';
             </td>
             <td class="num">{{ r.velDay | number: '1.0-1' }}</td>
             <td><span [class]="stateClass(r.sbState)">{{ r.sbState ?? '' }}</span></td>
+            <td class="node-window">
+              @if (windowOf(r); as w) {
+                @if (w.up) {
+                  <span class="state-up">● up · ends ~{{ w.endsInRealMin }}m</span>
+                } @else {
+                  <span class="secondary">{{ w.nextSpawnHour }}:00 · in ~{{ w.nextInRealMin }}m</span>
+                }
+              } @else {
+                <span class="muted">—</span>
+              }
+            </td>
             <td class="why">{{ r.why || '—' }}</td>
           </tr>
         } @empty {
           <tr>
-            <td [attr.colspan]="showReason() ? 8 : 7" class="muted center">Nothing here at these settings.</td>
+            <td [attr.colspan]="showReason() ? 9 : 8" class="muted center">Nothing here at these settings.</td>
           </tr>
         }
       </tbody>
@@ -58,9 +73,17 @@ import { SweepRow } from './models';
   `,
 })
 export class MarketTableComponent {
+  private readonly clock = inject(EorzeaClockService);
+
   readonly rows = input.required<SweepRow[]>();
   readonly showReason = input(false);
   readonly reasonOf = input<(r: SweepRow) => string>(() => '');
+
+  /** Live node-window state; reading clock.nowMs() keeps the cell ticking. */
+  windowOf(r: SweepRow): NodeWindow | null {
+    if (!r.spawns?.length) return null;
+    return nodeWindow(r.spawns, r.uptime, this.clock.nowMs());
+  }
 
   stateClass(state: string | null): string {
     switch (state) {

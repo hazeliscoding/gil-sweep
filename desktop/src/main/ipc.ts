@@ -25,6 +25,7 @@ export function registerIpc(services: Services): void {
   ipcMain.handle('config:get', () => services.config.get());
   ipcMain.handle('config:set', (_e, patch: GilConfigPatch) => services.config.set(patch ?? {}));
 
+  ipcMain.handle('items:list', () => services.sweep.items);
   ipcMain.handle('sweep:latest', () => services.sweep.latest());
   ipcMain.handle('sweep:run', () => services.sweep.run(services.config.get()));
 

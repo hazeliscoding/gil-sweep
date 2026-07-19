@@ -197,7 +197,7 @@ import {
 export class SweepComponent {
   readonly store = inject(SweepStore);
 
-  readonly rows = computed<SweepRow[]>(() => this.store.snapshot()?.rows ?? []);
+  readonly rows = computed<SweepRow[]>(() => this.store.rows());
 
   readonly expIndex = computed(() => {
     const e = this.store.config()?.msqExpansion ?? 'DT';

@@ -143,6 +143,13 @@ label { font-size: var(--fs-dense); color: var(--color-text-secondary); }
 .header-right { display: flex; align-items: center; gap: var(--space-6); }
 .header-right label { display: flex; align-items: center; gap: var(--space-3); }
 .header-status { font-size: var(--fs-dense); color: var(--color-text-secondary); font-variant-numeric: tabular-nums; }
+.et-clock {
+  font-size: var(--fs-dense); font-weight: var(--fw-bold); color: var(--color-green);
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--color-green-tint); background: var(--color-green-tint);
+  padding: 2px var(--space-4);
+}
+td.node-window { white-space: nowrap; font-size: var(--fs-caption); font-variant-numeric: tabular-nums; }
 
 .app-body { display: flex; flex: 1 1 auto; min-height: 0; }
 .sidebar {

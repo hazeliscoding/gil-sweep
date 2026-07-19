@@ -11,6 +11,7 @@ const api: GilApi = {
   health: () => ipcRenderer.invoke('health'),
   getConfig: () => ipcRenderer.invoke('config:get'),
   setConfig: (patch) => ipcRenderer.invoke('config:set', patch),
+  listItems: () => ipcRenderer.invoke('items:list'),
   latestSweep: () => ipcRenderer.invoke('sweep:latest'),
   runSweep: () => ipcRenderer.invoke('sweep:run'),
   listWorlds: () => ipcRenderer.invoke('worlds:list'),

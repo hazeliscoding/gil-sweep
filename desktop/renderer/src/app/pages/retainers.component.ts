@@ -100,8 +100,7 @@ export class RetainersComponent {
 
   readonly targets = computed<SweepRow[]>(() => {
     const cfg = this.store.config();
-    const rows = this.store.snapshot()?.rows ?? [];
-    return cfg ? retainerTargets(rows, cfg) : [];
+    return cfg ? retainerTargets(this.store.rows(), cfg) : [];
   });
 
   readonly plan = computed<PlanRow[]>(() =>

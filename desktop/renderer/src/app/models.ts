@@ -17,6 +17,10 @@ export interface TrackedItem {
   kind: string;
   expansion: Expansion;
   note?: string;
+  /** Timed nodes: spawn hours in Eorzea time (e.g. [10, 22]). */
+  spawns?: number[];
+  /** Timed nodes: window length in Eorzea MINUTES (120 = 2 ET hours ≈ 5.8 real min). */
+  uptime?: number;
 }
 
 export interface DemandConsumer {

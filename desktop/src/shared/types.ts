@@ -20,6 +20,10 @@ export interface TrackedItem {
   kind: string; // node | unspoiled | legendary | ephemeral | map | crystal | diadem | vendor | submarine | venture | reduction
   expansion: Expansion;
   note?: string;
+  /** Timed nodes: spawn hours in Eorzea time (e.g. [10, 22]). */
+  spawns?: number[];
+  /** Timed nodes: window length in Eorzea MINUTES (120 = 2 ET hours ≈ 5.8 real min). */
+  uptime?: number;
 }
 
 export interface DemandConsumer {
@@ -133,6 +137,8 @@ export interface GilApi {
   health(): Promise<HealthResult>;
   getConfig(): Promise<GilConfig>;
   setConfig(patch: GilConfigPatch): Promise<GilConfig>;
+  /** The bundled curated item DB (for spawn clocks etc. on older snapshots). */
+  listItems(): Promise<TrackedItem[]>;
   /** Newest stored snapshot, else the bundled seed, else null. Never fetches. */
   latestSweep(): Promise<SweepSnapshot | null>;
   /** Runs a live sweep against Universalis/Saddlebag and persists the snapshot. */

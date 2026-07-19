@@ -5,6 +5,7 @@ import {
   RetainerAdvice,
   RetainerTarget,
   SweepSnapshot,
+  TrackedItem,
 } from './models';
 
 /**
@@ -16,6 +17,7 @@ export interface GilApi {
   health(): Promise<HealthResult>;
   getConfig(): Promise<GilConfig>;
   setConfig(patch: GilConfigPatch): Promise<GilConfig>;
+  listItems(): Promise<TrackedItem[]>;
   latestSweep(): Promise<SweepSnapshot | null>;
   runSweep(): Promise<SweepSnapshot>;
   listWorlds(): Promise<string[]>;

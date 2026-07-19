@@ -21,7 +21,7 @@ import { fetchAggregated, pick, scopeOf } from './universalis';
 import { fetchSaddlebag } from './saddlebag';
 
 export class SweepService {
-  private readonly items: TrackedItem[];
+  readonly items: TrackedItem[];
 
   constructor(
     private readonly dataDir: string,

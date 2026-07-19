@@ -1,5 +1,5 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { GilConfig, GilConfigPatch, SweepSnapshot } from './models';
+import { GilConfig, GilConfigPatch, SweepRow, SweepSnapshot, TrackedItem } from './models';
 
 /**
  * App-wide state: the current config (world/levels/expansion), the latest sweep
@@ -15,9 +15,24 @@ export class SweepStore {
 
   readonly config = signal<GilConfig | null>(null);
   readonly snapshot = signal<SweepSnapshot | null>(null);
+  readonly items = signal<TrackedItem[]>([]);
   readonly worlds = signal<string[]>([]);
   readonly running = signal(false);
   readonly error = signal<string | null>(null);
+
+  /**
+   * Snapshot rows joined with the bundled item DB — snapshots persisted before
+   * a data-schema addition (e.g. spawn hours) pick the new fields up from the
+   * shipped items.json instead of waiting for the next sweep.
+   */
+  readonly rows = computed<SweepRow[]>(() => {
+    const raw = this.snapshot()?.rows ?? [];
+    const byId = new Map(this.items().map((i) => [i.id, i]));
+    return raw.map((r) => {
+      const item = byId.get(r.id);
+      return item ? { ...r, spawns: item.spawns, uptime: item.uptime } : r;
+    });
+  });
 
   /** Snapshot age in whole minutes (null for the bundled seed / unknown). */
   readonly snapshotAgeMin = computed<number | null>(() => {
@@ -35,9 +50,14 @@ export class SweepStore {
 
   async init(): Promise<void> {
     try {
-      const [config, snapshot] = await Promise.all([this.api.getConfig(), this.api.latestSweep()]);
+      const [config, snapshot, items] = await Promise.all([
+        this.api.getConfig(),
+        this.api.latestSweep(),
+        this.api.listItems(),
+      ]);
       this.config.set(config);
       this.snapshot.set(snapshot);
+      this.items.set(items);
     } catch (e) {
       this.error.set(`Failed to load: ${(e as Error).message}`);
     }
