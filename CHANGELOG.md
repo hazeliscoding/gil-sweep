@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.0] — 2026-07-19
+
+- Trends page: week-over-week digest (latest snapshot vs a ~week-old baseline, ranked by market-throughput change) with prune suggestions for farm-rotation items under ~5 sold/day across the last three sweeps.
+- Item history charts: full-size price and velocity charts per item from the local snapshot archive; click a digest row to chart it.
+- Snapshot housekeeping: archive stats and a prune-to-one-per-day button in Settings.
+
 ## [0.6.0] — 2026-07-19
 
 - Watch stars: star any item in any table. Watched timed nodes fire a desktop notification the moment their window opens (with time remaining; click to open the app), respecting your levels and MSQ progress.
