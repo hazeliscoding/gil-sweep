@@ -12,6 +12,7 @@ export const DEFAULT_CONFIG: GilConfig = {
   msqExpansion: 'EW',
   folklore: [],
   closeToTray: true,
+  watched: [],
   saddlebag: { timePeriod: 168, salesAmount: 2, averagePrice: 50, filters: [47, 48, 49] },
 };
 

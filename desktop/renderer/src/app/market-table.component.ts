@@ -39,6 +39,12 @@ import { SparklineComponent } from './sparkline.component';
         @for (r of rows(); track r.id) {
           <tr class="clickable" (click)="store.openDetail(r)" [class.selected]="store.detail()?.id === r.id">
             <td>
+              <button
+                class="star"
+                [class.on]="isWatched(r.id)"
+                (click)="toggleWatch(r.id); $event.stopPropagation()"
+                [title]="isWatched(r.id) ? 'Unwatch' : 'Watch — notify when its node opens or its price swings'"
+              >{{ isWatched(r.id) ? '★' : '☆' }}</button>
               {{ r.name }}
               @if (folk(r)) {
                 <span class="folk-tag" title="Needs this expansion's folklore book">folklore</span>
@@ -94,6 +100,17 @@ export class MarketTableComponent {
   folk(r: SweepRow): boolean {
     const cfg = this.store.config();
     return cfg ? needsFolklore(r, cfg) : false;
+  }
+
+  isWatched(id: number): boolean {
+    return (this.store.config()?.watched ?? []).includes(id);
+  }
+
+  toggleWatch(id: number): void {
+    const current = this.store.config()?.watched ?? [];
+    this.store.patchConfig({
+      watched: current.includes(id) ? current.filter((w) => w !== id) : [...current, id],
+    });
   }
 
   /** Price series for the sparkline; hidden until there are ≥2 snapshots to draw. */

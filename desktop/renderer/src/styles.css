@@ -151,6 +151,15 @@ label { font-size: var(--fs-dense); color: var(--color-text-secondary); }
 }
 td.node-window { white-space: nowrap; font-size: var(--fs-caption); font-variant-numeric: tabular-nums; }
 
+/* watch star (node/price notifications) */
+button.star {
+  border: none; background: none; padding: 0 var(--space-1);
+  font-size: var(--fs-base); line-height: 1;
+  color: var(--color-text-muted); cursor: pointer;
+}
+button.star:hover { background: none; color: var(--color-gold-border); }
+button.star.on { color: var(--color-gold-border); }
+
 /* folklore-book requirement tag */
 .folk-tag {
   font-size: var(--fs-caption); color: var(--color-accent);

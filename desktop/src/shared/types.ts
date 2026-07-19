@@ -124,6 +124,8 @@ export interface GilConfig {
   folklore: Expansion[];
   /** Closing the window keeps the app (and its spawn-clock tray) running. */
   closeToTray: boolean;
+  /** Starred item ids — get node-window and price-spike notifications. */
+  watched: number[];
   saddlebag: SaddlebagParams;
 }
 
@@ -134,6 +136,7 @@ export interface GilConfigPatch {
   msqExpansion?: Expansion;
   folklore?: Expansion[];
   closeToTray?: boolean;
+  watched?: number[];
   saddlebag?: Partial<SaddlebagParams>;
 }
 

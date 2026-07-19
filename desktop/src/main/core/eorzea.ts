@@ -23,6 +23,33 @@ export interface TrayWindow {
   minutes: number;
 }
 
+/** Level + MSQ gate for the tray/alerts (timed kinds are all gatherable kinds). */
+export function canGather(it: TrackedItem, cfg: GilConfig): boolean {
+  if (EXPANSIONS.indexOf(it.expansion) > EXPANSIONS.indexOf(cfg.msqExpansion)) return false;
+  const lvl = it.job === 'both' ? Math.max(cfg.levels.MIN, cfg.levels.BTN) : cfg.levels[it.job];
+  return it.level <= lvl;
+}
+
+/** Current window state for one timed item; null when the item isn't timed. */
+export function itemWindow(
+  it: TrackedItem,
+  realMs: number,
+): { up: boolean; minutes: number } | null {
+  if (!it.spawns?.length) return null;
+  const now = eorzeaMinuteOfDay(realMs);
+  const uptime = it.uptime ?? 120;
+  let best: { up: boolean; minutes: number } | null = null;
+  for (const s of it.spawns) {
+    const sinceOpen = (now - s * 60 + ET_MIN_PER_DAY) % ET_MIN_PER_DAY;
+    if (sinceOpen < uptime) {
+      return { up: true, minutes: Math.ceil(((uptime - sinceOpen) * 175) / 3600) };
+    }
+    const minutes = Math.ceil(((ET_MIN_PER_DAY - sinceOpen) * 175) / 3600);
+    if (!best || minutes < best.minutes) best = { up: false, minutes };
+  }
+  return best;
+}
+
 /**
  * The next node windows for the tray: timed items the configured character can
  * gather, up-now first (soonest to close), then soonest-to-open.
@@ -33,25 +60,11 @@ export function nextWindows(
   realMs: number,
   limit = 6,
 ): TrayWindow[] {
-  const now = eorzeaMinuteOfDay(realMs);
   const res: TrayWindow[] = [];
   for (const it of items) {
-    if (!it.spawns?.length) continue;
-    if (EXPANSIONS.indexOf(it.expansion) > EXPANSIONS.indexOf(cfg.msqExpansion)) continue;
-    const lvl = it.job === 'both' ? Math.max(cfg.levels.MIN, cfg.levels.BTN) : cfg.levels[it.job];
-    if (it.level > lvl) continue;
-    const uptime = it.uptime ?? 120;
-    let best: { up: boolean; minutes: number } | null = null;
-    for (const s of it.spawns) {
-      const sinceOpen = (now - s * 60 + ET_MIN_PER_DAY) % ET_MIN_PER_DAY;
-      if (sinceOpen < uptime) {
-        best = { up: true, minutes: Math.ceil(((uptime - sinceOpen) * 175) / 3600) };
-        break;
-      }
-      const minutes = Math.ceil(((ET_MIN_PER_DAY - sinceOpen) * 175) / 3600);
-      if (!best || minutes < best.minutes) best = { up: false, minutes };
-    }
-    if (best) res.push({ name: it.name, ...best });
+    if (!canGather(it, cfg)) continue;
+    const w = itemWindow(it, realMs);
+    if (w) res.push({ name: it.name, ...w });
   }
   res.sort((a, b) => (a.up === b.up ? a.minutes - b.minutes : a.up ? -1 : 1));
   return res.slice(0, limit);

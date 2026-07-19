@@ -7,6 +7,7 @@
  * in core/ where it's testable without Electron.
  */
 import { ipcMain, shell } from 'electron';
+import { notifySpikes } from './alerts';
 import { ConfigService } from './core/config.service';
 import { marketDetail } from './core/market-detail';
 import { retainerPlan } from './core/retainer.service';
@@ -28,7 +29,12 @@ export function registerIpc(services: Services): void {
 
   ipcMain.handle('items:list', () => services.sweep.items);
   ipcMain.handle('sweep:latest', () => services.sweep.latest());
-  ipcMain.handle('sweep:run', () => services.sweep.run(services.config.get()));
+  ipcMain.handle('sweep:run', async () => {
+    const cfg = services.config.get();
+    const snapshot = await services.sweep.run(cfg);
+    notifySpikes(snapshot, cfg);
+    return snapshot;
+  });
   ipcMain.handle('sweep:history', () => services.sweep.history(services.config.get().world));
   ipcMain.handle('sweep:backfill', () => services.sweep.backfill(services.config.get().world));
 

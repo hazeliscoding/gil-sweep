@@ -9,6 +9,7 @@
  */
 import { app, BrowserWindow, Menu, Tray, nativeImage } from 'electron';
 import * as path from 'path';
+import { startNodeAlerts } from './alerts';
 import { ConfigService } from './core/config.service';
 import { loadDemandIndex } from './core/demand';
 import { eorzeaClock, nextWindows } from './core/eorzea';
@@ -117,6 +118,7 @@ app.whenReady().then(async () => {
   };
   registerIpc(services);
   setupTray();
+  startNodeAlerts(services, showWindow);
   await createWindow();
 
   app.on('activate', () => {
