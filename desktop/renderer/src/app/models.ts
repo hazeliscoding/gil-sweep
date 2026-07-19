@@ -79,6 +79,8 @@ export interface GilConfig {
   world: string;
   levels: { MIN: number; BTN: number };
   msqExpansion: Expansion;
+  /** Expansions whose folklore books are owned (legendary nodes need them). */
+  folklore: Expansion[];
   saddlebag: SaddlebagParams;
 }
 
@@ -87,7 +89,15 @@ export interface GilConfigPatch {
   world?: string;
   levels?: Partial<GilConfig['levels']>;
   msqExpansion?: Expansion;
+  folklore?: Expansion[];
   saddlebag?: Partial<SaddlebagParams>;
+}
+
+/** One point of an item's local price history (from accumulated snapshots). */
+export interface HistoryPoint {
+  t: number;
+  avg: number;
+  velDay: number;
 }
 
 export interface HealthResult {

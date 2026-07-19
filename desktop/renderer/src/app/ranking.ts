@@ -74,6 +74,11 @@ export function locked(rows: SweepRow[], cfg: GilConfig, limit = 12): SweepRow[]
   return rows.filter((r) => !accessible(r, cfg) && r.throughput > 0).slice(0, limit);
 }
 
+/** Legendary nodes need their expansion's folklore book — annotate, don't gate (matches the CLI). */
+export function needsFolklore(row: SweepRow, cfg: GilConfig): boolean {
+  return row.kind === 'legendary' && !(cfg.folklore ?? []).includes(row.expansion);
+}
+
 /**
  * What you'd realistically have on retainers: top 10 farmable mats, up to 3
  * liquid maps, and crystals worth the slot (>100k gil/day market throughput).

@@ -11,6 +11,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join } from 'path';
 import {
   GilConfig,
+  HistoryPoint,
   SaddlebagUnknown,
   SweepRow,
   SweepSnapshot,
@@ -42,6 +43,34 @@ export class SweepService {
     }
     const seedFile = join(this.dataDir, 'seed-snapshot.json');
     return existsSync(seedFile) ? JSON.parse(readFileSync(seedFile, 'utf8')) : null;
+  }
+
+  /**
+   * Per-item price/velocity series across every stored snapshot (plus the
+   * bundled seed) for one world — the data behind the sparklines. Grows with
+   * every sweep; reads a handful of local JSON files, so it stays instant.
+   */
+  history(world: string): Record<number, HistoryPoint[]> {
+    const snaps: SweepSnapshot[] = [];
+    const seedFile = join(this.dataDir, 'seed-snapshot.json');
+    if (existsSync(seedFile)) snaps.push(JSON.parse(readFileSync(seedFile, 'utf8')));
+    if (existsSync(this.snapshotsDir)) {
+      for (const f of readdirSync(this.snapshotsDir).filter((f) => f.endsWith('.json')).sort()) {
+        snaps.push(JSON.parse(readFileSync(join(this.snapshotsDir, f), 'utf8')));
+      }
+    }
+    const out: Record<number, HistoryPoint[]> = {};
+    for (const s of snaps) {
+      if (s.world !== world) continue;
+      const t = s.timestamp ? Date.parse(s.timestamp) : Date.parse(s.date);
+      if (!Number.isFinite(t)) continue;
+      for (const r of s.rows) (out[r.id] ??= []).push({ t, avg: r.avg, velDay: r.velDay });
+    }
+    for (const series of Object.values(out)) {
+      series.sort((a, b) => a.t - b.t);
+      if (series.length > 60) series.splice(0, series.length - 60);
+    }
+    return out;
   }
 
   async run(config: GilConfig): Promise<SweepSnapshot> {

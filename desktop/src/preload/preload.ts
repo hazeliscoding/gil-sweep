@@ -14,6 +14,7 @@ const api: GilApi = {
   listItems: () => ipcRenderer.invoke('items:list'),
   latestSweep: () => ipcRenderer.invoke('sweep:latest'),
   runSweep: () => ipcRenderer.invoke('sweep:run'),
+  sweepHistory: () => ipcRenderer.invoke('sweep:history'),
   listWorlds: () => ipcRenderer.invoke('worlds:list'),
   retainerPlan: (targets) => ipcRenderer.invoke('retainer:plan', targets),
   openDataFolder: () => ipcRenderer.invoke('data:openFolder'),

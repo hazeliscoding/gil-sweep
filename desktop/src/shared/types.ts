@@ -89,6 +89,8 @@ export interface GilConfig {
   world: string;
   levels: { MIN: number; BTN: number };
   msqExpansion: Expansion;
+  /** Expansions whose folklore books are owned (legendary nodes need them). */
+  folklore: Expansion[];
   saddlebag: SaddlebagParams;
 }
 
@@ -97,7 +99,15 @@ export interface GilConfigPatch {
   world?: string;
   levels?: Partial<GilConfig['levels']>;
   msqExpansion?: Expansion;
+  folklore?: Expansion[];
   saddlebag?: Partial<SaddlebagParams>;
+}
+
+/** One point of an item's local price history (from accumulated snapshots). */
+export interface HistoryPoint {
+  t: number;
+  avg: number;
+  velDay: number;
 }
 
 export interface HealthResult {
@@ -143,6 +153,8 @@ export interface GilApi {
   latestSweep(): Promise<SweepSnapshot | null>;
   /** Runs a live sweep against Universalis/Saddlebag and persists the snapshot. */
   runSweep(): Promise<SweepSnapshot>;
+  /** Per-item avg/velocity series across all stored snapshots for the configured world. */
+  sweepHistory(): Promise<Record<number, HistoryPoint[]>>;
   /** All public world names, for the world picker. */
   listWorlds(): Promise<string[]>;
   /** Live listings + recent sales → per-item selling advice for the given targets. */

@@ -10,6 +10,7 @@ export const DEFAULT_CONFIG: GilConfig = {
   world: 'Cactuar',
   levels: { MIN: 89, BTN: 70 },
   msqExpansion: 'EW',
+  folklore: [],
   saddlebag: { timePeriod: 168, salesAmount: 2, averagePrice: 50, filters: [47, 48, 49] },
 };
 

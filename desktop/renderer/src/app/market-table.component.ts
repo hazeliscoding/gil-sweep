@@ -3,6 +3,9 @@ import { DecimalPipe } from '@angular/common';
 import { SweepRow } from './models';
 import { EorzeaClockService } from './eorzea-clock.service';
 import { NodeWindow, nodeWindow } from './eorzea';
+import { SweepStore } from './sweep.store';
+import { needsFolklore } from './ranking';
+import { SparklineComponent } from './sparkline.component';
 
 /**
  * The dense market table used by the farm/mover/watchlist sections: item,
@@ -13,7 +16,7 @@ import { NodeWindow, nodeWindow } from './eorzea';
 @Component({
   selector: 'app-market-table',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, SparklineComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <table>
@@ -35,7 +38,15 @@ import { NodeWindow, nodeWindow } from './eorzea';
       <tbody>
         @for (r of rows(); track r.id) {
           <tr>
-            <td>{{ r.name }}</td>
+            <td>
+              {{ r.name }}
+              @if (folk(r)) {
+                <span class="folk-tag" title="Needs this expansion's folklore book">folklore</span>
+              }
+              @if (sparkOf(r.id); as v) {
+                <app-sparkline [values]="v" />
+              }
+            </td>
             <td class="secondary">{{ r.where }}</td>
             @if (showReason()) {
               <td class="secondary">{{ reasonOf()(r) }}</td>
@@ -74,10 +85,22 @@ import { NodeWindow, nodeWindow } from './eorzea';
 })
 export class MarketTableComponent {
   private readonly clock = inject(EorzeaClockService);
+  private readonly store = inject(SweepStore);
 
   readonly rows = input.required<SweepRow[]>();
   readonly showReason = input(false);
   readonly reasonOf = input<(r: SweepRow) => string>(() => '');
+
+  folk(r: SweepRow): boolean {
+    const cfg = this.store.config();
+    return cfg ? needsFolklore(r, cfg) : false;
+  }
+
+  /** Price series for the sparkline; hidden until there are ≥2 snapshots to draw. */
+  sparkOf(id: number): number[] | null {
+    const s = this.store.history()[id];
+    return s && s.length >= 2 ? s.map((p) => p.avg) : null;
+  }
 
   /** Live node-window state; reading clock.nowMs() keeps the cell ticking. */
   windowOf(r: SweepRow): NodeWindow | null {

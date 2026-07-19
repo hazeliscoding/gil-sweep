@@ -28,6 +28,7 @@ export function registerIpc(services: Services): void {
   ipcMain.handle('items:list', () => services.sweep.items);
   ipcMain.handle('sweep:latest', () => services.sweep.latest());
   ipcMain.handle('sweep:run', () => services.sweep.run(services.config.get()));
+  ipcMain.handle('sweep:history', () => services.sweep.history(services.config.get().world));
 
   ipcMain.handle('worlds:list', () => listWorlds());
 

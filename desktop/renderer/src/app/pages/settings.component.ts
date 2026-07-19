@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { EXPANSIONS } from '../models';
+import { EXPANSIONS, Expansion } from '../models';
 import { SweepStore } from '../sweep.store';
 
 /**
@@ -46,9 +46,22 @@ import { SweepStore } from '../sweep.store';
             </select>
           </div>
         </div>
+        <div class="form-field" style="max-width: none">
+          <label>Folklore books owned (legendary nodes without one get a tag)</label>
+          <div class="actions">
+            @for (e of folkloreExpansions; track e) {
+              <label>
+                <input type="checkbox" [checked]="cfg.folklore.includes(e)"
+                       (change)="toggleFolklore(e, $any($event.target).checked)" />
+                {{ e }}
+              </label>
+            }
+          </div>
+        </div>
         <div class="meta">
-          Changing the world runs a fresh sweep (prices are per-world). Levels and MSQ only
-          re-rank what's already loaded — instant, no network.
+          Changing the world runs a fresh sweep (prices are per-world). Levels, MSQ, and folklore
+          only re-rank what's already loaded — instant, no network. On launch, a sweep runs
+          automatically in the background whenever the loaded snapshot is older than a day.
         </div>
       </div>
 
@@ -69,6 +82,14 @@ import { SweepStore } from '../sweep.store';
 export class SettingsComponent {
   readonly store = inject(SweepStore);
   readonly expansions = EXPANSIONS;
+  /** ARR has no folklore books — they start with Heavensward. */
+  readonly folkloreExpansions = EXPANSIONS.filter((e) => e !== 'ARR');
+
+  toggleFolklore(expansion: Expansion, owned: boolean): void {
+    const current = this.store.config()?.folklore ?? [];
+    const next = owned ? [...new Set([...current, expansion])] : current.filter((e) => e !== expansion);
+    this.store.patchConfig({ folklore: next });
+  }
 
   openFolder(): void {
     window.api.openDataFolder();

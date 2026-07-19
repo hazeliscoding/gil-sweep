@@ -1,5 +1,15 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { GilConfig, GilConfigPatch, SweepRow, SweepSnapshot, TrackedItem } from './models';
+import {
+  GilConfig,
+  GilConfigPatch,
+  HistoryPoint,
+  SweepRow,
+  SweepSnapshot,
+  TrackedItem,
+} from './models';
+
+/** A snapshot this old (or from another world, or the bundled seed) triggers a background refresh on boot. */
+const STALE_MS = 24 * 3600 * 1000;
 
 /**
  * App-wide state: the current config (world/levels/expansion), the latest sweep
@@ -17,6 +27,7 @@ export class SweepStore {
   readonly snapshot = signal<SweepSnapshot | null>(null);
   readonly items = signal<TrackedItem[]>([]);
   readonly worlds = signal<string[]>([]);
+  readonly history = signal<Record<number, HistoryPoint[]>>({});
   readonly running = signal(false);
   readonly error = signal<string | null>(null);
 
@@ -58,6 +69,17 @@ export class SweepStore {
       this.config.set(config);
       this.snapshot.set(snapshot);
       this.items.set(items);
+      this.loadHistory();
+
+      // Stale-on-boot: the old data is already on screen — refresh quietly
+      // behind it so the numbers are simply fresh (no spinner, no button).
+      const stale =
+        !snapshot ||
+        snapshot.seed ||
+        !snapshot.timestamp ||
+        Date.now() - Date.parse(snapshot.timestamp) > STALE_MS ||
+        snapshot.world !== config.world;
+      if (stale) this.runSweep({ auto: true });
     } catch (e) {
       this.error.set(`Failed to load: ${(e as Error).message}`);
     }
@@ -67,6 +89,14 @@ export class SweepStore {
     } catch {
       const w = this.config()?.world;
       this.worlds.set(w ? [w] : []);
+    }
+  }
+
+  private async loadHistory(): Promise<void> {
+    try {
+      this.history.set(await this.api.sweepHistory());
+    } catch {
+      /* sparklines are decorative — never block on them */
     }
   }
 
@@ -89,14 +119,17 @@ export class SweepStore {
     await this.runSweep(); // prices are per-world; refresh right away
   }
 
-  async runSweep(): Promise<void> {
+  async runSweep(opts: { auto?: boolean } = {}): Promise<void> {
     if (this.running()) return;
     this.running.set(true);
     this.error.set(null);
     try {
       this.snapshot.set(await this.api.runSweep());
+      this.loadHistory();
     } catch (e) {
-      this.error.set(`Sweep failed: ${(e as Error).message}`);
+      // An auto-refresh failing (offline boot) is not worth a banner — the
+      // stale data on screen is still the best data we have.
+      if (!opts.auto) this.error.set(`Sweep failed: ${(e as Error).message}`);
     } finally {
       this.running.set(false);
     }
