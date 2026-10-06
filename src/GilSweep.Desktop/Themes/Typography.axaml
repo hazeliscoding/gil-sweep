@@ -8,6 +8,17 @@
     <Setter Property="Foreground" Value="{StaticResource Text1}" />
   </Style>
 
+  <!-- Titles are headings for screen readers too. -->
+  <Style Selector="TextBlock.page-title">
+    <Setter Property="AutomationProperties.HeadingLevel" Value="1" />
+  </Style>
+  <Style Selector="TextBlock.section-title">
+    <Setter Property="AutomationProperties.HeadingLevel" Value="2" />
+  </Style>
+  <Style Selector="TextBlock.card-title">
+    <Setter Property="AutomationProperties.HeadingLevel" Value="3" />
+  </Style>
+
   <Style Selector="TextBlock.page-title">
     <Setter Property="FontSize" Value="20" />
     <Setter Property="FontWeight" Value="SemiBold" />
