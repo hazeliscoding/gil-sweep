@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Renders every desktop screen to PNG with Avalonia's headless Skia renderer, against fake
+    market data and a fixed clock, so the same commit always produces the same pictures. Used for
+    the README screenshots and for checking the UI against the mockup. Argument: the output folder,
+    e.g. docs/screenshots
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\GilSweep.Desktop\GilSweep.Desktop.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Headless" />
+  </ItemGroup>
+
+  <!-- The same recorded market responses the tests use. -->
+  <ItemGroup>
+    <None Include="..\..\tests\GilSweep.Tests\Fixtures\**\*.json" LinkBase="Fixtures" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="GilSweep.Tests" />
+  </ItemGroup>
+
+</Project>
