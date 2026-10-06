@@ -17,7 +17,11 @@ namespace GilSweep.Desktop.Services;
 [SupportedOSPlatform("windows10.0.17763.0")]
 public sealed class WindowsToastNotifier : INotifier
 {
-    public const string AppId = "hazeliscoding.GilSweep";
+    /// <summary>
+    /// The ID Velopack gives the Start menu shortcut (velopack.&lt;packId&gt;), so Windows files the
+    /// toasts under the same "Gil Sweep" app as the shortcut. The registry entry covers portable copies.
+    /// </summary>
+    public const string AppId = "velopack.GilSweep";
 
     private static readonly string RegistryKey = $@"Software\Classes\AppUserModelId\{AppId}";
     private readonly ILogger<WindowsToastNotifier> _logger;
