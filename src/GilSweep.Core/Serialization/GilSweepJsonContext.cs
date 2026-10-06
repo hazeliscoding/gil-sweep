@@ -16,6 +16,7 @@ namespace GilSweep.Core.Serialization;
     ReadCommentHandling = JsonCommentHandling.Skip,
     AllowTrailingCommas = true)]
 [JsonSerializable(typeof(GilSweepSettings))]
+[JsonSerializable(typeof(CatalogItem))]
 [JsonSerializable(typeof(List<CatalogItem>))]
 [JsonSerializable(typeof(Dictionary<string, CraftRecipe>))]
 [JsonSerializable(typeof(Dictionary<string, DemandSignals>))]

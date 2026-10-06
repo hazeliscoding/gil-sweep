@@ -78,6 +78,22 @@ public sealed partial class FakeMarketHandler : HttpMessageHandler
             return Json(Saddlebag.ToJsonString());
         }
 
+        if (uri.Host == "v2.xivapi.com")
+        {
+            var query = Uri.UnescapeDataString(uri.Query.Split("query=")[1].Split('&')[0]);
+            var name = SearchName().Match(query).Groups[1].Value.Replace(' ', '_');
+            var file = Fixture.PathOf("Verify", (query.Contains('~', StringComparison.Ordinal) ? "search-fuzzy-" : "search-") + name + ".json");
+            return Json(File.Exists(file) ? File.ReadAllText(file) : """{"results":[]}""");
+        }
+
+        if (uri.Host == "garlandtools.org")
+        {
+            var file = uri.AbsolutePath.Contains("/core/", StringComparison.Ordinal)
+                ? Fixture.PathOf("Verify", "garland-core-locations.json")
+                : Fixture.PathOf("Verify", "garland-" + Path.GetFileName(uri.AbsolutePath));
+            return File.Exists(file) ? Json(File.ReadAllText(file)) : new HttpResponseMessage(HttpStatusCode.NotFound);
+        }
+
         var path = uri.AbsolutePath;
         if (path == "/api/v2/worlds")
         {
@@ -130,6 +146,9 @@ public sealed partial class FakeMarketHandler : HttpMessageHandler
 
     private static HttpResponseMessage Json(string json) =>
         new(HttpStatusCode.OK) { Content = new StringContent(json, Encoding.UTF8, "application/json") };
+
+    [GeneratedRegex("Name[=~]\"(.*)\"")]
+    private static partial Regex SearchName();
 
     [GeneratedRegex(@"^/api/v2/aggregated/[^/]+/(?<ids>[\d,]+)$")]
     private static partial Regex AggregatedPath();

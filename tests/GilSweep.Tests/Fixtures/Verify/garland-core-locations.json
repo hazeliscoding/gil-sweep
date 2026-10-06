@@ -1,0 +1,53 @@
+{
+ "locationIndex": {
+  "42": {
+   "id": 42,
+   "name": "Western Thanalan",
+   "parentId": 24,
+   "size": 1.0,
+   "weatherRate": 9
+  },
+  "43": {
+   "id": 43,
+   "name": "Central Thanalan",
+   "parentId": 24,
+   "size": 1.0,
+   "weatherRate": 10
+  },
+  "45": {
+   "id": 45,
+   "name": "Southern Thanalan",
+   "parentId": 24,
+   "size": 1.0,
+   "weatherRate": 12
+  },
+  "63": {
+   "id": 63,
+   "name": "Coerthas Central Highlands",
+   "parentId": 25,
+   "size": 1.0,
+   "weatherRate": 21
+  },
+  "2002": {
+   "id": 2002,
+   "name": "The Churning Mists",
+   "parentId": 498,
+   "size": 0.95,
+   "weatherRate": 52
+  },
+  "2200": {
+   "id": 2200,
+   "name": "Coerthas Western Highlands",
+   "parentId": 25,
+   "size": 0.95,
+   "weatherRate": 49
+  },
+  "2410": {
+   "id": 2410,
+   "name": "Yanxia",
+   "parentId": 2401,
+   "size": 1.0,
+   "weatherRate": 84
+  }
+ }
+}

@@ -1,0 +1,182 @@
+{
+ "schema": "exdschema@2:rev:e773c41a90aed788cf4c1c48469fa85618ef01fb",
+ "version": "541c0c12e07da325",
+ "results": [
+  {
+   "score": 0.9230769,
+   "sheet": "Item",
+   "row_id": 19966,
+   "fields": {
+    "Name": "Imperial Jade"
+   }
+  },
+  {
+   "score": 0.7058824,
+   "sheet": "Item",
+   "row_id": 19972,
+   "fields": {
+    "Name": "Raw Imperial Jade"
+   }
+  },
+  {
+   "score": 0.42857143,
+   "sheet": "Item",
+   "row_id": 18966,
+   "fields": {
+    "Name": "Imperial Jade Ring of Aiming"
+   }
+  },
+  {
+   "score": 0.41379312,
+   "sheet": "Item",
+   "row_id": 18964,
+   "fields": {
+    "Name": "Imperial Jade Ring of Fending"
+   }
+  },
+  {
+   "score": 0.41379312,
+   "sheet": "Item",
+   "row_id": 18965,
+   "fields": {
+    "Name": "Imperial Jade Ring of Slaying"
+   }
+  },
+  {
+   "score": 0.41379312,
+   "sheet": "Item",
+   "row_id": 18967,
+   "fields": {
+    "Name": "Imperial Jade Ring of Healing"
+   }
+  },
+  {
+   "score": 0.41379312,
+   "sheet": "Item",
+   "row_id": 18968,
+   "fields": {
+    "Name": "Imperial Jade Ring of Casting"
+   }
+  },
+  {
+   "score": 0.375,
+   "sheet": "Item",
+   "row_id": 18951,
+   "fields": {
+    "Name": "Imperial Jade Earrings of Aiming"
+   }
+  },
+  {
+   "score": 0.375,
+   "sheet": "Item",
+   "row_id": 18956,
+   "fields": {
+    "Name": "Imperial Jade Necklace of Aiming"
+   }
+  },
+  {
+   "score": 0.375,
+   "sheet": "Item",
+   "row_id": 18961,
+   "fields": {
+    "Name": "Imperial Jade Armillae of Aiming"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18949,
+   "fields": {
+    "Name": "Imperial Jade Earrings of Fending"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18950,
+   "fields": {
+    "Name": "Imperial Jade Earrings of Slaying"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18952,
+   "fields": {
+    "Name": "Imperial Jade Earrings of Healing"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18953,
+   "fields": {
+    "Name": "Imperial Jade Earrings of Casting"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18954,
+   "fields": {
+    "Name": "Imperial Jade Necklace of Fending"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18955,
+   "fields": {
+    "Name": "Imperial Jade Necklace of Slaying"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18957,
+   "fields": {
+    "Name": "Imperial Jade Necklace of Healing"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18958,
+   "fields": {
+    "Name": "Imperial Jade Necklace of Casting"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18959,
+   "fields": {
+    "Name": "Imperial Jade Armillae of Fending"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18960,
+   "fields": {
+    "Name": "Imperial Jade Armillae of Slaying"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18962,
+   "fields": {
+    "Name": "Imperial Jade Armillae of Healing"
+   }
+  },
+  {
+   "score": 0.36363637,
+   "sheet": "Item",
+   "row_id": 18963,
+   "fields": {
+    "Name": "Imperial Jade Armillae of Casting"
+   }
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "Zinc Ore": {
+  "result": {
+   "found": true,
+   "id": 5110,
+   "name": "Zinc Ore",
+   "gatherable": true,
+   "reason": "node lv10 · Black Brush, Central Thanalan"
+  },
+  "item": {
+   "name": "Zinc Ore",
+   "id": 5110,
+   "job": "MIN",
+   "level": 10,
+   "where": "Black Brush, Central Thanalan",
+   "kind": "node",
+   "expansion": "ARR",
+   "note": "added in-app (Garland-verified nodes)"
+  }
+ },
+ "Raw Imperial Jade": {
+  "result": {
+   "found": true,
+   "id": 19972,
+   "name": "Raw Imperial Jade",
+   "gatherable": true,
+   "reason": "unspoiled lv70 · spawns 6/18 ET · Valley of the Fallen Rainbow, Yanxia"
+  },
+  "item": {
+   "name": "Raw Imperial Jade",
+   "id": 19972,
+   "job": "MIN",
+   "level": 70,
+   "where": "Valley of the Fallen Rainbow, Yanxia",
+   "kind": "unspoiled",
+   "expansion": "StB",
+   "spawns": [
+    6,
+    18
+   ],
+   "note": "added in-app (Garland-verified nodes)"
+  }
+ },
+ "Cloud Mica": {
+  "result": {
+   "found": true,
+   "id": 12539,
+   "name": "Cloud Mica",
+   "gatherable": true,
+   "reason": "node lv60 · Landlord Colony, The Churning Mists"
+  },
+  "item": {
+   "name": "Cloud Mica",
+   "id": 12539,
+   "job": "MIN",
+   "level": 60,
+   "where": "Landlord Colony, The Churning Mists",
+   "kind": "node",
+   "expansion": "HW",
+   "note": "added in-app (Garland-verified nodes)"
+  }
+ },
+ "Mythrite Ingot": {
+  "result": {
+   "found": true,
+   "id": 12519,
+   "name": "Mythrite Ingot",
+   "gatherable": false,
+   "reason": "crafted item — the Crafting page covers these; not tracked"
+  }
+ },
+ "Distilled Water": {
+  "result": {
+   "found": true,
+   "id": 5487,
+   "name": "Distilled Water",
+   "gatherable": false,
+   "reason": "crafted item — the Crafting page covers these; not tracked"
+  }
+ },
+ "Grade 8 Dark Matter": {
+  "result": {
+   "found": true,
+   "id": 33916,
+   "name": "Grade 8 Dark Matter",
+   "gatherable": false,
+   "reason": "vendor item — tracked as a non-farm so it stops resurfacing"
+  },
+  "item": {
+   "name": "Grade 8 Dark Matter",
+   "id": 33916,
+   "job": "both",
+   "level": 0,
+   "where": "vendor purchase",
+   "kind": "vendor",
+   "expansion": "ARR",
+   "note": "added in-app - NOT gatherable"
+  }
+ },
+ "Darksteel Ore": {
+  "result": {
+   "found": true,
+   "id": 5121,
+   "name": "Darksteel Ore",
+   "gatherable": false,
+   "alreadyTracked": true,
+   "reason": "already tracked"
+  }
+ },
+ "Gilded Purple Pixie": {
+  "result": {
+   "found": false,
+   "gatherable": false,
+   "reason": "no item named \"Gilded Purple Pixie\""
+  }
+ },
+ "Imperial Jad": {
+  "result": {
+   "found": true,
+   "id": 19966,
+   "name": "Imperial Jade",
+   "gatherable": false,
+   "reason": "crafted item — the Crafting page covers these; not tracked"
+  }
+ }
+}

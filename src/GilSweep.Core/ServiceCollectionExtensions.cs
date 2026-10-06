@@ -31,6 +31,7 @@ public static class ServiceCollectionExtensions
 
         services.AddHttpClient<IUniversalisClient, UniversalisClient>(client => Configure(client, UniversalisClient.BaseUrl));
         services.AddHttpClient<ISaddlebagClient, SaddlebagClient>(client => Configure(client, null));
+        services.AddHttpClient<IItemVerifier, ItemVerifier>(client => Configure(client, null));
 
         services.TryAddSingleton<IConfigStore, ConfigStore>();
         services.TryAddSingleton<LegacyImporter>();
