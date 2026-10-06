@@ -4,7 +4,7 @@ Every test runs offline against these files. Nothing here is generated at test t
 
 ## Universalis/ and Saddlebag/
 
-Real responses for **Cactuar**, recorded on 2026-10-05 by `legacy/characterize/capture.py` and trimmed by `trim.py` to the fields Gil Sweep reads. The shapes are the APIs' own.
+Real responses for **Cactuar**, recorded on 2026-10-05 by `legacy/characterize/capture.py` and trimmed by `trim.py` (both in commit f0be844) to the fields Gil Sweep reads. The shapes are the APIs' own.
 
 | File | What it is |
 | --- | --- |
@@ -26,7 +26,7 @@ Real XIVAPI search and Garland Tools item responses for the verify-and-track tes
 
 ## V1/
 
-What the v1 (Electron/Angular) code produced from the responses above. `legacy/characterize/harness.ts` runs the v1 TypeScript unchanged under Node with `fetch` answering from these files, and writes:
+What the v1 (Electron/Angular) code produced from the responses above. `legacy/characterize/harness.ts` (commit f0be844) ran the v1 TypeScript unchanged under Node with `fetch` answering from these files, and writes:
 
 | File | v1 code it captures |
 | --- | --- |
@@ -39,4 +39,4 @@ What the v1 (Electron/Angular) code produced from the responses above. `legacy/c
 | `archive/` | The snapshot archive the history outputs were computed from |
 | `seed-snapshot.json` | v1's bundled first-boot snapshot (a real Cactuar sweep, 2026-07-19) |
 
-To regenerate after changing a fixture, see the comment at the top of `legacy/characterize/harness.ts`. The harness and the v1 source are removed at cutover; tag `electron-final` keeps them.
+The v1 source and the harness were removed at cutover. To regenerate an output, check out commit f0be844 (it has `legacy/electron` and `legacy/characterize`) and follow the comment at the top of `legacy/characterize/harness.ts`. Tag `electron-final` is the last buildable v1.

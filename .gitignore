@@ -6,12 +6,9 @@ publish/
 TestResults/
 *.binlog
 
-# Legacy Electron app (removed at cutover)
+# Dev-time icon generation (scripts/make-lucide-icons.mjs)
+.lucide/
 node_modules/
-dist/
-release/
-.angular/
-legacy/electron/desktop/e2e/shots/
 *.log
 
 # Editors

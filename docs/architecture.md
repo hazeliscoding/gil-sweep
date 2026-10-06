@@ -78,7 +78,7 @@ Writes go through a temp file and a rename, so a crash never leaves half a file.
 
 ## Tests
 
-- **Characterization.** `legacy/characterize/harness.ts` ran the v1 TypeScript unchanged against recorded Universalis and Saddlebag responses; `Fixtures/V1/` holds what v1 produced. Core reproduces it exactly: sweep rows and craft margins, ranking for six characters, Eorzea windows to the millisecond, drill-down and selling advice, digest, history, backfill, prune, and the item verifier.
+- **Characterization.** A harness (`legacy/characterize`, removed at cutover; see commit f0be844) ran the v1 TypeScript unchanged against recorded Universalis and Saddlebag responses; `Fixtures/V1/` holds what v1 produced. Core reproduces it exactly: sweep rows and craft margins, ranking for six characters, Eorzea windows to the millisecond, drill-down and selling advice, digest, history, backfill, prune, and the item verifier.
 - **Scoring.** With listings, trends and node windows set aside, the ranking is v1's throughput order; the top Miner or Botanist item is v1's top farm.
 - **Failure modes.** Universalis down, Saddlebag down, partial chunks, 429 and 504 retries, garbled JSON, cancellation, stale and empty markets.
 - **View models.** First run, the Sweep screen and its clock, farm sessions, hourly sweeps, offline and retry, Market, Craft, Watchlist, History export, Settings, updates waiting for a sweep, toasts.

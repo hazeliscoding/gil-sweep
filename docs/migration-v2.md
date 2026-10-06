@@ -4,11 +4,11 @@ Gil Sweep v1 is an Electron + Angular app. v2 replaces it with a native .NET 10 
 
 - The last Electron build is tagged `electron-final` (it is `v1.0.0` plus documentation). Release `v1.0.0` stays published.
 - The rewrite happens on `rewrite/dotnet-avalonia`. `main` keeps the Electron app until the cutover gate below passes.
-- While the rewrite runs, the Electron source lives in `legacy/electron/` as porting reference only. Nothing in v2 calls it, and it is deleted before the v2 release.
+- During the rewrite the Electron source lived in `legacy/electron/` as porting reference only; nothing in v2 called it. It was removed at cutover, after the gate below passed. Commit f0be844 is the last with it and with the characterization harness (`legacy/characterize`).
 
 ## Inventory
 
-Paths on the left are v1 (`legacy/electron/desktop/...` on this branch).
+Paths on the left are v1 (`desktop/...` at tag `electron-final`).
 
 ### Keep
 
@@ -73,16 +73,26 @@ Not part of v2.0; tracked in `ROADMAP.md` under Later.
 
 ## Cutover gate
 
-`legacy/` is deleted and the branch merges only when v2 can, with tests to show it:
+Passed on 2026-10-06. `legacy/` was deleted once v2 could, with tests to show it:
 
-- [ ] load settings and progression, including a v1 config;
-- [ ] fetch, or load from fixtures, representative market data;
-- [ ] normalize it into Core models (no API types outside the adapters);
-- [ ] rank gathering opportunities;
-- [ ] respect gatherer levels, MSQ progress and trap items;
-- [ ] respect node availability from the Eorzea clock;
-- [ ] show the Sweep screen;
-- [ ] explain why the top items are recommended;
-- [ ] pass offline characterization tests against the v1 outputs.
+- [x] load settings and progression, including a v1 config;
+- [x] fetch, or load from fixtures, representative market data;
+- [x] normalize it into Core models (no API types outside the adapters);
+- [x] rank gathering opportunities;
+- [x] respect gatherer levels, MSQ progress and trap items;
+- [x] respect node availability from the Eorzea clock;
+- [x] show the Sweep screen;
+- [x] explain why the top items are recommended;
+- [x] pass offline characterization tests against the v1 outputs.
 
 Given the same input, v2 must recommend the same items as v1 or differ only in ways listed in `docs/opportunity-scoring.md` under "Changes from v1".
+
+| Gate | Shown by |
+| --- | --- |
+| Settings, including a v1 config | `SettingsTests` |
+| Market data, live and recorded | `LiveMarketTests` (explicit), `SweepServiceTests`, `MarketScenarioTests` |
+| Normalized models | Adapters in `Core/Market/Universalis`, `Core/Market/Saddlebag`; everything else uses Core types |
+| Ranking, gates, traps | `RankingCharacterizationTests`, `OpportunityScoringTests` |
+| Node availability | `EorzeaCharacterizationTests`, `OpportunityScoringTests` |
+| Sweep screen and explanations | `SweepScreenTests`, `docs/screenshots/sweep.png` |
+| Characterization against v1 | everything under `tests/GilSweep.Tests/Fixtures/V1` |
