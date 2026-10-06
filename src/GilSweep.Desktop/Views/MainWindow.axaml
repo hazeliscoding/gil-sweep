@@ -1,0 +1,165 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="using:GilSweep.Desktop.Controls"
+        xmlns:vm="using:GilSweep.Desktop.ViewModels"
+        xmlns:s="using:GilSweep.Desktop.Services"
+        xmlns:v="using:GilSweep.Desktop.Views"
+        x:Class="GilSweep.Desktop.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Gil Sweep"
+        Icon="avares://GilSweep/Assets/gil-sweep.ico"
+        Width="1100" Height="720" MinWidth="980" MinHeight="620"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource Bg0}"
+        ExtendClientAreaToDecorationsHint="True"
+        WindowDecorations="BorderOnly">
+  <Panel>
+    <Grid RowDefinitions="34,*">
+      <!-- Title bar -->
+      <Border Grid.Row="0" Background="{StaticResource Bg1}" BorderBrush="{StaticResource Border1}" BorderThickness="0,0,0,1"
+              WindowDecorationProperties.ElementRole="TitleBar">
+        <Grid ColumnDefinitions="*,Auto" Margin="14,0,6,0">
+          <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+            <Border Classes="diamond" BoxShadow="{StaticResource MarkGlow}" />
+            <TextBlock Text="Gil Sweep" FontSize="12" FontWeight="Medium" Foreground="{StaticResource Text2}" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+            <Button Theme="{StaticResource CaptionButton}" Content="—" Click="OnMinimize"
+                    WindowDecorationProperties.ElementRole="MinimizeButton" AutomationProperties.Name="Minimize" />
+            <Button Theme="{StaticResource CaptionButton}" Content="▢" Click="OnMaximize"
+                    WindowDecorationProperties.ElementRole="MaximizeButton" AutomationProperties.Name="Maximize" />
+            <Button Theme="{StaticResource CaptionButton}" Classes="close" Content="✕" Click="OnClose"
+                    WindowDecorationProperties.ElementRole="CloseButton" AutomationProperties.Name="Close" />
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <Grid Grid.Row="1" ColumnDefinitions="196,*">
+        <!-- Navigation -->
+        <Border Grid.Column="0" Background="{StaticResource Bg1}" BorderBrush="{StaticResource Border1}" BorderThickness="0,0,1,0"
+                Padding="8,12,8,10">
+          <DockPanel>
+            <StackPanel DockPanel.Dock="Bottom" Spacing="0">
+              <!-- Eorzea clock -->
+              <Border Margin="2,0,2,10" Padding="10" CornerRadius="6" Background="{StaticResource Bg2}"
+                      BorderBrush="{StaticResource Border1}" BorderThickness="1" BoxShadow="{StaticResource HighlightInset}">
+                <StackPanel Spacing="8">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Classes="eyebrow" Text="EORZEA TIME" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="{Binding EorzeaClock}" FontFamily="{StaticResource MonoFont}" FontSize="15"
+                               FontWeight="Medium" Foreground="{StaticResource Text1}" AutomationProperties.Name="Eorzea time" />
+                  </Grid>
+                  <TextBlock Classes="compact t2" Text="{Binding NextWindowLine}" TextWrapping="Wrap" />
+                </StackPanel>
+              </Border>
+              <Button Theme="{StaticResource LinkButton}" Margin="10,0,4,8"
+                      Command="{Binding OpenUpdatesCommand}" IsVisible="{Binding Updates.HasUpdate}"
+                      AutomationProperties.Name="{Binding Updates.NavLabel}" ToolTip.Tip="Open Settings to install it">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <c:StatusDot Classes="blink" Tone="Accent" Diameter="5" VerticalAlignment="Center" />
+                  <TextBlock Classes="compact" Text="{Binding Updates.NavLabel}" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+              <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" Margin="10,0,4,0">
+                <TextBlock Classes="data t3" FontSize="11" Text="{Binding VersionLabel}" VerticalAlignment="Center" />
+                <Button Grid.Column="1" Theme="{StaticResource LinkButton}" Foreground="{StaticResource Text3}"
+                        Command="{Binding OpenGitHubCommand}" AutomationProperties.Name="Open Gil Sweep on GitHub">
+                  <StackPanel Orientation="Horizontal" Spacing="4">
+                    <c:Icon Kind="Github" Size="12" VerticalAlignment="Center" />
+                    <TextBlock Classes="data" FontSize="11" Text="GitHub" VerticalAlignment="Center" />
+                  </StackPanel>
+                </Button>
+              </Grid>
+              <StackPanel Orientation="Horizontal" Spacing="6" Margin="10,8,10,0">
+                <c:StatusDot Tone="{Binding ConnectionTone}" Diameter="7" VerticalAlignment="Center" />
+                <TextBlock Classes="compact t3" Text="{Binding ConnectionLabel}" VerticalAlignment="Center" />
+              </StackPanel>
+            </StackPanel>
+
+            <ItemsControl ItemsSource="{Binding NavItems}" DockPanel.Dock="Top">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Spacing="2" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:NavItemViewModel">
+                  <Button Theme="{StaticResource NavItem}" Classes.active="{Binding IsActive}"
+                          Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand}"
+                          CommandParameter="{Binding Page}"
+                          AutomationProperties.Name="{Binding Label}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                      <c:Icon Kind="{Binding Icon}" Size="14" VerticalAlignment="Center" />
+                      <TextBlock Grid.Column="1" Text="{Binding Label}" VerticalAlignment="Center" />
+                      <TextBlock Grid.Column="2" Classes="data t3" FontSize="11" Text="{Binding Count}" VerticalAlignment="Center"
+                                 IsVisible="{Binding HasCount}" />
+                    </Grid>
+                  </Button>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Panel />
+          </DockPanel>
+        </Border>
+
+        <!-- Page -->
+        <DockPanel Grid.Column="1" ClipToBounds="True">
+          <c:Banner DockPanel.Dock="Top" Margin="24,14,24,0" Tone="Warning" IsVisible="{Binding ShowOfflineBanner}"
+                    Title="{Binding OfflineTitle}" Description="{Binding OfflineDescription}" Meta="{Binding OfflineMeta}">
+            <c:Banner.Actions>
+              <c:GsButton Classes="sm" Icon="RefreshCw" Content="Retry now" Command="{Binding RetryCommand}" />
+            </c:Banner.Actions>
+          </c:Banner>
+          <c:Banner DockPanel.Dock="Top" Margin="24,14,24,0" Tone="Info" Title="{Binding Notice}"
+                    IsVisible="{Binding Notice, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <c:Banner.Actions>
+              <c:GsButton Classes="ghost icon sm" Icon="X" Command="{Binding DismissNoticeCommand}"
+                          AutomationProperties.Name="Dismiss" ToolTip.Tip="Dismiss" />
+            </c:Banner.Actions>
+          </c:Banner>
+          <ScrollViewer Name="PageScroller" HorizontalScrollBarVisibility="Disabled">
+            <TransitioningContentControl Content="{Binding CurrentPage}" Margin="24,22,24,24">
+              <TransitioningContentControl.PageTransition>
+                <CrossFade Duration="0:0:0.12" />
+              </TransitioningContentControl.PageTransition>
+            </TransitioningContentControl>
+          </ScrollViewer>
+        </DockPanel>
+      </Grid>
+    </Grid>
+
+    <!-- First run -->
+    <Panel IsVisible="{Binding Onboarding.IsOpen}">
+      <Border Background="{StaticResource Scrim}" />
+      <v:OnboardingView DataContext="{Binding Onboarding}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    </Panel>
+
+    <!-- Confirmation modal -->
+    <Panel IsVisible="{Binding Dialogs.Active, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <Border Background="{StaticResource Scrim}" PointerPressed="OnScrimPressed" />
+      <ContentControl Content="{Binding Dialogs.Active}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <ContentControl.ContentTemplate>
+          <DataTemplate x:DataType="s:ConfirmDialog">
+            <Border Width="420" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Border2}" BorderThickness="1"
+                    CornerRadius="8" BoxShadow="{StaticResource Shadow4}">
+              <StackPanel>
+                <Grid ColumnDefinitions="*,Auto" Margin="16,12,12,12">
+                  <TextBlock Classes="section-title" Text="{Binding Request.Title}" VerticalAlignment="Center" />
+                  <c:GsButton Grid.Column="1" Classes="ghost icon" Icon="X" Command="{Binding CancelCommand}"
+                              AutomationProperties.Name="Close" ToolTip.Tip="Close" />
+                </Grid>
+                <Border Classes="divider" />
+                <TextBlock Margin="16" Classes="body t2" Text="{Binding Request.Message}" TextWrapping="Wrap" />
+                <Border Classes="divider" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="16,12">
+                  <c:GsButton Classes="ghost" Content="{Binding Request.CancelText}" Command="{Binding CancelCommand}" IsCancel="True" />
+                  <c:GsButton Classes.danger="{Binding Request.Danger}" Classes.primary="{Binding !Request.Danger}"
+                              Icon="{Binding Request.ConfirmIcon}" Content="{Binding Request.ConfirmText}"
+                              Command="{Binding ConfirmCommand}" />
+                </StackPanel>
+              </StackPanel>
+            </Border>
+          </DataTemplate>
+        </ContentControl.ContentTemplate>
+      </ContentControl>
+    </Panel>
+  </Panel>
+</Window>

@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:GilSweep.Desktop.Controls"
+             xmlns:vm="using:GilSweep.Desktop.ViewModels"
+             x:Class="GilSweep.Desktop.Views.OnboardingView"
+             x:DataType="vm:OnboardingViewModel">
+  <Border Width="460" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Border2}" BorderThickness="1"
+          CornerRadius="8" BoxShadow="{StaticResource Shadow4}">
+    <StackPanel>
+      <StackPanel Margin="20,18,20,14" Spacing="8">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Border Classes="diamond" VerticalAlignment="Center" />
+          <TextBlock Classes="eyebrow" Text="FIRST RUN" VerticalAlignment="Center" />
+        </StackPanel>
+        <TextBlock Classes="page-title t1" Text="What should you farm for gil?" />
+        <TextBlock Classes="body t2" TextWrapping="Wrap" Text="Three answers and Gil Sweep can price your world. Everything stays on this computer." />
+      </StackPanel>
+      <Border Classes="divider" />
+      <StackPanel Margin="20,16" Spacing="14">
+        <StackPanel Spacing="6">
+          <TextBlock Classes="label t2" Text="World" />
+          <ComboBox ItemsSource="{Binding Worlds}" SelectedItem="{Binding World}" AutomationProperties.Name="World" />
+        </StackPanel>
+        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+          <StackPanel Spacing="6">
+            <TextBlock Classes="label t2" Text="Miner" />
+            <TextBox Classes="mono" Text="{Binding Miner}" AutomationProperties.Name="Miner level" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Spacing="6">
+            <TextBlock Classes="label t2" Text="Botanist" />
+            <TextBox Classes="mono" Text="{Binding Botanist}" AutomationProperties.Name="Botanist level" />
+          </StackPanel>
+          <StackPanel Grid.Column="2" Spacing="6">
+            <TextBlock Classes="label t2" Text="Story progress" />
+            <ComboBox ItemsSource="{Binding Expansions}" SelectedItem="{Binding Story}" AutomationProperties.Name="Story progress" />
+          </StackPanel>
+        </Grid>
+        <TextBlock Classes="compact t3" TextWrapping="Wrap" Text="Crafter levels and folklore books can be added later in Settings." />
+        <TextBlock Classes="compact critical" Text="{Binding Error}" IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}" />
+      </StackPanel>
+      <Border Classes="divider" />
+      <Grid ColumnDefinitions="*,Auto" Margin="20,12">
+        <TextBlock Classes="compact t3" Text="{Binding RequestNote}" VerticalAlignment="Center" />
+        <c:GsButton Grid.Column="1" Classes="primary" Icon="RefreshCw" Content="Run first sweep" Command="{Binding RunFirstSweepCommand}" IsDefault="True" />
+      </Grid>
+    </StackPanel>
+  </Border>
+</UserControl>

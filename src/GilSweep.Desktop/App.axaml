@@ -1,0 +1,30 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:GilSweep.Desktop.ViewModels"
+             xmlns:v="using:GilSweep.Desktop.Views"
+             x:Class="GilSweep.Desktop.App"
+             Name="Gil Sweep"
+             RequestedThemeVariant="Dark">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://GilSweep/Themes/Tokens.axaml" />
+        <ResourceInclude Source="avares://GilSweep/Themes/Controls.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.DataTemplates>
+    <DataTemplate DataType="vm:SweepViewModel"><v:SweepView /></DataTemplate>
+    <DataTemplate DataType="vm:MarketViewModel"><v:MarketView /></DataTemplate>
+    <DataTemplate DataType="vm:CraftViewModel"><v:CraftView /></DataTemplate>
+    <DataTemplate DataType="vm:WatchlistViewModel"><v:WatchlistView /></DataTemplate>
+    <DataTemplate DataType="vm:HistoryViewModel"><v:HistoryView /></DataTemplate>
+    <DataTemplate DataType="vm:SettingsViewModel"><v:SettingsView /></DataTemplate>
+  </Application.DataTemplates>
+
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://GilSweep/Themes/Typography.axaml" />
+  </Application.Styles>
+</Application>

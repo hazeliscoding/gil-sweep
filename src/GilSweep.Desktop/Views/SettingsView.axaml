@@ -1,0 +1,7 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:GilSweep.Desktop.ViewModels"
+             x:Class="GilSweep.Desktop.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+  <TextBlock Classes="page-title" Text="Settings" />
+</UserControl>

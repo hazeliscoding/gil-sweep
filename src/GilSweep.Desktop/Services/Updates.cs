@@ -1,0 +1,133 @@
+using System.ComponentModel;
+using System.Diagnostics;
+using GilSweep.Core;
+using Microsoft.Extensions.Logging;
+using Velopack;
+using Velopack.Sources;
+
+namespace GilSweep.Desktop.Services;
+
+public sealed record AvailableUpdate(string Version);
+
+/// <summary>Self-update for a copy installed with Setup. Portable copies can't replace themselves.</summary>
+public interface IAppUpdater
+{
+    bool IsInstalled { get; }
+
+    /// <summary>Asks the release feed for a newer version. Null means this is the latest.</summary>
+    Task<AvailableUpdate?> CheckAsync(CancellationToken cancellationToken = default);
+
+    Task DownloadAsync(AvailableUpdate update, Action<int> progress, CancellationToken cancellationToken = default);
+
+    /// <summary>Exits Gil Sweep, replaces its files with the downloaded version and starts it again.</summary>
+    void RestartToApply(AvailableUpdate update);
+}
+
+public sealed class VelopackUpdater : IAppUpdater
+{
+    /// <summary>A folder or URL with a Velopack release feed, used instead of GitHub to try an update locally.</summary>
+    public const string SourceVariable = "GIL_SWEEP_UPDATE_SOURCE";
+
+    private static readonly TimeSpan CheckTimeout = TimeSpan.FromSeconds(30);
+
+    private readonly UpdateManager? _manager;
+    private UpdateInfo? _latest;
+
+    public VelopackUpdater(ILogger<VelopackUpdater> logger)
+    {
+        if (!IsInstalledWithSetup())
+        {
+            return;
+        }
+
+        try
+        {
+            var source = Environment.GetEnvironmentVariable(SourceVariable);
+            var manager = string.IsNullOrWhiteSpace(source)
+                ? new UpdateManager(new GithubSource(GilSweepInfo.RepositoryUrl, accessToken: null, prerelease: false))
+                : new UpdateManager(source);
+            _manager = manager.IsInstalled ? manager : null;
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Updates are unavailable for this copy");
+        }
+    }
+
+    public bool IsInstalled => _manager is not null;
+
+    /// <summary>
+    /// True for a copy installed with Setup: the app and its Velopack manifest in <c>current\</c>,
+    /// with Update.exe one folder up. Velopack is only started for these, because starting it
+    /// creates a log folder in %LOCALAPPDATA%, even for a portable copy or a build from source.
+    /// </summary>
+    public static bool IsInstalledWithSetup() =>
+        Path.GetDirectoryName(Environment.ProcessPath) is { } folder
+        && File.Exists(Path.Combine(folder, "sq.version"))
+        && File.Exists(Path.Combine(folder, "..", "Update.exe"));
+
+    public async Task<AvailableUpdate?> CheckAsync(CancellationToken cancellationToken = default)
+    {
+        _latest = await Manager.CheckForUpdatesAsync().WaitAsync(CheckTimeout, cancellationToken).ConfigureAwait(false);
+        return _latest is null ? null : new AvailableUpdate(_latest.TargetFullRelease.Version.ToString());
+    }
+
+    public Task DownloadAsync(AvailableUpdate update, Action<int> progress, CancellationToken cancellationToken = default) =>
+        Manager.DownloadUpdatesAsync(Find(update), progress, cancellationToken);
+
+    public void RestartToApply(AvailableUpdate update) => Manager.ApplyUpdatesAndRestart(Find(update).TargetFullRelease);
+
+    private UpdateManager Manager => _manager ?? throw new InvalidOperationException("This copy of Gil Sweep was not installed with Setup.");
+
+    private UpdateInfo Find(AvailableUpdate update) =>
+        _latest is { } latest && latest.TargetFullRelease.Version.ToString() == update.Version
+            ? latest
+            : throw new InvalidOperationException($"Version {update.Version} was not found by the last update check.");
+}
+
+/// <summary>Other running copies of the desktop app.</summary>
+public interface IAppInstances
+{
+    bool OthersRunning { get; }
+}
+
+public sealed class ProcessAppInstances : IAppInstances
+{
+    public bool OthersRunning
+    {
+        get
+        {
+            if (Environment.ProcessPath is not { } self)
+            {
+                return false;
+            }
+
+            // Matched by path, not name: installing an update only ends copies of this program.
+            var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(self));
+            try
+            {
+                return processes.Any(process => process.Id != Environment.ProcessId && RunsFrom(process, self));
+            }
+            finally
+            {
+                foreach (var process in processes)
+                {
+                    process.Dispose();
+                }
+            }
+        }
+    }
+
+    private static bool RunsFrom(Process process, string path)
+    {
+        try
+        {
+            return string.Equals(process.MainModule?.FileName, path, StringComparison.OrdinalIgnoreCase);
+        }
+        catch (Exception ex) when (ex is Win32Exception or InvalidOperationException)
+        {
+            // A copy we can't inspect (another user's, or elevated) might be this program; wait for it.
+            return true;
+        }
+    }
+}

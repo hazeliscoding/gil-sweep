@@ -1,0 +1,62 @@
+# Third-party notices
+
+Gil Sweep bundles the following assets. NuGet dependencies carry their own licenses in their packages.
+
+## IBM Plex Sans and IBM Plex Mono
+
+`src/GilSweep.Desktop/Assets/Fonts/*.ttf`. Copyright © 2017 IBM Corp. with Reserved Font Name "Plex". Licensed under the SIL Open Font License 1.1; the full text is in `src/GilSweep.Desktop/Assets/Fonts/OFL.txt`.
+
+## Lucide icons
+
+`src/GilSweep.Desktop/Controls/LucideIcons.cs` holds path data generated from lucide-static 0.460.0 by `scripts/make-lucide-icons.mjs`.
+
+```
+ISC License
+
+Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+```
+
+## Velopack
+
+`gil-sweep-setup-win-x64.exe` and the installed app's `Update.exe` are Velopack 1.2.161's installer and updater, and the desktop app uses the Velopack library to update itself.
+
+```
+MIT License
+
+Copyright © 2021 Caelan Sayler
+Copyright © 2024 Velopack Ltd.
+
+Permission is hereby granted,  free of charge,  to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to  use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+```
+
+## Market and game data
+
+Prices, sales and listings come from [Universalis](https://universalis.app/) and trend states from [Saddlebag Exchange](https://saddlebagexchange.com/) at run time; nothing from them is bundled except the recorded test fixtures in `tests/GilSweep.Tests/Fixtures`. The item, node and recipe data in `src/GilSweep.Core/Data` was compiled from [Garland Tools](https://garlandtools.org/). FINAL FANTASY XIV is a registered trademark of Square Enix Holdings Co., Ltd.; Gil Sweep is not affiliated with or endorsed by Square Enix.

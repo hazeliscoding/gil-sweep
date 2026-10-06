@@ -1,0 +1,335 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:GilSweep.Desktop.Controls"
+             xmlns:vm="using:GilSweep.Desktop.ViewModels"
+             xmlns:v="using:GilSweep.Desktop.Views"
+             x:Class="GilSweep.Desktop.Views.SweepView"
+             x:DataType="vm:SweepViewModel">
+  <StackPanel Spacing="0">
+    <!-- Header -->
+    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,18">
+      <StackPanel Spacing="4">
+        <TextBlock Classes="page-title" Text="Sweep" />
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <TextBlock Classes="compact t2" Text="{Binding WorldLine}" VerticalAlignment="Center" />
+          <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+            <c:StatusDot Tone="{Binding FreshnessTone}" Diameter="6" Classes.blink="{Binding Session.IsSweeping}" VerticalAlignment="Center" />
+            <TextBlock Classes="data t3" FontSize="11" Text="{Binding Freshness}" VerticalAlignment="Center" />
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+      <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+        <TextBlock Classes="compact t3" Text="Farm session" VerticalAlignment="Center" />
+        <ListBox Theme="{StaticResource Segmented}" ItemsSource="{Binding SessionLengths}" SelectedItem="{Binding SessionLength}"
+                 AutomationProperties.Name="Farm session length" />
+        <c:GsButton Classes="primary" Icon="RefreshCw" Content="Run sweep" Command="{Binding RunSweepCommand}"
+                    IsLoading="{Binding Session.IsSweeping}" ToolTip.Tip="Price every tracked item on your world now" />
+      </StackPanel>
+    </Grid>
+
+    <!-- First sweep running -->
+    <StackPanel Spacing="12" IsVisible="{Binding Session.IsFirstLoad}">
+      <c:Skeleton Height="132" CornerRadius="8" />
+      <Grid ColumnDefinitions="*,300" ColumnSpacing="16">
+        <StackPanel Spacing="6">
+          <c:Skeleton Height="40" />
+          <c:Skeleton Height="40" />
+          <c:Skeleton Height="40" />
+          <c:Skeleton Height="40" />
+        </StackPanel>
+        <c:Skeleton Grid.Column="1" Height="180" CornerRadius="6" />
+      </Grid>
+      <TextBlock Classes="compact t3" Text="{Binding LoadingLine}" />
+    </StackPanel>
+
+    <!-- Nothing yet -->
+    <Border Padding="0,56" IsVisible="{Binding Session.IsEmpty}">
+      <StackPanel HorizontalAlignment="Center" Spacing="10" MaxWidth="440">
+        <Border Width="40" Height="40" CornerRadius="8" Background="{StaticResource AccentSubtle}" BorderBrush="{StaticResource AccentBorder}"
+                BorderThickness="1" HorizontalAlignment="Center">
+          <c:Icon Kind="Pickaxe" Size="18" Foreground="{StaticResource AccentText}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+        <TextBlock Classes="section-title" HorizontalAlignment="Center" Text="No market data yet" />
+        <TextBlock Classes="body t2" TextAlignment="Center" TextWrapping="Wrap"
+                   Text="Run a sweep to price the tracked item database on your world. The first sweep takes about a minute; after that Gil Sweep sweeps on its own every hour." />
+        <c:GsButton Classes="primary" Icon="RefreshCw" Content="Run sweep" Command="{Binding RunSweepCommand}" HorizontalAlignment="Center" Margin="0,6,0,0" />
+      </StackPanel>
+    </Border>
+
+    <!-- Results -->
+    <StackPanel Spacing="16" IsVisible="{Binding Session.HasData}">
+      <c:Banner Tone="Info" Title="Part of this sweep is missing" Description="{Binding Warning}"
+                IsVisible="{Binding Warning, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+      <c:EmptyState IsVisible="{Binding NothingFarmable}" Icon="Lock" Title="Nothing to farm at these levels on this world yet"
+                    Description="Raise your gatherer levels or story progress in Settings, or sweep again later." />
+
+      <!-- Best farm right now -->
+      <Border Classes="raised enter" Padding="18,16,18,14" IsVisible="{Binding Best, Converter={x:Static ObjectConverters.IsNotNull}}">
+        <StackPanel DataContext="{Binding Best}" x:DataType="vm:OpportunityItemViewModel">
+          <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+            <StackPanel Spacing="6">
+              <TextBlock Classes="eyebrow" Text="BEST FARM RIGHT NOW" />
+              <WrapPanel Orientation="Horizontal">
+                <TextBlock Classes="hero-title" Text="{Binding Name}" VerticalAlignment="Center" Margin="0,0,10,0" />
+                <c:Pill Label="{Binding Grade}" Tone="{Binding GradeTone}" VerticalAlignment="Center" />
+              </WrapPanel>
+              <TextBlock Classes="compact t2" Margin="0,-2,0,0">
+                <Run Text="{Binding JobLevel}" />
+                <Run Text=" · " />
+                <Run Text="{Binding Where}" />
+              </TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+              <c:GsButton Classes="secondary" Icon="Bookmark" Content="{Binding WatchLabel}"
+                          Command="{Binding $parent[UserControl].((vm:SweepViewModel)DataContext).ToggleWatchCommand}"
+                          CommandParameter="{Binding ItemId}" />
+              <c:GsButton Classes="primary" IconRight="ArrowRight" Content="View farm"
+                          Command="{Binding $parent[UserControl].((vm:SweepViewModel)DataContext).OpenCommand}"
+                          CommandParameter="{Binding ItemId}" />
+            </StackPanel>
+          </Grid>
+          <Border Classes="divider" Margin="0,14,0,12" />
+          <Grid ColumnDefinitions="*,Auto,*,Auto,*,Auto,*,Auto,*">
+            <StackPanel Grid.Column="0" Spacing="3" Margin="0,0,12,0">
+              <TextBlock Classes="eyebrow" Text="PRICE" />
+              <TextBlock Classes="data-value t1" FontSize="15" Text="{Binding Price}" />
+              <TextBlock Classes="compact t3" Text="{Binding PriceNote}" />
+            </StackPanel>
+            <Border Grid.Column="1" Classes="vrule" />
+            <StackPanel Grid.Column="2" Spacing="3" Margin="12,0">
+              <TextBlock Classes="eyebrow" Text="SALES" />
+              <TextBlock Classes="data-value t1" FontSize="15" Text="{Binding Sales}" />
+              <TextBlock Classes="compact t3" Text="{Binding SalesNote}" />
+            </StackPanel>
+            <Border Grid.Column="3" Classes="vrule" />
+            <StackPanel Grid.Column="4" Spacing="3" Margin="12,0">
+              <TextBlock Classes="eyebrow" Text="COMPETITION" />
+              <TextBlock Classes="body-strong t1" FontSize="15" Text="{Binding Competition}" />
+              <TextBlock Classes="compact t3" Text="{Binding CompetitionNote}" />
+            </StackPanel>
+            <Border Grid.Column="5" Classes="vrule" />
+            <StackPanel Grid.Column="6" Spacing="3" Margin="12,0">
+              <TextBlock Classes="eyebrow" Text="TREND" />
+              <TextBlock Classes="body-strong" FontSize="15" Text="{Binding Trend}"
+                         Foreground="{Binding TrendTone, Converter={x:Static c:ToneConverters.Text}}" />
+              <TextBlock Classes="compact t3" Text="{Binding TrendNote}" />
+            </StackPanel>
+            <Border Grid.Column="7" Classes="vrule" />
+            <StackPanel Grid.Column="8" Spacing="3" Margin="12,0,0,0">
+              <TextBlock Classes="eyebrow" Text="NODE" />
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <c:StatusDot Tone="{Binding NodeTone}" VerticalAlignment="Center" />
+                <TextBlock Classes="body-strong" FontSize="15" Text="{Binding Node}"
+                           Foreground="{Binding NodeBrushKey, Converter={x:Static v:Converters.Brush}}" />
+              </StackPanel>
+              <TextBlock Classes="compact t3" Text="{Binding NodeNote}" />
+            </StackPanel>
+          </Grid>
+          <ItemsControl ItemsSource="{Binding Reasons}" Margin="0,12,0,0">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate><WrapPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:ReasonViewModel">
+                <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,0,14,4">
+                  <TextBlock Classes="compact" Text="{Binding Glyph}" Foreground="{Binding Tone, Converter={x:Static c:ToneConverters.Text}}" />
+                  <TextBlock Classes="compact t2" Text="{Binding Text}" />
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
+
+      <Grid ColumnDefinitions="*,260" ColumnSpacing="16">
+        <!-- More opportunities -->
+        <StackPanel Spacing="8">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Classes="section-title" Text="More opportunities" />
+            <TextBlock Grid.Column="1" Classes="compact t3" Text="{Binding RankedFor}" VerticalAlignment="Bottom" />
+          </Grid>
+          <Border Classes="panel" ClipToBounds="True">
+            <StackPanel>
+              <Border Classes="panel-head" Padding="12,7">
+                <Grid ColumnDefinitions="22,*,72,72,78,84" ColumnSpacing="6">
+                  <TextBlock Classes="eyebrow" Text="#" />
+                  <TextBlock Grid.Column="1" Classes="eyebrow" Text="ITEM" />
+                  <TextBlock Grid.Column="2" Classes="eyebrow" Text="PRICE" HorizontalAlignment="Right" />
+                  <TextBlock Grid.Column="3" Classes="eyebrow" Text="SELLERS" />
+                  <TextBlock Grid.Column="4" Classes="eyebrow" Text="TREND" />
+                  <TextBlock Grid.Column="5" Classes="eyebrow" Text="NODE" />
+                </Grid>
+              </Border>
+              <ItemsControl ItemsSource="{Binding Ranked}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:OpportunityItemViewModel">
+                    <Button Theme="{StaticResource PlainButton}" Height="40"
+                            Command="{Binding $parent[UserControl].((vm:SweepViewModel)DataContext).OpenCommand}"
+                            CommandParameter="{Binding ItemId}" AutomationProperties.Name="{Binding Name}">
+                      <Border BorderBrush="{StaticResource Border1}" BorderThickness="0,0,0,1" Padding="12,0">
+                        <Grid ColumnDefinitions="22,*,72,72,78,84" ColumnSpacing="6" VerticalAlignment="Center">
+                          <TextBlock Classes="data t3" Text="{Binding Rank}" VerticalAlignment="Center" />
+                          <Grid Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <StackPanel VerticalAlignment="Center">
+                              <TextBlock Classes="body-strong t1" TextTrimming="CharacterEllipsis">
+                                <Run Text="{Binding Name}" />
+                                <Run Text="{Binding FavoriteMark}" Foreground="{StaticResource AccentText}" />
+                              </TextBlock>
+                              <TextBlock Classes="compact t3" Text="{Binding Subline}" TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                            <c:Pill Grid.Column="1" Classes="sm" Label="{Binding Grade}" Tone="{Binding GradeTone}" />
+                          </Grid>
+                          <TextBlock Grid.Column="2" Classes="data-value t1" Text="{Binding Price}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                          <TextBlock Grid.Column="3" Classes="compact t2" Text="{Binding CompetitionShort}" VerticalAlignment="Center" />
+                          <TextBlock Grid.Column="4" Classes="compact" Text="{Binding Trend}" VerticalAlignment="Center"
+                                     Foreground="{Binding TrendTone, Converter={x:Static c:ToneConverters.Text}}" />
+                          <StackPanel Grid.Column="5" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                            <c:StatusDot Tone="{Binding NodeTone}" VerticalAlignment="Center" />
+                            <TextBlock Classes="compact" Text="{Binding NodeTiny}" TextTrimming="CharacterEllipsis"
+                                       Foreground="{Binding NodeBrushKey, Converter={x:Static v:Converters.Brush}}" />
+                          </StackPanel>
+                        </Grid>
+                      </Border>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </Border>
+          <TextBlock Classes="compact t3" TextWrapping="Wrap"
+                     Text="Ranking weighs price, how fast it sells, listing depth, recent trend and whether the node is open. Select a row for the full market view." />
+
+          <Grid ColumnDefinitions="*,*" ColumnSpacing="16" Margin="0,8,0,0">
+            <Button Theme="{StaticResource PlainButton}" CornerRadius="6" Command="{Binding OpenMapCommand}"
+                    IsEnabled="{Binding HasMapPick}" AutomationProperties.Name="Daily map pick">
+              <Border Classes="panel" Padding="14,12">
+                <StackPanel Spacing="4">
+                  <TextBlock Classes="eyebrow" Text="DAILY MAP PICK" />
+                  <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding HasMapPick}">
+                    <TextBlock Classes="body-strong t1" Text="{Binding MapName}" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="1" Classes="data-value t1" Text="{Binding MapPrice}" />
+                  </Grid>
+                  <TextBlock Classes="compact t3" Text="{Binding MapNote}" IsVisible="{Binding HasMapPick}" TextWrapping="Wrap" />
+                  <TextBlock Classes="compact t3" Text="No map sells at least twice a day at your levels." IsVisible="{Binding !HasMapPick}" TextWrapping="Wrap" />
+                </StackPanel>
+              </Border>
+            </Button>
+            <Border Grid.Column="1" Classes="panel" Padding="14,12">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="eyebrow" Text="WORTH PROCESSING" />
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding HasCraftPick}">
+                  <TextBlock Classes="body-strong t1" Text="{Binding CraftName}" TextTrimming="CharacterEllipsis" />
+                  <TextBlock Grid.Column="1" Classes="data-value healthy" Text="{Binding CraftDifference}" />
+                </Grid>
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock Classes="compact t3" Text="{Binding CraftNote}" IsVisible="{Binding HasCraftPick}" />
+                  <TextBlock Classes="compact t3" Text="No recipe beats selling raw right now." IsVisible="{Binding !HasCraftPick}" />
+                  <Button Grid.Column="1" Theme="{StaticResource LinkButton}" Command="{Binding OpenCraftCommand}">
+                    <TextBlock Classes="compact" Text="All crafts ›" />
+                  </Button>
+                </Grid>
+              </StackPanel>
+            </Border>
+          </Grid>
+        </StackPanel>
+
+        <!-- Right rail -->
+        <StackPanel Grid.Column="1" Spacing="14">
+          <Border Classes="raised accent" ClipToBounds="True" IsVisible="{Binding SessionOn}">
+            <StackPanel>
+              <Border Classes="panel-head">
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock Classes="eyebrow accent" Text="{Binding SessionTitle}" VerticalAlignment="Center" />
+                  <Button Grid.Column="1" Theme="{StaticResource LinkButton}" Foreground="{StaticResource Text3}" Command="{Binding ClearSessionCommand}">
+                    <TextBlock Classes="compact" Text="Clear" />
+                  </Button>
+                </Grid>
+              </Border>
+              <ItemsControl ItemsSource="{Binding SessionSteps}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:SessionStepViewModel">
+                    <Button Theme="{StaticResource PlainButton}"
+                            Command="{Binding $parent[UserControl].((vm:SweepViewModel)DataContext).OpenCommand}"
+                            CommandParameter="{Binding ItemId}" AutomationProperties.Name="{Binding Name}">
+                      <Border BorderBrush="{StaticResource Border1}" BorderThickness="0,0,0,1" Padding="14,9">
+                        <Grid ColumnDefinitions="64,*" ColumnSpacing="10">
+                          <TextBlock Classes="eyebrow" Text="{Binding When}" Margin="0,2,0,0"
+                                     Foreground="{Binding WhenTone, Converter={x:Static c:ToneConverters.Text}}" />
+                          <StackPanel Grid.Column="1">
+                            <TextBlock Classes="body-strong t1" Text="{Binding Name}" TextWrapping="Wrap" />
+                            <TextBlock Classes="compact t3" Text="{Binding Note}" TextWrapping="Wrap" />
+                          </StackPanel>
+                        </Grid>
+                      </Border>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <TextBlock Classes="compact t3" Margin="14,8" TextWrapping="Wrap"
+                         Text="An opportunity queue, not a route. Travel time and yield are not estimated." />
+            </StackPanel>
+          </Border>
+
+          <Border Classes="panel" ClipToBounds="True">
+            <StackPanel>
+              <Border Classes="panel-head">
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock Classes="eyebrow" Text="AVAILABLE NOW" VerticalAlignment="Center" />
+                  <TextBlock Grid.Column="1" Classes="data t3" Text="{Binding EorzeaClockLabel}" />
+                </Grid>
+              </Border>
+              <ItemsControl ItemsSource="{Binding AvailableNow}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:OpportunityItemViewModel">
+                    <Button Theme="{StaticResource PlainButton}"
+                            Command="{Binding $parent[UserControl].((vm:SweepViewModel)DataContext).OpenCommand}"
+                            CommandParameter="{Binding ItemId}" AutomationProperties.Name="{Binding Name}">
+                      <Border BorderBrush="{StaticResource Border1}" BorderThickness="0,0,0,1" Padding="14,9">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                          <c:StatusDot Tone="Healthy" VerticalAlignment="Top" Margin="0,6,0,0" />
+                          <StackPanel Grid.Column="1">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                              <TextBlock Classes="body-strong t1" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                              <TextBlock Grid.Column="1" Classes="compact" Text="{Binding GradeMarket}"
+                                         Foreground="{Binding GradeTone, Converter={x:Static c:ToneConverters.Text}}" />
+                            </Grid>
+                            <TextBlock Classes="compact t3" Text="{Binding WindowLine}" TextWrapping="Wrap" />
+                          </StackPanel>
+                        </Grid>
+                      </Border>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <TextBlock Classes="eyebrow" Text="SOON" Margin="14,9,14,4" />
+              <ItemsControl ItemsSource="{Binding Soon}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:OpportunityItemViewModel">
+                    <Button Theme="{StaticResource PlainButton}"
+                            Command="{Binding $parent[UserControl].((vm:SweepViewModel)DataContext).OpenCommand}"
+                            CommandParameter="{Binding ItemId}" AutomationProperties.Name="{Binding Name}">
+                      <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" Margin="14,8">
+                        <c:StatusDot Tone="Queued" VerticalAlignment="Top" Margin="0,6,0,0" />
+                        <StackPanel Grid.Column="1">
+                          <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <TextBlock Classes="data-value t1" Text="{Binding Countdown}" />
+                            <TextBlock Grid.Column="1" Classes="compact" Text="{Binding GradeOpportunity}"
+                                       Foreground="{Binding GradeTone, Converter={x:Static c:ToneConverters.Text}}" />
+                          </Grid>
+                          <TextBlock Classes="compact t2" Text="{Binding Name}" />
+                          <TextBlock Classes="compact t3" Text="{Binding WindowLine}" TextWrapping="Wrap" />
+                        </StackPanel>
+                      </Grid>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <Border Height="6" />
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Grid>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

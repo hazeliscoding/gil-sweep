@@ -1,0 +1,250 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:GilSweep.Desktop.Controls"
+             xmlns:vm="using:GilSweep.Desktop.ViewModels"
+             xmlns:v="using:GilSweep.Desktop.Views"
+             x:Class="GilSweep.Desktop.Views.MarketView"
+             x:DataType="vm:MarketViewModel">
+  <StackPanel>
+    <!-- Breadcrumb and search -->
+    <Grid ColumnDefinitions="*,260" Margin="0,0,0,8">
+      <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+        <Button Theme="{StaticResource LinkButton}" Foreground="{StaticResource Text3}" Command="{Binding BackCommand}">
+          <TextBlock Classes="compact" Text="Sweep" />
+        </Button>
+        <TextBlock Classes="compact t3" Text="›" />
+        <TextBlock Classes="compact t3" Text="Market" />
+      </StackPanel>
+      <AutoCompleteBox Grid.Column="1" ItemsSource="{Binding Choices}" SelectedItem="{Binding Search}" FilterMode="ContainsOrdinal"
+                       PlaceholderText="Find a tracked item" MinimumPrefixLength="1" MaxDropDownHeight="320"
+                       AutomationProperties.Name="Find a tracked item" />
+    </Grid>
+
+    <c:EmptyState IsVisible="{Binding !HasItem}" Icon="Search" Title="Choose an item"
+                  Description="Pick an opportunity on the Sweep screen, or find any tracked item above." />
+
+    <StackPanel IsVisible="{Binding HasItem}">
+      <!-- Header -->
+      <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+        <StackPanel Spacing="4">
+          <WrapPanel>
+            <TextBlock Classes="page-title" Text="{Binding Item.Name}" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <c:Pill Label="{Binding Item.Grade}" Tone="{Binding Item.GradeTone}" VerticalAlignment="Center" IsVisible="{Binding IsRanked}" />
+            <c:Pill Label="{Binding LockText}" Tone="Unknown" Icon="Lock" VerticalAlignment="Center"
+                    IsVisible="{Binding LockText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          </WrapPanel>
+          <TextBlock Classes="compact t2" Text="{Binding Subtitle}" TextWrapping="Wrap" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+          <c:GsButton Classes="secondary" Icon="Bookmark" Content="{Binding WatchLabel}" Command="{Binding ToggleWatchCommand}" />
+          <c:GsButton Classes="secondary" Icon="ExternalLink" Content="Universalis" Command="{Binding OpenUniversalisCommand}"
+                      ToolTip.Tip="Open this item on universalis.app" />
+        </StackPanel>
+      </Grid>
+
+      <Grid ColumnDefinitions="*,320" ColumnSpacing="16">
+        <StackPanel Spacing="16">
+          <!-- Key figures -->
+          <Border Classes="panel" ClipToBounds="True">
+            <Grid ColumnDefinitions="*,Auto,*,Auto,*,Auto,*">
+              <StackPanel Grid.Column="0" Margin="14,12" Spacing="4">
+                <TextBlock Classes="eyebrow" Text="CHEAPEST NOW" />
+                <TextBlock Classes="metric t1" Text="{Binding CheapestNow}" />
+                <TextBlock Classes="compact t3" Text="{Binding CheapestNote}" />
+              </StackPanel>
+              <Border Grid.Column="1" Classes="vrule" />
+              <StackPanel Grid.Column="2" Margin="14,12" Spacing="4">
+                <TextBlock Classes="eyebrow" Text="UNITS SOLD / DAY" />
+                <TextBlock Classes="metric t1" Text="{Binding SoldPerDay}" />
+                <TextBlock Classes="compact t3" Text="{Binding SoldNote}" />
+              </StackPanel>
+              <Border Grid.Column="3" Classes="vrule" />
+              <StackPanel Grid.Column="4" Margin="14,12" Spacing="4">
+                <TextBlock Classes="eyebrow" Text="DAYS OF SUPPLY" />
+                <TextBlock Classes="metric t1" Text="{Binding DaysOfSupply}" />
+                <TextBlock Classes="compact t3" Text="{Binding SupplyNote}" />
+              </StackPanel>
+              <Border Grid.Column="5" Classes="vrule" />
+              <StackPanel Grid.Column="6" Margin="14,12" Spacing="4">
+                <TextBlock Classes="eyebrow" Text="PRICE TREND" />
+                <TextBlock Classes="metric" Text="{Binding TrendValue}" Foreground="{Binding TrendBrushKey, Converter={x:Static v:Converters.Brush}}" />
+                <TextBlock Classes="compact t3" Text="{Binding TrendNote}" TextTrimming="CharacterEllipsis" />
+              </StackPanel>
+            </Grid>
+          </Border>
+
+          <c:Banner Tone="Warning" Title="{Binding LoadError}" IsVisible="{Binding LoadError, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <c:Banner.Actions>
+              <c:GsButton Classes="sm" Icon="RefreshCw" Content="Try again" Command="{Binding ReloadCommand}" />
+            </c:Banner.Actions>
+          </c:Banner>
+
+          <!-- Price history -->
+          <Border Classes="panel" Padding="14,12">
+            <StackPanel Spacing="8">
+              <StackPanel Spacing="2">
+                <TextBlock Classes="card-title t1" Text="Price history" />
+                <TextBlock Classes="compact t3" Text="{Binding ChartSubtitle}" />
+              </StackPanel>
+              <Panel Height="160">
+                <c:PriceChart Points="{Binding PricePoints}" />
+                <c:Skeleton IsVisible="{Binding IsLoading}" />
+              </Panel>
+            </StackPanel>
+          </Border>
+
+          <!-- Listings and sales -->
+          <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+            <Border Classes="panel" ClipToBounds="True">
+              <StackPanel>
+                <Border Classes="panel-head">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Classes="eyebrow" Text="CHEAPEST LISTINGS" />
+                    <TextBlock Grid.Column="1" Classes="eyebrow" Text="QTY · TOTAL" />
+                  </Grid>
+                </Border>
+                <ItemsControl ItemsSource="{Binding Listings}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:TableRow">
+                      <Border Classes="row" Height="26" Padding="14,0">
+                        <Grid ColumnDefinitions="*,50,90" VerticalAlignment="Center">
+                          <TextBlock Classes="data t1" Text="{Binding Price}" />
+                          <TextBlock Grid.Column="1" Classes="data t2" Text="{Binding Quantity}" HorizontalAlignment="Right" />
+                          <TextBlock Grid.Column="2" Classes="data t2" Text="{Binding Third}" HorizontalAlignment="Right" />
+                        </Grid>
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Classes="compact t3" Margin="14,10" Text="Nothing listed: an empty market."
+                           IsVisible="{Binding !Listings.Count}" />
+              </StackPanel>
+            </Border>
+            <Border Grid.Column="1" Classes="panel" ClipToBounds="True">
+              <StackPanel>
+                <Border Classes="panel-head">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Classes="eyebrow" Text="RECENT SALES" />
+                    <TextBlock Grid.Column="1" Classes="eyebrow" Text="QTY · WHEN" />
+                  </Grid>
+                </Border>
+                <ItemsControl ItemsSource="{Binding Sales}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:TableRow">
+                      <Border Classes="row" Height="26" Padding="14,0">
+                        <Grid ColumnDefinitions="*,50,90" VerticalAlignment="Center">
+                          <TextBlock Classes="data t1" Text="{Binding Price}" />
+                          <TextBlock Grid.Column="1" Classes="data t2" Text="{Binding Quantity}" HorizontalAlignment="Right" />
+                          <TextBlock Grid.Column="2" Classes="data t2" Text="{Binding Third}" HorizontalAlignment="Right" />
+                        </Grid>
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Classes="compact t3" Margin="14,10" Text="No recorded sales." IsVisible="{Binding !Sales.Count}" />
+              </StackPanel>
+            </Border>
+          </Grid>
+
+          <!-- When it sells -->
+          <Border Classes="panel" Padding="14,12">
+            <StackPanel Spacing="10">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Classes="card-title t1" Text="When it sells" />
+                <TextBlock Grid.Column="1" Classes="compact t3">
+                  <Run Text="sales by hour, your local time · " />
+                  <Run Text="{Binding PeakLine}" />
+                </TextBlock>
+              </Grid>
+              <c:Sparkline Height="48" Bars="True" Values="{Binding Hours}" Stroke="{StaticResource Border3}"
+                           Highlighted="{Binding PeakHours}" Highlight="{StaticResource Series1}"
+                           AutomationProperties.Name="Sales by hour of day" />
+              <Grid ColumnDefinitions="*,*,*,*,Auto">
+                <TextBlock Classes="data t3" FontSize="11" Text="00" />
+                <TextBlock Grid.Column="1" Classes="data t3" FontSize="11" Text="06" />
+                <TextBlock Grid.Column="2" Classes="data t3" FontSize="11" Text="12" />
+                <TextBlock Grid.Column="3" Classes="data t3" FontSize="11" Text="18" />
+                <TextBlock Grid.Column="4" Classes="data t3" FontSize="11" Text="23" />
+              </Grid>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+
+        <!-- Inspector -->
+        <StackPanel Grid.Column="1" Spacing="14">
+          <Border Classes="panel" Padding="14,12">
+            <StackPanel Spacing="10">
+              <TextBlock Classes="eyebrow" Text="{Binding RankTitle}" />
+              <TextBlock Classes="compact t2" Text="{Binding LockText}" TextWrapping="Wrap"
+                         IsVisible="{Binding LockText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+              <ItemsControl ItemsSource="{Binding Item.Signals}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate><StackPanel Spacing="10" /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:SignalViewModel">
+                    <StackPanel Spacing="4">
+                      <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Classes="compact t1" Text="{Binding Label}" />
+                        <TextBlock Grid.Column="1" Classes="data t3" Text="{Binding Points}" />
+                      </Grid>
+                      <c:Meter Fraction="{Binding Fraction}" Foreground="{Binding Tone, Converter={x:Static c:ToneConverters.Main}}" />
+                      <TextBlock Classes="compact t3" Text="{Binding Detail}" TextWrapping="Wrap" />
+                    </StackPanel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <Border Classes="divider" />
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Classes="compact t2" Text="Opportunity score" />
+                <TextBlock Grid.Column="1" Classes="data-value t1">
+                  <Run Text="{Binding Item.Score}" />
+                  <Run Text=" / 100" />
+                </TextBlock>
+              </Grid>
+            </StackPanel>
+          </Border>
+
+          <Border Classes="panel" Padding="14,12">
+            <StackPanel Spacing="8">
+              <TextBlock Classes="eyebrow" Text="GATHERING" />
+              <Grid ColumnDefinitions="84,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="10">
+                <TextBlock Classes="compact t3" Text="Node" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
+                  <c:StatusDot Tone="{Binding Item.NodeTone}" VerticalAlignment="Center" />
+                  <TextBlock Classes="compact" Text="{Binding Item.Node}" Foreground="{Binding Item.NodeBrushKey, Converter={x:Static v:Converters.Brush}}" />
+                </StackPanel>
+                <TextBlock Grid.Row="1" Classes="compact t3" Text="Window" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Classes="compact t1" Text="{Binding WindowText}" TextWrapping="Wrap" />
+                <TextBlock Grid.Row="2" Classes="compact t3" Text="Location" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Classes="compact t1" Text="{Binding Item.Where}" TextWrapping="Wrap" />
+                <TextBlock Grid.Row="3" Classes="compact t3" Text="Requires" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Classes="compact t1" Text="{Binding Requirement}" TextWrapping="Wrap" />
+              </Grid>
+            </StackPanel>
+          </Border>
+
+          <Border Classes="panel" Padding="14,12">
+            <StackPanel Spacing="8">
+              <TextBlock Classes="eyebrow" Text="WHO BUYS IT" />
+              <TextBlock Classes="compact t2" Text="{Binding Demand}" TextWrapping="Wrap" LineHeight="18" />
+            </StackPanel>
+          </Border>
+
+          <Border Classes="panel" Padding="14,12" IsVisible="{Binding Advice, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+            <StackPanel Spacing="6">
+              <TextBlock Classes="eyebrow" Text="SELLING IT" />
+              <TextBlock Classes="body-strong t1" Text="{Binding Advice}" />
+              <TextBlock Classes="compact t3" Text="{Binding AdviceNote}" TextWrapping="Wrap" />
+            </StackPanel>
+          </Border>
+
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <c:Icon Kind="Database" Size="12" Foreground="{StaticResource Text3}" VerticalAlignment="Center" />
+            <TextBlock Classes="compact t3" Text="{Binding SourceLine}" />
+          </StackPanel>
+        </StackPanel>
+      </Grid>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

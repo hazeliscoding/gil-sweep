@@ -1,0 +1,206 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="using:GilSweep.Desktop.Controls">
+  <!-- The mockup's type scale. Sans for the interface, mono for evidence: prices, counts, times, countdowns. -->
+  <Style Selector="Window">
+    <Setter Property="FontFamily" Value="{StaticResource SansFont}" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{StaticResource Text1}" />
+  </Style>
+
+  <Style Selector="TextBlock.page-title">
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LineHeight" Value="24" />
+    <Setter Property="LetterSpacing" Value="-0.4" />
+  </Style>
+  <Style Selector="TextBlock.section-title">
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LineHeight" Value="19.5" />
+  </Style>
+  <Style Selector="TextBlock.card-title">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LineHeight" Value="17" />
+  </Style>
+  <Style Selector="TextBlock.body">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="LineHeight" Value="19.5" />
+  </Style>
+  <Style Selector="TextBlock.body-strong">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LineHeight" Value="19.5" />
+  </Style>
+  <Style Selector="TextBlock.strong">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="19.5" />
+  </Style>
+  <Style Selector="TextBlock.compact">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="LineHeight" Value="17.4" />
+  </Style>
+  <Style Selector="TextBlock.label">
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LineHeight" Value="13.2" />
+    <Setter Property="LetterSpacing" Value="0.66" />
+  </Style>
+  <Style Selector="TextBlock.micro">
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="12" />
+    <Setter Property="LetterSpacing" Value="0.8" />
+  </Style>
+  <Style Selector="TextBlock.data">
+    <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="16.8" />
+  </Style>
+  <Style Selector="TextBlock.data-value">
+    <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="17" />
+  </Style>
+  <Style Selector="TextBlock.metric">
+    <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+    <Setter Property="FontSize" Value="24" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="26.4" />
+  </Style>
+  <!-- The best farm's name in the Sweep headline. -->
+  <Style Selector="TextBlock.hero-title">
+    <Setter Property="FontSize" Value="22" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LineHeight" Value="25.3" />
+    <Setter Property="LetterSpacing" Value="-0.44" />
+  </Style>
+  <!-- Uppercase micro labels (BEST FARM RIGHT NOW). The text is written in capitals. -->
+  <Style Selector="TextBlock.eyebrow">
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LineHeight" Value="12" />
+    <Setter Property="LetterSpacing" Value="0.8" />
+    <Setter Property="Foreground" Value="{StaticResource Text3}" />
+  </Style>
+
+  <Style Selector="TextBlock.t1">
+    <Setter Property="Foreground" Value="{StaticResource Text1}" />
+  </Style>
+  <Style Selector="TextBlock.t2">
+    <Setter Property="Foreground" Value="{StaticResource Text2}" />
+  </Style>
+  <Style Selector="TextBlock.t3">
+    <Setter Property="Foreground" Value="{StaticResource Text3}" />
+  </Style>
+  <Style Selector="TextBlock.t4">
+    <Setter Property="Foreground" Value="{StaticResource Text4}" />
+  </Style>
+  <Style Selector="TextBlock.accent">
+    <Setter Property="Foreground" Value="{StaticResource AccentText}" />
+  </Style>
+  <Style Selector="TextBlock.healthy">
+    <Setter Property="Foreground" Value="{StaticResource HealthyText}" />
+  </Style>
+  <Style Selector="TextBlock.critical">
+    <Setter Property="Foreground" Value="{StaticResource CriticalText}" />
+  </Style>
+  <Style Selector="TextBlock.warning">
+    <Setter Property="Foreground" Value="{StaticResource WarningText}" />
+  </Style>
+  <Style Selector="TextBlock.queued">
+    <Setter Property="Foreground" Value="{StaticResource QueuedText}" />
+  </Style>
+  <Style Selector="TextBlock.tnum">
+    <Setter Property="FontFeatures" Value="+tnum, +lnum" />
+  </Style>
+
+  <!-- Surfaces. A panel is the mockup's standard card (bg-1, hairline, 6 px); a raised card is bg-2 with an inner highlight. -->
+  <Style Selector="Border.panel">
+    <Setter Property="Background" Value="{StaticResource Bg1}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Border1}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+  </Style>
+  <Style Selector="Border.panel.lg">
+    <Setter Property="CornerRadius" Value="8" />
+  </Style>
+  <Style Selector="Border.raised">
+    <Setter Property="Background" Value="{StaticResource Bg2}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Border2}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="BoxShadow" Value="{StaticResource HighlightInset}" />
+  </Style>
+  <Style Selector="Border.raised.accent">
+    <Setter Property="BorderBrush" Value="{StaticResource AccentBorder}" />
+    <Setter Property="CornerRadius" Value="6" />
+  </Style>
+  <!-- A panel's heading strip: micro label left, a detail right, hairline below. -->
+  <Style Selector="Border.panel-head">
+    <Setter Property="Padding" Value="14,9" />
+    <Setter Property="BorderBrush" Value="{StaticResource Border1}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+  </Style>
+  <Style Selector="Border.divider">
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Background" Value="{StaticResource Border1}" />
+  </Style>
+  <Style Selector="Border.vrule">
+    <Setter Property="Width" Value="1" />
+    <Setter Property="Background" Value="{StaticResource Border1}" />
+  </Style>
+  <!-- The gold diamond: the app's mark in the title bar and on first run. -->
+  <Style Selector="Border.diamond">
+    <Setter Property="Width" Value="10" />
+    <Setter Property="Height" Value="10" />
+    <Setter Property="CornerRadius" Value="1" />
+    <Setter Property="Background" Value="{StaticResource Accent}" />
+    <Setter Property="RenderTransform" Value="rotate(45deg) scale(0.82)" />
+  </Style>
+
+  <!-- Rows in a list: a hairline below each one, and a lighter surface on hover. -->
+  <Style Selector="Border.row">
+    <Setter Property="BorderBrush" Value="{StaticResource Border1}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="Border.row:pointerover">
+    <Setter Property="Background" Value="{StaticResource Bg3}" />
+  </Style>
+  <Style Selector="Border.row.selected">
+    <Setter Property="Background" Value="{StaticResource Bg2}" />
+  </Style>
+  <Style Selector="Border.hover:pointerover">
+    <Setter Property="Background" Value="{StaticResource Bg3}" />
+  </Style>
+
+  <!-- A thin bar for score signals: a 3 px track with a fill. -->
+  <Style Selector="ProgressBar.signal">
+    <Setter Property="Height" Value="3" />
+    <Setter Property="MinHeight" Value="3" />
+    <Setter Property="Background" Value="{StaticResource Bg3}" />
+    <Setter Property="CornerRadius" Value="2" />
+  </Style>
+
+  <Style Selector="TextBox.mono">
+    <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+    <Setter Property="FontSize" Value="12" />
+  </Style>
+  <Style Selector="TextBox">
+    <Setter Property="FontSize" Value="13" />
+  </Style>
+  <Style Selector="ComboBox">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Height" Value="28" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="CheckBox">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="MinHeight" Value="20" />
+  </Style>
+</Styles>

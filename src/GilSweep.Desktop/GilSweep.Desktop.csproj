@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- The Windows SDK projection is only used for toast notifications. -->
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <RootNamespace>GilSweep.Desktop</RootNamespace>
+    <AssemblyName>GilSweep</AssemblyName>
+    <!-- Shown by Windows as the file description, e.g. in Task Manager. -->
+    <AssemblyTitle>Gil Sweep</AssemblyTitle>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\..\docs\brand\gil-sweep.ico</ApplicationIcon>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GilSweep.Core\GilSweep.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Velopack" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\Fonts\*.ttf" />
+    <AvaloniaResource Include="..\..\docs\brand\gil-sweep.ico" Link="Assets\gil-sweep.ico" />
+    <AvaloniaResource Include="..\..\docs\brand\app-icon-256.png" Link="Assets\app-icon-256.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="GilSweep.Tests" />
+    <InternalsVisibleTo Include="GilSweep.Screenshots" />
+  </ItemGroup>
+
+</Project>
