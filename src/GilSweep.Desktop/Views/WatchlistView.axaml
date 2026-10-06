@@ -1,7 +1,113 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:GilSweep.Desktop.Controls"
              xmlns:vm="using:GilSweep.Desktop.ViewModels"
+             xmlns:v="using:GilSweep.Desktop.Views"
              x:Class="GilSweep.Desktop.Views.WatchlistView"
              x:DataType="vm:WatchlistViewModel">
-  <TextBlock Classes="page-title" Text="Watchlist" />
+  <StackPanel Spacing="16">
+    <Grid ColumnDefinitions="*,260" ColumnSpacing="16">
+      <StackPanel Spacing="4">
+        <TextBlock Classes="page-title" Text="Watchlist" />
+        <TextBlock Classes="compact t2" TextWrapping="Wrap"
+                   Text="Watch an item, then choose what it should tell you about. Notifications arrive as Windows toasts while Gil Sweep runs, including from the tray." />
+      </StackPanel>
+      <AutoCompleteBox Grid.Column="1" ItemsSource="{Binding Choices}" SelectedItem="{Binding ToWatch}" FilterMode="ContainsOrdinal"
+                       PlaceholderText="Watch an item" MinimumPrefixLength="1" MaxDropDownHeight="320" VerticalAlignment="Top"
+                       AutomationProperties.Name="Watch an item" />
+    </Grid>
+
+    <c:Banner Tone="Info" Title="Add your retainer names to spot undercuts"
+              Description="Undercut alerts compare listings against your retainers. Their names stay on this computer."
+              IsVisible="{Binding NeedsRetainers}">
+      <c:Banner.Actions>
+        <c:GsButton Classes="sm" Content="Open Settings" Command="{Binding OpenSettingsCommand}" />
+      </c:Banner.Actions>
+    </c:Banner>
+
+    <c:EmptyState IsVisible="{Binding !HasRows}" Icon="Bookmark" Title="Nothing watched yet"
+                  Description="Watch an item from the box above, or with Watch on the Sweep and Market screens." />
+
+    <Border Classes="panel" ClipToBounds="True" IsVisible="{Binding HasRows}">
+      <StackPanel>
+        <Border Classes="panel-head" Padding="14,7">
+          <Grid ColumnDefinitions="*,96,96,96,96,96,28" ColumnSpacing="8">
+            <TextBlock Classes="eyebrow" Text="ITEM" />
+            <TextBlock Grid.Column="1" Classes="eyebrow" Text="NODE OPENS" />
+            <TextBlock Grid.Column="2" Classes="eyebrow" Text="PRICE SPIKE" />
+            <TextBlock Grid.Column="3" Classes="eyebrow" Text="PRICE CRASH" />
+            <TextBlock Grid.Column="4" Classes="eyebrow" Text="UNDERCUT" />
+            <TextBlock Grid.Column="5" Classes="eyebrow" Text="FAVORITE" />
+          </Grid>
+        </Border>
+        <ItemsControl ItemsSource="{Binding Rows}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:WatchRowViewModel">
+              <Border Classes="row" Height="48" Padding="14,0">
+                <Grid ColumnDefinitions="*,96,96,96,96,96,28" ColumnSpacing="8" VerticalAlignment="Center">
+                  <Button Theme="{StaticResource PlainButton}" Background="Transparent" HorizontalAlignment="Left"
+                          Command="{Binding $parent[UserControl].((vm:WatchlistViewModel)DataContext).OpenCommand}" CommandParameter="{Binding ItemId}"
+                          AutomationProperties.Name="{Binding Name}">
+                    <StackPanel>
+                      <TextBlock Classes="body-strong t1" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                      <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Classes="data t3" Text="{Binding Price}" />
+                        <TextBlock Classes="compact" Text="{Binding Change}" Foreground="{Binding ChangeBrushKey, Converter={x:Static v:Converters.Brush}}" />
+                        <TextBlock Classes="compact t3" Text="{Binding LastEvent}" />
+                      </StackPanel>
+                    </StackPanel>
+                  </Button>
+                  <c:GsSwitch Grid.Column="1" IsChecked="{Binding NodeOpens}" IsEnabled="{Binding Timed}"
+                              AutomationProperties.Name="Remind me before the node opens" ToolTip.Tip="Only timed nodes have windows" />
+                  <c:GsSwitch Grid.Column="2" IsChecked="{Binding PriceSpike}" AutomationProperties.Name="Notify me of a price spike" />
+                  <c:GsSwitch Grid.Column="3" IsChecked="{Binding PriceCrash}" AutomationProperties.Name="Notify me of a price crash" />
+                  <c:GsSwitch Grid.Column="4" IsChecked="{Binding Undercut}" AutomationProperties.Name="Notify me when undercut" />
+                  <c:GsSwitch Grid.Column="5" IsChecked="{Binding Favorite}" AutomationProperties.Name="Favorite farm" />
+                  <c:GsButton Grid.Column="6" Classes="ghost icon sm" Icon="X"
+                              Command="{Binding $parent[UserControl].((vm:WatchlistViewModel)DataContext).RemoveCommand}" CommandParameter="{Binding ItemId}"
+                              AutomationProperties.Name="Stop watching" ToolTip.Tip="Stop watching" />
+                </Grid>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+      <Border Classes="panel" Padding="14,12">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="eyebrow" Text="THRESHOLDS" />
+          <Grid ColumnDefinitions="*,140" RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+            <TextBlock Classes="compact t1" Text="A price spike is a rise since the last sweep of at least" VerticalAlignment="Center" TextWrapping="Wrap" />
+            <ComboBox Grid.Column="1" ItemsSource="{Binding SpikeOptions}" SelectedItem="{Binding Spike}" AutomationProperties.Name="Price spike threshold" />
+            <TextBlock Grid.Row="1" Classes="compact t1" Text="A price crash is a drop since the last sweep of at least" VerticalAlignment="Center" TextWrapping="Wrap" />
+            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding CrashOptions}" SelectedItem="{Binding Crash}" AutomationProperties.Name="Price crash threshold" />
+            <TextBlock Grid.Row="2" Classes="compact t1" Text="Node reminder" VerticalAlignment="Center" />
+            <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding LeadOptions}" SelectedItem="{Binding Lead}" AutomationProperties.Name="Node reminder lead time" />
+          </Grid>
+        </StackPanel>
+      </Border>
+      <Border Grid.Column="1" Classes="panel" Padding="14,12">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="eyebrow" Text="RECENT NOTIFICATIONS" />
+          <TextBlock Classes="compact t3" Text="Nothing yet. Alerts for watched items appear here as well as in Windows."
+                     IsVisible="{Binding !RecentAlerts.Count}" TextWrapping="Wrap" />
+          <ItemsControl ItemsSource="{Binding RecentAlerts}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate><StackPanel Spacing="6" /></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:AlertLineViewModel">
+                <Grid ColumnDefinitions="72,*" ColumnSpacing="10">
+                  <TextBlock Classes="data t3" Text="{Binding When}" />
+                  <TextBlock Grid.Column="1" Classes="compact t1" Text="{Binding Text}" TextWrapping="Wrap" />
+                </Grid>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
+    </Grid>
+  </StackPanel>
 </UserControl>
