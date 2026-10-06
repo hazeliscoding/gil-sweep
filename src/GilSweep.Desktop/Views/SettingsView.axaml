@@ -1,7 +1,204 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:GilSweep.Desktop.Controls"
              xmlns:vm="using:GilSweep.Desktop.ViewModels"
              x:Class="GilSweep.Desktop.Views.SettingsView"
              x:DataType="vm:SettingsViewModel">
-  <TextBlock Classes="page-title" Text="Settings" />
+  <StackPanel MaxWidth="760" HorizontalAlignment="Left" Spacing="14">
+    <TextBlock Classes="page-title" Text="Settings" Margin="0,0,0,4" />
+
+    <!-- Character -->
+    <Border Classes="panel lg" Padding="18,16">
+      <StackPanel Spacing="14">
+        <TextBlock Classes="card-title t1" Text="Character" />
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="14" RowSpacing="14">
+          <StackPanel Spacing="6">
+            <TextBlock Classes="label t2" Text="World" />
+            <ComboBox ItemsSource="{Binding Worlds}" SelectedItem="{Binding World}" AutomationProperties.Name="World" />
+            <TextBlock Classes="compact t3" Text="Prices are fetched for this world only. Changing it sweeps again." />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Spacing="6">
+            <TextBlock Classes="label t2" Text="Main scenario progress" />
+            <ComboBox ItemsSource="{Binding Expansions}" SelectedItem="{Binding Story}" AutomationProperties.Name="Main scenario progress" />
+            <TextBlock Classes="compact t3" Text="Items from later expansions are hidden." />
+          </StackPanel>
+          <StackPanel Grid.Row="1" Spacing="6">
+            <TextBlock Classes="label t2" Text="Miner level" />
+            <TextBox Classes="mono" Text="{Binding Miner, UpdateSourceTrigger=LostFocus}" AutomationProperties.Name="Miner level" />
+          </StackPanel>
+          <StackPanel Grid.Row="1" Grid.Column="1" Spacing="6">
+            <TextBlock Classes="label t2" Text="Botanist level" />
+            <TextBox Classes="mono" Text="{Binding Botanist, UpdateSourceTrigger=LostFocus}" AutomationProperties.Name="Botanist level" />
+          </StackPanel>
+        </Grid>
+        <StackPanel Spacing="8">
+          <TextBlock Classes="label t3" Text="FOLKLORE BOOKS OWNED" />
+          <ItemsControl ItemsSource="{Binding Folklore}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:FolkloreViewModel">
+                <CheckBox Content="{Binding Label}" IsChecked="{Binding Owned}" Margin="0,0,16,0" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <TextBlock Classes="compact t3" Text="Legendary nodes without their book are still ranked, with a reminder." />
+        </StackPanel>
+        <TextBlock Classes="compact critical" Text="{Binding CharacterError}" IsVisible="{Binding CharacterError, Converter={x:Static ObjectConverters.IsNotNull}}" />
+      </StackPanel>
+    </Border>
+
+    <!-- Crafters -->
+    <Border Classes="panel lg" Padding="18,16">
+      <StackPanel Spacing="12">
+        <StackPanel Spacing="4">
+          <TextBlock Classes="card-title t1" Text="Crafters" />
+          <TextBlock Classes="compact t3" Text="Craft suggestions are limited to recipes these jobs can make." />
+        </StackPanel>
+        <ItemsControl ItemsSource="{Binding Crafters}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate><UniformGrid Columns="4" /></ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:CrafterViewModel">
+              <StackPanel Spacing="6" Margin="0,0,10,10">
+                <TextBlock Classes="label t2" Text="{Binding Label}" />
+                <TextBox Classes="mono" Text="{Binding Level, UpdateSourceTrigger=LostFocus}" AutomationProperties.Name="{Binding Label}" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <TextBlock Classes="compact critical" Text="{Binding CrafterError}" IsVisible="{Binding CrafterError, Converter={x:Static ObjectConverters.IsNotNull}}" />
+      </StackPanel>
+    </Border>
+
+    <!-- Application -->
+    <Border Classes="panel lg" Padding="18,16">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="card-title t1" Text="Application" />
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel>
+            <TextBlock Classes="body t1" Text="Keep running in the tray when closed" />
+            <TextBlock Classes="compact t3" Text="Node reminders and price alerts need Gil Sweep running. Quit from the tray icon." />
+          </StackPanel>
+          <c:GsSwitch Grid.Column="1" IsChecked="{Binding CloseToTray}" AutomationProperties.Name="Keep running in the tray when closed" />
+        </Grid>
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel>
+            <TextBlock Classes="body t1" Text="Sweep automatically every hour" />
+            <TextBlock Classes="compact t3" Text="{Binding RequestNote}" />
+          </StackPanel>
+          <c:GsSwitch Grid.Column="1" IsChecked="{Binding AutoSweep}" AutomationProperties.Name="Sweep automatically every hour" />
+        </Grid>
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel>
+            <TextBlock Classes="body t1" Text="Use Saddlebag Exchange for trend signals" />
+            <TextBlock Classes="compact t3" Text="An optional second source; off means Universalis only." />
+          </StackPanel>
+          <c:GsSwitch Grid.Column="1" IsChecked="{Binding UseSaddlebag}" AutomationProperties.Name="Use Saddlebag Exchange" />
+        </Grid>
+        <StackPanel Spacing="6">
+          <TextBlock Classes="label t2" Text="Retainer names" />
+          <TextBox Text="{Binding RetainerNames, UpdateSourceTrigger=LostFocus}" PlaceholderText="Mochi, Tansy"
+                   AutomationProperties.Name="Retainer names" />
+          <TextBlock Classes="compact t3" TextWrapping="Wrap"
+                     Text="Separated by commas. Used to notice when someone lists below you; the names stay on this computer." />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- Tracked items -->
+    <Border Classes="panel lg" Padding="18,16">
+      <StackPanel Spacing="12">
+        <StackPanel Spacing="4">
+          <TextBlock Classes="card-title t1" Text="Tracked items" />
+          <TextBlock Classes="compact t3" TextWrapping="Wrap"
+                     Text="Add an item by name. Garland Tools confirms it has gathering nodes of its own; crafted, vendor and voyage items are kept out of the recommendations." />
+        </StackPanel>
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+          <TextBox Text="{Binding TrackQuery}" PlaceholderText="Item name, such as Zinc Ore" AutomationProperties.Name="Item to track" />
+          <c:GsButton Grid.Column="1" Icon="Plus" Content="Track" Command="{Binding TrackCommand}" IsLoading="{Binding IsTracking}" />
+        </Grid>
+        <TextBlock Classes="compact t2" Text="{Binding TrackResult}" TextWrapping="Wrap"
+                   IsVisible="{Binding TrackResult, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        <ItemsControl ItemsSource="{Binding CustomItems}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:CustomItemViewModel">
+              <Border Classes="row" Padding="0,6">
+                <Grid ColumnDefinitions="*,Auto">
+                  <StackPanel>
+                    <TextBlock Classes="body-strong t1" Text="{Binding Name}" />
+                    <TextBlock Classes="compact t3" Text="{Binding Detail}" />
+                  </StackPanel>
+                  <c:GsButton Grid.Column="1" Classes="ghost sm" Icon="Trash2" Content="Remove"
+                              Command="{Binding $parent[UserControl].((vm:SettingsViewModel)DataContext).RemoveCustomCommand}"
+                              CommandParameter="{Binding Id}" />
+                </Grid>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!-- Local data -->
+    <Border Classes="panel lg" Padding="18,16">
+      <StackPanel Spacing="12">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+          <StackPanel Spacing="2">
+            <TextBlock Classes="card-title t1" Text="Local data" />
+            <TextBlock Classes="compact t3" Text="{Binding DataLine}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+            <c:GsButton Classes="sm" Icon="FolderOpen" Content="Open folder" Command="{Binding OpenFolderCommand}" />
+            <c:GsButton Classes="sm" Content="Keep one per day" Command="{Binding KeepOnePerDayCommand}"
+                        ToolTip.Tip="Delete all but the newest snapshot of each day" />
+            <c:GsButton Classes="sm danger" Content="Clear snapshots" Command="{Binding ClearSnapshotsCommand}" />
+          </StackPanel>
+        </Grid>
+        <Grid ColumnDefinitions="*,160">
+          <StackPanel>
+            <TextBlock Classes="body t1" Text="Keep history for" />
+            <TextBlock Classes="compact t3" Text="Every sweep from the last two days is kept; before that, the newest of each day." />
+          </StackPanel>
+          <ComboBox Grid.Column="1" ItemsSource="{Binding Retentions}" SelectedItem="{Binding Retention}" VerticalAlignment="Center"
+                    AutomationProperties.Name="Keep history for" />
+        </Grid>
+        <TextBlock Classes="compact t2" Text="{Binding DataResult}" IsVisible="{Binding DataResult, Converter={x:Static ObjectConverters.IsNotNull}}" />
+      </StackPanel>
+    </Border>
+
+    <!-- Updates -->
+    <Border Classes="panel lg" Padding="18,16" DataContext="{Binding Updates}" x:DataType="vm:UpdatesViewModel">
+      <StackPanel Spacing="10">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+          <StackPanel Spacing="2">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Classes="card-title t1" Text="Updates" VerticalAlignment="Center" />
+              <c:StatusBadge Classes="sm" Label="{Binding BadgeLabel}" Tone="{Binding BadgeTone}"
+                             IsVisible="{Binding BadgeLabel, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            </StackPanel>
+            <TextBlock Classes="compact t3" Text="{Binding VersionText}" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+            <c:GsButton Classes="sm" Icon="RefreshCw" Content="Check now" Command="{Binding CheckNowCommand}" IsLoading="{Binding IsChecking}"
+                        IsVisible="{Binding IsInstalled}" />
+            <c:GsButton Classes="sm primary" Content="Restart to update" Command="{Binding UpdateAndRestartCommand}"
+                        IsLoading="{Binding IsDownloading}" IsVisible="{Binding HasUpdate}" />
+            <c:GsButton Classes="sm" Icon="ExternalLink" Content="Releases" Command="{Binding OpenReleasesCommand}"
+                        IsVisible="{Binding !IsInstalled}" />
+          </StackPanel>
+        </Grid>
+        <TextBlock Classes="compact t2" Text="{Binding Detail}" TextWrapping="Wrap" />
+        <TextBlock Classes="compact warning" Text="{Binding Notice}" TextWrapping="Wrap" IsVisible="{Binding Notice, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsInstalled}">
+          <TextBlock Classes="compact t3" TextWrapping="Wrap"
+                     Text="Updates install only when you choose, never during a sweep. Installed for your Windows user with Setup." />
+          <c:GsSwitch Grid.Column="1" IsChecked="{Binding $parent[UserControl].((vm:SettingsViewModel)DataContext).CheckForUpdates}"
+                      AutomationProperties.Name="Check for updates when Gil Sweep starts" ToolTip.Tip="Check for updates when Gil Sweep starts" />
+        </Grid>
+      </StackPanel>
+    </Border>
+  </StackPanel>
 </UserControl>
