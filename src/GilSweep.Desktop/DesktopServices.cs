@@ -32,6 +32,7 @@ public static class DesktopServices
         services.AddSingleton<IAppUpdater, VelopackUpdater>();
         services.AddSingleton<IAppInstances, ProcessAppInstances>();
 
+        services.AddSingleton<ProblemReporter>();
         services.AddSingleton<AppSession>();
         services.AddSingleton<UpdatesViewModel>();
         services.AddSingleton<OnboardingViewModel>();

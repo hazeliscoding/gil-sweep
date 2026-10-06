@@ -108,6 +108,13 @@
               <c:GsButton Classes="sm" Icon="RefreshCw" Content="Retry now" Command="{Binding RetryCommand}" />
             </c:Banner.Actions>
           </c:Banner>
+          <c:Banner DockPanel.Dock="Top" Margin="24,14,24,0" Tone="Warning" Title="{Binding Problems.Message}"
+                    IsVisible="{Binding Problems.Message, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <c:Banner.Actions>
+              <c:GsButton Classes="ghost icon sm" Icon="X" Command="{Binding Problems.DismissCommand}"
+                          AutomationProperties.Name="Dismiss" ToolTip.Tip="Dismiss" />
+            </c:Banner.Actions>
+          </c:Banner>
           <c:Banner DockPanel.Dock="Top" Margin="24,14,24,0" Tone="Info" Title="{Binding Notice}"
                     IsVisible="{Binding Notice, Converter={x:Static ObjectConverters.IsNotNull}}">
             <c:Banner.Actions>

@@ -51,9 +51,17 @@ public sealed partial class FakeMarketHandler : HttpMessageHandler
     {
     }
 
-    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    /// <summary>While set, every request waits for it: a sweep caught in the middle.</summary>
+    public TaskCompletionSource? Hold { get; set; }
+
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         var uri = request.RequestUri!;
+        if (Hold is { } hold)
+        {
+            await hold.Task.WaitAsync(cancellationToken);
+        }
+
         lock (_gate)
         {
             Requests.Add(uri);
@@ -63,12 +71,12 @@ public sealed partial class FakeMarketHandler : HttpMessageHandler
                 if (times > 0 && match(uri))
                 {
                     _overrides[i] = (match, respond, times - 1);
-                    return Task.FromResult(respond());
+                    return respond();
                 }
             }
         }
 
-        return Task.FromResult(Route(uri));
+        return Route(uri);
     }
 
     private HttpResponseMessage Route(Uri uri)

@@ -33,6 +33,7 @@ public sealed partial class UpdatesViewModel : ObservableObject
     private readonly ISweepService _sweeps;
     private readonly ISettingsService _settings;
     private readonly IShellService _shell;
+    private readonly ProblemReporter _problems;
     private readonly IUiThread _uiThread;
     private readonly ILogger<UpdatesViewModel> _logger;
 
@@ -42,9 +43,11 @@ public sealed partial class UpdatesViewModel : ObservableObject
         ISweepService sweeps,
         ISettingsService settings,
         IShellService shell,
+        ProblemReporter problems,
         IUiThread uiThread,
         ILogger<UpdatesViewModel> logger)
     {
+        _problems = problems;
         _updater = updater;
         _instances = instances;
         _sweeps = sweeps;
@@ -194,7 +197,7 @@ public sealed partial class UpdatesViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void OpenReleases() => _shell.OpenUrl(ReleasesUrl);
+    private void OpenReleases() => _problems.Run(() => _shell.OpenUrl(ReleasesUrl));
 
     /// <summary>
     /// Installing ends every copy of Gil Sweep that runs from the install folder. A sweep it

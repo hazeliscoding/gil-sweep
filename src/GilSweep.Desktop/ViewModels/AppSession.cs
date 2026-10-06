@@ -36,6 +36,8 @@ public sealed partial class AppSession : ObservableObject
     private DateTimeOffset _lastBoard = DateTimeOffset.MinValue;
     private DateTimeOffset _lastNodeCheck = DateTimeOffset.MinValue;
     private string _world;
+    private string? _sweepingWorld;
+    private bool _sweepAgain;
     private bool _initialized;
 
     public AppSession(
@@ -127,43 +129,91 @@ public sealed partial class AppSession : ObservableObject
         }
     }
 
-    /// <summary>Sweeps now. Failures become <see cref="SweepError"/>, with a retry in a few minutes.</summary>
-    public async Task SweepAsync()
+    /// <summary>
+    /// Sweeps now. A sweep already running for this world is enough; one running for another world
+    /// (the user just switched) is followed by a sweep of this one. Failures become
+    /// <see cref="SweepError"/>, with a retry in a few minutes.
+    /// </summary>
+    public Task SweepAsync()
     {
         if (IsSweeping)
         {
+            _sweepAgain |= !string.Equals(_sweepingWorld, Settings.World, StringComparison.Ordinal);
+            return Task.CompletedTask;
+        }
+
+        return RunSweepsAsync();
+    }
+
+    /// <summary>Sweeps once more after the running sweep, which started before a change it should include (a newly tracked item).</summary>
+    public void SweepAfterCurrent()
+    {
+        if (IsSweeping)
+        {
+            _sweepAgain = true;
             return;
         }
 
+        _ = RunSweepsAsync();
+    }
+
+    private async Task RunSweepsAsync()
+    {
+        do
+        {
+            _sweepAgain = false;
+            await SweepOnceAsync();
+        }
+        while (_sweepAgain);
+    }
+
+    private async Task SweepOnceAsync()
+    {
+        var world = Settings.World;
+        _sweepingWorld = world;
         IsSweeping = true;
         Progress = null;
         try
         {
             var progress = new UiProgress<SweepProgress>(_ui, value => Progress = value);
             var snapshot = await _sweeps.RunAsync(progress);
-            SweepError = null;
-            NextRetryAt = null;
-            Accept(snapshot);
-            _alerts.CheckSweep(snapshot);
+
+            // A sweep of a world the user has since left is kept in History but not shown or alerted on.
+            if (IsCurrent(world))
+            {
+                SweepError = null;
+                NextRetryAt = null;
+                Accept(snapshot);
+                _alerts.CheckSweep(snapshot);
+            }
         }
         catch (GilSweepException ex)
         {
-            _logger.LogWarning("Sweep failed: {Message}", ex.Message);
-            SweepError = ex.Message;
-            NextRetryAt = Now + RetryAfter;
+            Fail(world, ex.Message, ex);
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
-            _logger.LogError(ex, "Could not save the sweep");
-            SweepError = "The sweep could not be saved: " + ex.Message;
-            NextRetryAt = Now + RetryAfter;
+            Fail(world, "The sweep could not be saved: " + ex.Message, ex);
         }
         finally
         {
             IsSweeping = false;
             Progress = null;
+            _sweepingWorld = null;
         }
     }
+
+    private void Fail(string world, string message, Exception exception)
+    {
+        _logger.LogWarning(exception, "Sweep of {World} failed", world);
+        if (IsCurrent(world))
+        {
+            SweepError = message;
+            NextRetryAt = Now + RetryAfter;
+        }
+    }
+
+    private bool IsCurrent(string world) => string.Equals(world, Settings.World, StringComparison.Ordinal);
 
     /// <summary>Rebuilds the board for this moment, so node windows and countdowns are current.</summary>
     public void RefreshBoard()

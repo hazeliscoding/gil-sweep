@@ -55,6 +55,7 @@ public sealed partial class SettingsViewModel : PageViewModel
     private readonly IAppEnvironment _environment;
     private readonly IDialogService _dialogs;
     private readonly IShellService _shell;
+    private readonly ProblemReporter _problems;
     private readonly ILogger<SettingsViewModel> _logger;
     private bool _loading;
 
@@ -69,8 +70,10 @@ public sealed partial class SettingsViewModel : PageViewModel
         IDialogService dialogs,
         IShellService shell,
         UpdatesViewModel updates,
+        ProblemReporter problems,
         ILogger<SettingsViewModel> logger)
     {
+        _problems = problems;
         _settings = settings;
         _session = session;
         _catalog = catalog;
@@ -225,7 +228,7 @@ public sealed partial class SettingsViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private void OpenFolder() => _shell.OpenFolder(DataFolder);
+    private void OpenFolder() => _problems.Run(() => _shell.OpenFolder(DataFolder));
 
     [RelayCommand]
     private void KeepOnePerDay()
@@ -278,8 +281,8 @@ public sealed partial class SettingsViewModel : PageViewModel
             TrackQuery = "";
             if (result.Gatherable)
             {
-                // Price the newcomer, as v1 did.
-                _ = _session.SweepAsync();
+                // Price the newcomer, as v1 did; a sweep already running started without it.
+                _session.SweepAfterCurrent();
             }
         }
         catch (GilSweepException ex)
@@ -294,7 +297,7 @@ public sealed partial class SettingsViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private void RemoveCustom(int itemId) => _catalog.RemoveCustom(itemId);
+    private void RemoveCustom(int itemId) => _problems.Run(() => _catalog.RemoveCustom(itemId));
 
     private void ApplyLevel(string value, Action<GilSweepSettings, int> apply)
     {

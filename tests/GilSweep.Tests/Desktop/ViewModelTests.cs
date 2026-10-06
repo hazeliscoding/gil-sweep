@@ -172,6 +172,69 @@ public sealed class SweepScreenTests : IDisposable
     }
 
     [Fact]
+    public async Task Switching_world_during_a_sweep_sweeps_the_new_world_after_it()
+    {
+        await _host.StartWithSweepAsync();
+        _host.Market.Hold = new TaskCompletionSource();
+        _host.Clock.Advance(TimeSpan.FromMinutes(10));
+        var running = _host.Session.SweepAsync();
+
+        _host.Get<ISettingsService>().Update(settings => settings.World = "Siren");
+        _host.Market.Hold.SetResult();
+        _host.Market.Hold = null;
+        await running;
+        await _host.SettleAsync();
+
+        Assert.Equal("Siren", _host.Session.Snapshot!.World);
+        Assert.Null(_host.Session.SweepError);
+        Assert.Contains(_host.Market.Requests, uri => uri.AbsolutePath.StartsWith("/api/v2/aggregated/Siren/", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public async Task A_sweep_for_a_world_the_user_left_never_sets_the_banner()
+    {
+        await _host.StartWithSweepAsync();
+        _host.Market.Hold = new TaskCompletionSource();
+        _host.Market.Fail(uri => uri.AbsolutePath.Contains("/Cactuar/", StringComparison.Ordinal), HttpStatusCode.ServiceUnavailable);
+        var running = _host.Session.SweepAsync();
+
+        _host.Get<ISettingsService>().Update(settings => settings.World = "Siren");
+        _host.Market.Hold.SetResult();
+        _host.Market.Hold = null;
+        await running;
+        await _host.SettleAsync();
+
+        Assert.False(_host.Session.IsOffline);
+        Assert.Equal("Siren", _host.Session.Snapshot!.World);
+    }
+
+    [Fact]
+    public async Task The_list_numbers_items_as_the_board_ranks_them()
+    {
+        await _host.StartWithSweepAsync();
+        var sweep = _host.Get<SweepViewModel>();
+        var board = _host.Session.Board;
+
+        Assert.All(sweep.Ranked, row => Assert.Equal(board.RankOf(row.ItemId), row.Rank));
+    }
+
+    [Fact]
+    public async Task A_failed_save_shows_a_message_instead_of_crashing()
+    {
+        var main = await _host.StartWithSweepAsync();
+        var config = Path.Combine(_host.Environment.DataDirectory, "config.json");
+        File.Delete(config);
+        Directory.CreateDirectory(config);
+
+        _host.Get<SweepViewModel>().ToggleWatchCommand.Execute(_host.Get<SweepViewModel>().Best!.ItemId);
+
+        Assert.StartsWith("Settings could not be saved", main.Problems.Message, StringComparison.Ordinal);
+        Assert.Empty(_host.Get<IWatchlistService>().Entries);
+        main.Problems.DismissCommand.Execute(null);
+        Assert.Null(main.Problems.Message);
+    }
+
+    [Fact]
     public async Task Raising_a_level_re_ranks_without_a_new_sweep()
     {
         await _host.StartWithSweepAsync();
@@ -252,6 +315,42 @@ public sealed class MarketScreenTests : IDisposable
         Assert.StartsWith("List at ", market.Advice, StringComparison.Ordinal);
         Assert.True(market.PricePoints.Count > 1);
         Assert.Null(market.LoadError);
+    }
+
+    [Fact]
+    public async Task After_a_world_switch_the_market_screen_fetches_the_new_world()
+    {
+        await _host.StartWithSweepAsync();
+        var market = _host.Get<MarketViewModel>();
+        market.Select(12531);
+        await WaitAsync(() => !market.IsLoading);
+
+        _host.Get<ISettingsService>().Update(settings => settings.World = "Siren");
+        await _host.SettleAsync();
+        await WaitAsync(() => !market.IsLoading);
+
+        Assert.Contains(_host.Market.Requests, uri => uri.AbsolutePath == "/api/v2/Siren/12531");
+        Assert.EndsWith("Siren", market.Subtitle, StringComparison.Ordinal);
+        Assert.NotEmpty(market.Listings);
+    }
+
+    [Fact]
+    public async Task Choosing_another_item_never_shows_the_last_ones_listings()
+    {
+        await _host.StartWithSweepAsync();
+        var market = _host.Get<MarketViewModel>();
+        market.Select(12531);
+        await WaitAsync(() => !market.IsLoading);
+        _host.Market.Hold = new TaskCompletionSource();
+
+        market.Select(5121);
+
+        Assert.Empty(market.Listings);
+        Assert.Empty(market.Sales);
+        _host.Market.Hold.SetResult();
+        _host.Market.Hold = null;
+        await WaitAsync(() => !market.IsLoading);
+        Assert.NotEmpty(market.Listings);
     }
 
     [Fact]

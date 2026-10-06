@@ -37,9 +37,13 @@ public sealed partial class MarketViewModel : PageViewModel
     private readonly IShellService _shell;
     private readonly INavigator _navigator;
     private readonly IUiThread _ui;
+    private readonly ProblemReporter _problems;
     private readonly ILogger<MarketViewModel> _logger;
     private CancellationTokenSource? _loading;
-    private int? _loadedId;
+
+    // What the live tables show, and what was last asked for; both are an item on a world.
+    private (int Id, string World)? _loaded;
+    private (int Id, string World)? _requested;
 
     public MarketViewModel(
         AppSession session,
@@ -50,8 +54,10 @@ public sealed partial class MarketViewModel : PageViewModel
         IShellService shell,
         INavigator navigator,
         IUiThread ui,
+        ProblemReporter problems,
         ILogger<MarketViewModel> logger)
     {
+        _problems = problems;
         _session = session;
         _catalog = catalog;
         _universalis = universalis;
@@ -204,7 +210,7 @@ public sealed partial class MarketViewModel : PageViewModel
     {
         if (SelectedId is { } id)
         {
-            _watchlist.Toggle(id);
+            _problems.Run(() => _watchlist.Toggle(id));
         }
     }
 
@@ -213,7 +219,7 @@ public sealed partial class MarketViewModel : PageViewModel
     {
         if (SelectedId is { } id)
         {
-            _shell.OpenUrl($"https://universalis.app/market/{id}");
+            _problems.Run(() => _shell.OpenUrl($"https://universalis.app/market/{id}"));
         }
     }
 
@@ -229,7 +235,7 @@ public sealed partial class MarketViewModel : PageViewModel
         {
             UpdateFromSnapshot();
         }
-        else if (e.PropertyName == nameof(AppSession.Snapshot) && SelectedId is { } id && _loadedId != id)
+        else if (e.PropertyName == nameof(AppSession.Snapshot) && SelectedId is { } id && _loaded != (id, _session.Settings.World))
         {
             _ = LoadLiveAsync(id);
         }
@@ -275,7 +281,7 @@ public sealed partial class MarketViewModel : PageViewModel
             TrendValue = opportunity.Trend.Percent is { } percent ? Formatting.SignedPercent(percent) : opportunity.Trend.Arrow + " " + opportunity.Trend.Word;
             TrendNote = opportunity.Trend.Percent is not null ? $"{opportunity.Trend.Word} · {opportunity.Trend.Basis}" : opportunity.Trend.Basis;
             TrendBrushKey = Presentation.ChangeBrushKey(opportunity.Trend.Percent ?? (opportunity.Trend.Direction switch { TrendDirection.Rising => 5, TrendDirection.Falling => -5, _ => 0 }));
-            if (_loadedId != id || DaysOfSupply == "—")
+            if (!LiveIsCurrent(id) || DaysOfSupply == "—")
             {
                 DaysOfSupply = opportunity.Competition.DaysOfSupply is { } days ? days.ToString(days >= 10 ? "0" : "0.0", CultureInfo.InvariantCulture) : "—";
                 SupplyNote = opportunity.Competition.Listings is { } listings
@@ -284,7 +290,7 @@ public sealed partial class MarketViewModel : PageViewModel
             }
         }
 
-        if (_loadedId != id)
+        if (!LiveIsCurrent(id))
         {
             CheapestNow = row.Min > 0 ? Formatting.Gil(row.Min) : "—";
             CheapestNote = $"average sale {Formatting.Gil(row.Avg)}";
@@ -292,15 +298,44 @@ public sealed partial class MarketViewModel : PageViewModel
 
         SourceLine = snapshot is null ? "Not swept yet" : $"Universalis · swept {Formatting.Ago(_session.Now - snapshot.TakenAt)}";
         UpdateWatch();
+
+        // After a world switch the live tables still show the old world: fetch this one's.
+        if (_requested is not null && _requested != (id, _session.Settings.World))
+        {
+            _ = LoadLiveAsync(id);
+        }
+    }
+
+    private bool LiveIsCurrent(int id) => _loaded == (id, _session.Settings.World);
+
+    /// <summary>Empties the live tables so another item's or world's figures never show under this one.</summary>
+    private void ClearLive()
+    {
+        _loaded = null;
+        Listings = [];
+        Sales = [];
+        Hours = [];
+        PeakHours = [];
+        PeakLine = "";
+        Advice = "";
+        AdviceNote = "";
+        PricePoints = [];
+        ChartSubtitle = "";
     }
 
     private async Task LoadLiveAsync(int itemId)
     {
         _loading?.Cancel();
         var cancel = _loading = new CancellationTokenSource();
+        var world = _session.Settings.World;
+        _requested = (itemId, world);
+        if (_loaded != (itemId, world))
+        {
+            ClearLive();
+        }
+
         IsLoading = true;
         LoadError = null;
-        var world = _session.Settings.World;
         try
         {
             var markets = await _universalis.GetMarketsAsync(world, [itemId], 30, 100, cancel.Token);
@@ -310,7 +345,7 @@ public sealed partial class MarketViewModel : PageViewModel
                 return;
             }
 
-            _ui.Post(() => Apply(itemId, markets.GetValueOrDefault(itemId), history));
+            _ui.Post(() => Apply(itemId, world, markets.GetValueOrDefault(itemId), history));
         }
         catch (OperationCanceledException)
         {
@@ -319,7 +354,7 @@ public sealed partial class MarketViewModel : PageViewModel
         {
             _ui.Post(() =>
             {
-                if (SelectedId != itemId)
+                if (SelectedId != itemId || _session.Settings.World != world)
                 {
                     return;
                 }
@@ -346,14 +381,15 @@ public sealed partial class MarketViewModel : PageViewModel
         }
     }
 
-    private void Apply(int itemId, ItemMarket? market, SaleHistory? history)
+    private void Apply(int itemId, string world, ItemMarket? market, SaleHistory? history)
     {
-        if (SelectedId != itemId)
+        // A slow answer for an item or world the user has left must not land on the current one.
+        if (SelectedId != itemId || _session.Settings.World != world)
         {
             return;
         }
 
-        _loadedId = itemId;
+        _loaded = (itemId, world);
         IsLoading = false;
         if (market is null)
         {

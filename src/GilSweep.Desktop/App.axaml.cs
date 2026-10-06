@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
+using Avalonia.Threading;
 using GilSweep.Core.Configuration;
 using GilSweep.Desktop.Services;
 using GilSweep.Desktop.ViewModels;
@@ -26,6 +27,13 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         Services = ServicesOverride?.Invoke() ?? new ServiceCollection().AddGilSweepDesktop().BuildServiceProvider();
+
+        // Last resort: an action that fails in a way nothing caught shows a message instead of ending the app.
+        Dispatcher.UIThread.UnhandledException += (_, e) =>
+        {
+            Services.GetRequiredService<ProblemReporter>().Report(e.Exception);
+            e.Handled = true;
+        };
 
         // Motion is opt-out: with Windows animations off, the animation styles are never loaded.
         if (!Services.GetRequiredService<IMotionSettings>().ReduceMotion)

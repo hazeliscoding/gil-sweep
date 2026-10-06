@@ -27,9 +27,11 @@ public sealed partial class SweepViewModel : PageViewModel
     private readonly AppSession _session;
     private readonly IWatchlistService _watchlist;
     private readonly INavigator _navigator;
+    private readonly ProblemReporter _problems;
 
-    public SweepViewModel(AppSession session, IWatchlistService watchlist, INavigator navigator)
+    public SweepViewModel(AppSession session, IWatchlistService watchlist, INavigator navigator, ProblemReporter problems)
     {
+        _problems = problems;
         _session = session;
         _watchlist = watchlist;
         _navigator = navigator;
@@ -144,7 +146,7 @@ public sealed partial class SweepViewModel : PageViewModel
     private void Open(int itemId) => _navigator.OpenItem(itemId);
 
     [RelayCommand]
-    private void ToggleWatch(int itemId) => _watchlist.Toggle(itemId);
+    private void ToggleWatch(int itemId) => _problems.Run(() => _watchlist.Toggle(itemId));
 
     [RelayCommand]
     private void ClearSession() => SessionLength = SessionLengths[0];
@@ -183,7 +185,7 @@ public sealed partial class SweepViewModel : PageViewModel
             : $"Pricing on {settings.World} · Universalis";
 
         Best = Sync(board.Best, Best);
-        SyncList(Ranked, board.Ranked.Where(opportunity => opportunity.ItemId != board.Best?.ItemId).Take(RankedRows).ToList(), rankFrom: 2);
+        SyncList(Ranked, board.Ranked.Where(opportunity => opportunity.ItemId != board.Best?.ItemId).Take(RankedRows).ToList());
         SyncList(AvailableNow, board.AvailableNow);
         SyncList(Soon, board.Soon);
 
@@ -256,8 +258,11 @@ public sealed partial class SweepViewModel : PageViewModel
         return item;
     }
 
-    /// <summary>Updates rows in place when the order is unchanged; otherwise replaces them.</summary>
-    private void SyncList(ObservableCollection<OpportunityItemViewModel> target, IReadOnlyList<MarketOpportunity> source, int rankFrom = 1)
+    /// <summary>
+    /// Updates rows in place when the order is unchanged; otherwise replaces them. Ranks are the
+    /// board's, so a closed node that outscores the best farm right now keeps its #1, as on Market.
+    /// </summary>
+    private void SyncList(ObservableCollection<OpportunityItemViewModel> target, IReadOnlyList<MarketOpportunity> source)
     {
         if (target.Count != source.Count || target.Select(item => item.ItemId).Where((id, i) => id != source[i].ItemId).Any())
         {
@@ -271,7 +276,7 @@ public sealed partial class SweepViewModel : PageViewModel
         for (var i = 0; i < source.Count; i++)
         {
             target[i].Update(source[i]);
-            target[i].Rank = rankFrom + i;
+            target[i].Rank = _session.Board.RankOf(source[i].ItemId) ?? i + 1;
             Mark(target[i]);
         }
     }

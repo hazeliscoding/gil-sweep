@@ -15,14 +15,16 @@ namespace GilSweep.Desktop.ViewModels;
 public sealed partial class WatchRowViewModel : ObservableObject
 {
     private readonly IWatchlistService _watchlist;
+    private readonly ProblemReporter _problems;
     private bool _syncing;
 
-    public WatchRowViewModel(int itemId, string name, bool timed, IWatchlistService watchlist)
+    public WatchRowViewModel(int itemId, string name, bool timed, IWatchlistService watchlist, ProblemReporter problems)
     {
         ItemId = itemId;
         Name = name;
         Timed = timed;
         _watchlist = watchlist;
+        _problems = problems;
     }
 
     public int ItemId { get; }
@@ -84,7 +86,7 @@ public sealed partial class WatchRowViewModel : ObservableObject
     {
         if (!_syncing)
         {
-            _watchlist.Set(ItemId, change);
+            _problems.Run(() => _watchlist.Set(ItemId, change));
         }
     }
 }
@@ -101,6 +103,7 @@ public sealed partial class WatchlistViewModel : PageViewModel
     private readonly AppSession _session;
     private readonly INavigator _navigator;
     private readonly IUiThread _ui;
+    private readonly ProblemReporter _problems;
 
     public WatchlistViewModel(
         IWatchlistService watchlist,
@@ -109,8 +112,10 @@ public sealed partial class WatchlistViewModel : PageViewModel
         IItemCatalog catalog,
         AppSession session,
         INavigator navigator,
-        IUiThread ui)
+        IUiThread ui,
+        ProblemReporter problems)
     {
+        _problems = problems;
         _watchlist = watchlist;
         _settings = settings;
         _alerts = alerts;
@@ -165,7 +170,7 @@ public sealed partial class WatchlistViewModel : PageViewModel
     {
         if (value is not null)
         {
-            _watchlist.Watch(value.Id);
+            _problems.Run(() => _watchlist.Watch(value.Id));
             ToWatch = null;
         }
     }
@@ -177,7 +182,7 @@ public sealed partial class WatchlistViewModel : PageViewModel
     partial void OnLeadChanged(Option<int>? value) => SaveThreshold(value, (alerts, minutes) => alerts.NodeLeadMinutes = minutes, _settings.Current.Alerts.NodeLeadMinutes);
 
     [RelayCommand]
-    private void Remove(int itemId) => _watchlist.Unwatch(itemId);
+    private void Remove(int itemId) => _problems.Run(() => _watchlist.Unwatch(itemId));
 
     [RelayCommand]
     private void Open(int itemId) => _navigator.OpenItem(itemId);
@@ -196,7 +201,7 @@ public sealed partial class WatchlistViewModel : PageViewModel
     {
         if (value is not null && value.Value != current)
         {
-            _settings.Update(settings => apply(settings.Alerts, value.Value));
+            _problems.Run(() => _settings.Update(settings => apply(settings.Alerts, value.Value)));
         }
     }
 
@@ -217,7 +222,7 @@ public sealed partial class WatchlistViewModel : PageViewModel
             foreach (var entry in entries)
             {
                 var item = _catalog.Find(entry.ItemId);
-                Rows.Add(new WatchRowViewModel(entry.ItemId, item?.Name ?? $"Item {entry.ItemId}", item?.IsTimed ?? false, _watchlist));
+                Rows.Add(new WatchRowViewModel(entry.ItemId, item?.Name ?? $"Item {entry.ItemId}", item?.IsTimed ?? false, _watchlist, _problems));
             }
         }
 

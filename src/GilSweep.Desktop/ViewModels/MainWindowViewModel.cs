@@ -51,8 +51,10 @@ public sealed partial class MainWindowViewModel : ObservableObject
         OverlayDialogService dialogs,
         UpdatesViewModel updates,
         OnboardingViewModel onboarding,
+        ProblemReporter problems,
         IShellService shell)
     {
+        Problems = problems;
         _pages = pages.ToDictionary(page => page.Page);
         _session = session;
         _settings = settings;
@@ -89,6 +91,8 @@ public sealed partial class MainWindowViewModel : ObservableObject
     public UpdatesViewModel Updates { get; }
 
     public OnboardingViewModel Onboarding { get; }
+
+    public ProblemReporter Problems { get; }
 
     public string VersionLabel { get; } = "Gil Sweep " + GilSweepInfo.Version;
 
@@ -143,7 +147,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
     private Task OpenUpdatesAsync() => ShowAsync(AppPage.Settings, null);
 
     [RelayCommand]
-    private void OpenGitHub() => _shell.OpenUrl(GilSweepInfo.RepositoryUrl);
+    private void OpenGitHub() => Problems.Run(() => _shell.OpenUrl(GilSweepInfo.RepositoryUrl));
 
     [RelayCommand]
     private Task RetryAsync() => _session.SweepAsync();
