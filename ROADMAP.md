@@ -1,52 +1,50 @@
 # Roadmap
 
-## v0.6.0 — Alerts — shipped ✅
-- Watch (star) items in any table; Windows notification when a watched node's window opens, with time remaining.
-- Price-spike notification for watched items after a sweep (≥25% swing).
+Gil Sweep answers one question: **what should I farm for gil right now?** v1 (Electron + Angular, `v1.0.0`) shipped everything in `CHANGELOG.md`. v2 is a native rewrite; the plan and the inventory of what moves where are in `docs/migration-v2.md`.
 
-## v0.7.0 — Trends & weekly digest — shipped ✅
-- Trends page: price/velocity charts per item from the local snapshot archive (the drill-down panel's big sibling).
-- "This week" digest: movers with context, new watchlist entrants, prune suggestions for farms below ~5 sold/day for 3+ consecutive sweeps.
-- Snapshot housekeeping in Settings (view, prune, export).
+## Decisions
 
-## v0.8.0 — Crafting depth — shipped ✅
-- HQ-aware margins: gear/consumables price at HQ, materials stay NQ (gathered mats have no HQ since 6.0).
-- One level of min(buy, craft) costing for intermediate ingredients (nugget → ingot chains).
-- Crafter job/level config gating the Crafting page.
+- **2026-10-05** — v2 is .NET 10 + Avalonia 12 + MVVM (CommunityToolkit.Mvvm), laid out like XIV Vault: `GilSweep.Core`, `GilSweep.Desktop`, `GilSweep.Tests`, `tools/GilSweep.Screenshots`. No Node at runtime and no bridge to the old app.
+- **2026-10-05** — The Electron app is frozen at tag `electron-final`. The rewrite lives on `rewrite/dotnet-avalonia`; `main` stays on v1 until the cutover gate in `docs/migration-v2.md` passes.
+- **2026-10-05** — Six screens: Sweep, Market, Craft, Watchlist, History, Settings. Export, updates, notifications and webhooks live inside them, never as their own pages.
+- **2026-10-05** — No gil/hour. Gil Sweep doesn't know yield, travel time or gathering speed, so it ranks by an explainable opportunity score (`docs/opportunity-scoring.md`). The Farm Session is a queue of opportunities, not a route.
+- **2026-10-05** — Ranking keeps v1's rules (gates, trap kinds, world-scope liquidity, throughput as the market measure). Changes are listed in the scoring doc and covered by tests.
+- **2026-10-05** — Data lives in `%APPDATA%\GilSweep`. The v1 config, stars and snapshots in `%APPDATA%\gil-sweep` are imported once, so history carries over.
+- **2026-10-05** — The bundled seed snapshot is no longer shown as live prices; first run goes straight to a real sweep.
+- **2026-10-05** — Typography follows XIV Vault: IBM Plex Sans and IBM Plex Mono, bundled. The approved mockup's Quorum tokens with a gold accent (`#D9A94A`) used sparingly; green and red only for market movement, always with an arrow or word.
+- **2026-10-05** — Velopack per-user Setup with in-app update and restart, plus a portable zip. An update never installs during a sweep.
+- **2026-10-05** — The old plan for a v2 web build is dropped; see Not planned.
 
-## v0.9.0 — Bring your own item DB — shipped ✅
-- In-app "track new item": name search → node verification against Garland Tools → crafted/vendor/submarine trap detection, so top sellers that aren't gatherable never get recommended.
-- First-run onboarding: pick world and levels instead of inheriting defaults.
+## v2.0 — Native rewrite
 
-## v1.0.0 — Distribution — shipped ✅
-- NSIS installer with auto-update alongside the portable exe.
-- **Shipping unsigned** — the SmartScreen warning stays documented in the README instead of paying for code signing.
-- End-to-end suite in CI: the packaged app driven headlessly (launch, sweep, every page), not just compiled.
-- README screenshots; config/snapshot schema migration safety.
+- [ ] **Foundation** — solution, central package versions, DI, logging, config, theme tokens, app shell with the six-item sidebar and Eorzea clock.
+  Done when: `dotnet build`, `dotnet test` and `dotnet format --verify-no-changes` pass and the window opens.
+- [ ] **Domain models** — catalog, nodes and spawn windows, snapshots, opportunities, watch entries; persisted shapes round-trip, v1 snapshots read.
+  Done when: serialization tests pass against v1 files.
+- [ ] **Market integrations** — Universalis and Saddlebag behind interfaces, fixtures for normal, sparse, stale, empty and high-volume markets, retries and partial failure.
+  Done when: every adapter test runs offline.
+- [ ] **Sweep engine** — v1 ranking ported with characterization tests against outputs captured from the v1 TypeScript; opportunity score on top.
+  Done when: v2 matches v1 on the fixtures except for the documented changes.
+- [ ] **Eorzea scheduling** — clock, windows, next spawn, countdowns, feeding the score.
+  Done when: timed-node tests cover wrap-around and multiple spawns.
+- [ ] **First vertical slice** — launch → load config → sweep → ranked recommendations with reasons → open an item.
+  Done when: it works against live Universalis and against fixtures.
+- [ ] **Market, Craft, Watchlist, History, Settings** — in that order, each on tested view models.
+- [ ] **Notifications** — node windows, price spikes and crashes, undercuts; Windows toasts; tray with the spawn clock.
+- [ ] **Packaging and updates** — Velopack Setup, update check and restart, portable zip, release workflow with checksums.
+- [ ] **Screenshots** — deterministic screenshots of every screen and state from fake data; README rewritten.
+- [ ] **Cutover** — gate passed, `legacy/` and Node files removed, branch merged, v2.0.0 tagged.
 
-## v1.1.0 — Discord webhooks
-- Price-spike alerts and the weekly digest posted to a Discord webhook (reaches your phone — the alerts that matter while away from the PC). Node-window alerts stay desktop toasts by default, Discord delivery opt-in (a ~6-minute window isn't actionable from a phone).
-- Webhook-only, no bot: a single POST, zero hosting, per-alert-type toggles in Settings. Honest limitation: the app must be running to send.
-- Doubles as the notification story for the future web build, which can't do OS toasts.
+## Later
 
-## v1.2.0 — Visual & input polish
-- In-game item icons (~22px) beside names in every table — McMaster tables have product thumbnails; this is ours. Icon ids ride the existing Garland data pipeline; lazy-loaded from Garland's CDN (consider bundling tracked-item icons later for offline).
-- Crafter-level slider on the Crafting page toolbar: one slider drags all eight jobs (instant re-rank); per-job fine-tuning stays in Settings for split-level characters.
-- Sortable table columns (click a header, re-sort) and CSV export of any table.
+- Discord webhooks for price alerts and the weekly summary (the app must be running to send).
+- In-game item icons beside names.
+- Live watch over the Universalis websocket for faster crash and undercut alerts.
+- Gil per scrip for the scrip vendors.
+- Sortable columns and CSV export on every table.
 
-## v1.3.0 — Your market (undercut watch)
-- Retainer names in config → the app spots *your* listings in the Universalis data it already fetches (listings carry retainer names) and alerts when you've been undercut, with the new floor and your delta. No game integration, pure public data.
-- Live watch on starred items via the Universalis websocket (or periodic re-checks): price-crash and undercut alerts in near-real-time instead of sweep cadence. Feeds toasts and Discord alike.
+## Not planned
 
-## v1.4.0 — Scrip economy
-- Gil-per-scrip page: everything the purple/orange scrip vendors sell (gatherer and crafter), priced live on your world, ranked by gil per scrip — the "what do I spend my weekly scrips on" answer. Needs a curated scrip-item list in the data pipeline (Sphalerite was the prototype).
-
-## v2.0.0 — Hybrid delivery: desktop app + live website
-- The renderer already talks to the world through one interface (`window.api`), so a web build swaps that adapter for direct Universalis calls (their CORS is open) plus a thin proxy for the endpoints that need one (Saddlebag). Same Angular app, two targets; the desktop keeps the tray, notifications, and local snapshot archive as its edge.
-
-## Parked (until there's data or demand)
-- Discord **bot** (slash commands, price queries from chat) — hosting + token surface; webhooks cover the need for now.
-- Multi-character profiles (per-character levels/worlds) — plumbing without a proven need; revisit when alts show up.
-- Gil/hour route planner — needs yield-per-node data no API provides.
-- Cross-DC arbitrage; macOS builds; localized item names (DE/FR/JP).
-- Bundled item icons for full offline rendering (if the CDN hotlinking ever chafes).
+- A web build or hosted backend, accounts, cloud sync, telemetry.
+- Discord bot, multi-character profiles, cross-DC arbitrage, macOS builds, localized item names.
+- Route planning or gil/hour estimates without yield and travel data.
