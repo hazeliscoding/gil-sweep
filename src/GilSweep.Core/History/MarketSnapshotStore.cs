@@ -55,11 +55,13 @@ public sealed partial class MarketSnapshotStore(IAppEnvironment environment, ILo
     public static string FileName(MarketSnapshot snapshot) =>
         $"sweep-{(snapshot.Timestamp ?? snapshot.Date).Replace(':', '-').Replace('.', '-')}-{snapshot.World}.json";
 
-    public MarketSnapshot? Latest(string world)
-    {
-        var file = Files().LastOrDefault(file => string.Equals(WorldOf(file), world, StringComparison.OrdinalIgnoreCase));
-        return file is null ? null : Read(file);
-    }
+    /// <remarks>An unreadable newest file is skipped for the one before it.</remarks>
+    public MarketSnapshot? Latest(string world) =>
+        Files()
+            .Where(file => string.Equals(WorldOf(file), world, StringComparison.OrdinalIgnoreCase))
+            .Reverse()
+            .Select(Read)
+            .FirstOrDefault(snapshot => snapshot is not null && string.Equals(snapshot.World, world, StringComparison.Ordinal));
 
     public IReadOnlyList<MarketSnapshot> Load(string world) =>
         [.. Files()

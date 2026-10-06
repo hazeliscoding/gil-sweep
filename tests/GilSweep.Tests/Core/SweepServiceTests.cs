@@ -171,6 +171,17 @@ public sealed class SweepServiceTests : IDisposable
     }
 
     [Fact]
+    public async Task An_unreadable_newest_snapshot_falls_back_to_the_one_before()
+    {
+        var first = await Sweeps.RunAsync(cancellationToken: TestContext.Current.CancellationToken);
+        File.WriteAllText(Path.Combine(Store.Folder, "sweep-2026-10-05T19-30-00-000Z-Cactuar.json"), "{ truncated");
+
+        var latest = new MarketSnapshotStore(_host.Environment, Microsoft.Extensions.Logging.Abstractions.NullLogger<MarketSnapshotStore>.Instance).Latest("Cactuar");
+
+        Assert.Equal(first.Timestamp, latest!.Timestamp);
+    }
+
+    [Fact]
     public void A_sweep_asks_about_nineteen_requests()
     {
         var engine = _host.Get<ISweepEngine>();
