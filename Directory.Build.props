@@ -1,0 +1,22 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <!-- IDE0005 (unused usings) only runs in build when docs are generated. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- CS1573: records document only the parameters that need it. -->
+    <NoWarn>$(NoWarn);CS1591;CS1573</NoWarn>
+
+    <Version>2.0.0</Version>
+    <Authors>Hazel Granados</Authors>
+    <Company>Gil Sweep</Company>
+    <Product>Gil Sweep</Product>
+    <Copyright>Copyright 2026 Hazel Granados</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/hazeliscoding/gil-sweep</RepositoryUrl>
+  </PropertyGroup>
+</Project>

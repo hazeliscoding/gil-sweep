@@ -1,6 +1,30 @@
+# Build output
+bin/
+obj/
+artifacts/
+publish/
+TestResults/
+*.binlog
+
+# Legacy Electron app (removed at cutover)
 node_modules/
 dist/
 release/
 .angular/
-desktop/e2e/shots/
+legacy/electron/desktop/e2e/shots/
 *.log
+
+# Editors
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Agent guidelines are committed; this overrides the global gitignore
+!AGENTS.md
+!CLAUDE.md
