@@ -22,6 +22,8 @@ public sealed partial class SweepViewModel : PageViewModel
 {
     public const int RankedRows = 12;
 
+    public static readonly TimeSpan StaleAfter = TimeSpan.FromHours(6);
+
     private readonly AppSession _session;
     private readonly IWatchlistService _watchlist;
     private readonly INavigator _navigator;
@@ -120,6 +122,10 @@ public sealed partial class SweepViewModel : PageViewModel
     [ObservableProperty]
     public partial string? Warning { get; private set; }
 
+    /// <summary>The last sweep is hours old (hourly sweeps off, or the PC slept): prices may have moved.</summary>
+    [ObservableProperty]
+    public partial string? StaleNotice { get; private set; }
+
     /// <summary>Data, but nothing this character can farm (low levels, or nothing sells).</summary>
     [ObservableProperty]
     public partial bool NothingFarmable { get; private set; }
@@ -217,8 +223,12 @@ public sealed partial class SweepViewModel : PageViewModel
         else
         {
             Freshness = _session.SnapshotAge is { } age ? "updated " + Formatting.Ago(age) : "not swept yet";
-            FreshnessTone = _session.HasData ? Tone.Healthy : Tone.Unknown;
+            FreshnessTone = _session.SnapshotAge >= StaleAfter ? Tone.Warning : _session.HasData ? Tone.Healthy : Tone.Unknown;
         }
+
+        StaleNotice = !_session.IsSweeping && !_session.IsOffline && _session.SnapshotAge is { } old && old >= StaleAfter
+            ? $"The last sweep was {Formatting.Ago(old)}. Recommendations use its prices until the next one."
+            : null;
     }
 
     private void UpdateSession()

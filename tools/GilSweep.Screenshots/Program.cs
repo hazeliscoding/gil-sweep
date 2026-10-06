@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Headless;
 using Avalonia.Threading;
+using GilSweep.Core.Configuration;
 using GilSweep.Desktop;
 using GilSweep.Desktop.Services;
 using GilSweep.Desktop.ViewModels;
@@ -54,10 +55,15 @@ internal static class Program
         ScrollToEnd(window);
         Shot(window, "settings-update");
 
-        // Universalis goes down two hours later: the cached sweep stays on screen with a banner.
+        // With hourly sweeps off, seven hours later the prices are stale.
         Go(main, AppPage.Sweep);
+        services.GetRequiredService<ISettingsService>().Update(settings => settings.AutoSweep = false);
+        world.Clock.Now += TimeSpan.FromHours(7);
+        world.Ticker.Beat();
+        Shot(window, "stale");
+
+        // Then Universalis goes down: the cached sweep stays on screen with a banner.
         world.Market.Down = true;
-        world.Clock.Now += TimeSpan.FromMinutes(134);
         world.Ticker.Beat();
         Run(services.GetRequiredService<AppSession>().SweepAsync());
         Shot(window, "offline");

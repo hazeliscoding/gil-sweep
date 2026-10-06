@@ -155,6 +155,23 @@ public sealed class SweepScreenTests : IDisposable
     }
 
     [Fact]
+    public async Task Hours_without_a_sweep_say_the_prices_may_have_moved()
+    {
+        await _host.StartWithSweepAsync();
+        _host.Get<ISettingsService>().Update(settings => settings.AutoSweep = false);
+        var sweep = _host.Get<SweepViewModel>();
+
+        _host.Advance(TimeSpan.FromHours(5));
+        Assert.Null(sweep.StaleNotice);
+
+        _host.Advance(TimeSpan.FromHours(2));
+        Assert.Equal("The last sweep was 7h 00m ago. Recommendations use its prices until the next one.", sweep.StaleNotice);
+
+        await _host.Session.SweepAsync();
+        Assert.Null(sweep.StaleNotice);
+    }
+
+    [Fact]
     public async Task Raising_a_level_re_ranks_without_a_new_sweep()
     {
         await _host.StartWithSweepAsync();

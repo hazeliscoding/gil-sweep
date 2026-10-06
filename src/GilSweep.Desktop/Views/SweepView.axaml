@@ -58,6 +58,13 @@
 
     <!-- Results -->
     <StackPanel Spacing="16" IsVisible="{Binding Session.HasData}">
+      <c:Banner Tone="Warning" Title="Prices may have moved" Description="{Binding StaleNotice}"
+                IsVisible="{Binding StaleNotice, Converter={x:Static ObjectConverters.IsNotNull}}">
+        <c:Banner.Actions>
+          <c:GsButton Classes="sm" Icon="RefreshCw" Content="Sweep now" Command="{Binding RunSweepCommand}" />
+        </c:Banner.Actions>
+      </c:Banner>
+
       <c:Banner Tone="Info" Title="Part of this sweep is missing" Description="{Binding Warning}"
                 IsVisible="{Binding Warning, Converter={x:Static ObjectConverters.IsNotNull}}" />
 
