@@ -1,7 +1,140 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:GilSweep.Desktop.Controls"
              xmlns:vm="using:GilSweep.Desktop.ViewModels"
+             xmlns:v="using:GilSweep.Desktop.Views"
              x:Class="GilSweep.Desktop.Views.HistoryView"
              x:DataType="vm:HistoryViewModel">
-  <TextBlock Classes="page-title" Text="History" />
+  <StackPanel>
+    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,18">
+      <StackPanel Spacing="4">
+        <TextBlock Classes="page-title" Text="History" />
+        <TextBlock Classes="compact t2" Text="{Binding Subtitle}" TextWrapping="Wrap" />
+      </StackPanel>
+      <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Top" HorizontalAlignment="Right">
+        <c:GsButton Classes="secondary" Icon="Download" Content="Export CSV" Command="{Binding ExportCommand}" HorizontalAlignment="Right"
+                    IsEnabled="{Binding HasHistory}" ToolTip.Tip="Every sweep's prices on this world as a spreadsheet" />
+        <TextBlock Classes="compact t3" Text="{Binding ExportResult}" HorizontalAlignment="Right"
+                   IsVisible="{Binding ExportResult, Converter={x:Static ObjectConverters.IsNotNull}}" />
+      </StackPanel>
+    </Grid>
+
+    <c:EmptyState IsVisible="{Binding !HasHistory}" Icon="History" Title="No sweeps recorded on this world yet"
+                  Description="Each sweep is saved here, on this computer. A week of sweeps shows what is moving." />
+
+    <Grid ColumnDefinitions="*,320" ColumnSpacing="16" IsVisible="{Binding HasHistory}">
+      <StackPanel Spacing="16">
+        <Border Classes="panel" ClipToBounds="True">
+          <StackPanel>
+            <Border Classes="panel-head" Padding="14,7">
+              <Grid ColumnDefinitions="140,*,60,60" ColumnSpacing="8">
+                <TextBlock Classes="eyebrow" Text="SWEEP" />
+                <TextBlock Grid.Column="1" Classes="eyebrow" Text="TOP FARM" />
+                <TextBlock Grid.Column="2" Classes="eyebrow" Text="ITEMS" HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="3" Classes="eyebrow" Text="MOVERS" HorizontalAlignment="Right" />
+              </Grid>
+            </Border>
+            <ItemsControl ItemsSource="{Binding Sweeps}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:SweepLogRowViewModel">
+                  <Border Classes="row" Height="36" Padding="14,0">
+                    <Grid ColumnDefinitions="140,*,60,60" ColumnSpacing="8" VerticalAlignment="Center">
+                      <TextBlock Classes="data t2" Text="{Binding When}" />
+                      <TextBlock Grid.Column="1" Classes="body t1" TextTrimming="CharacterEllipsis">
+                        <Run Text="{Binding Best}" />
+                        <Run Text=" · " Foreground="{StaticResource Text3}" />
+                        <Run Text="{Binding BestPrice}" Foreground="{StaticResource Text3}" />
+                      </TextBlock>
+                      <TextBlock Grid.Column="2" Classes="data t2" Text="{Binding Items}" HorizontalAlignment="Right" />
+                      <TextBlock Grid.Column="3" Classes="data t2" Text="{Binding Movers}" HorizontalAlignment="Right" />
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+
+        <StackPanel Spacing="8">
+          <TextBlock Classes="section-title" Text="{Binding MoversTitle}" />
+          <Border Classes="panel" ClipToBounds="True">
+            <ItemsControl ItemsSource="{Binding Movers}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:MoverRowViewModel">
+                  <Button Theme="{StaticResource PlainButton}" Command="{Binding $parent[UserControl].((vm:HistoryViewModel)DataContext).OpenCommand}"
+                          CommandParameter="{Binding ItemId}" AutomationProperties.Name="{Binding Name}">
+                    <Border BorderBrush="{StaticResource Border1}" BorderThickness="0,0,0,1" Height="36" Padding="14,0">
+                      <Grid ColumnDefinitions="*,100,130,64" ColumnSpacing="8" VerticalAlignment="Center">
+                        <TextBlock Classes="body-strong t1" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                        <c:Sparkline Grid.Column="1" Height="18" Values="{Binding History}" Stroke="{Binding Tone, Converter={x:Static c:ToneConverters.Main}}" />
+                        <TextBlock Grid.Column="2" Classes="data t2" HorizontalAlignment="Right">
+                          <Run Text="{Binding Then}" />
+                          <Run Text=" → " />
+                          <Run Text="{Binding Now}" />
+                        </TextBlock>
+                        <TextBlock Grid.Column="3" Classes="data-value" Text="{Binding Change}" HorizontalAlignment="Right"
+                                   Foreground="{Binding ChangeBrushKey, Converter={x:Static v:Converters.Brush}}" />
+                      </Grid>
+                    </Border>
+                  </Button>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Border>
+        </StackPanel>
+      </StackPanel>
+
+      <StackPanel Grid.Column="1" Spacing="14">
+        <Border Classes="panel" Padding="14,12">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="eyebrow" Text="{Binding WeekTitle}" />
+            <TextBlock Classes="body t1" Text="{Binding WeekText}" TextWrapping="Wrap" LineHeight="19.5" />
+            <Border Classes="divider" Margin="0,4,0,2" />
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6">
+              <TextBlock Classes="compact t2" Text="Sweeps this week" />
+              <TextBlock Grid.Column="1" Classes="data t1" Text="{Binding SweepsRecorded}" />
+              <TextBlock Grid.Row="1" Classes="compact t2" Text="Items tracked" />
+              <TextBlock Grid.Row="1" Grid.Column="1" Classes="data t1" Text="{Binding ItemsTracked}" />
+              <TextBlock Grid.Row="2" Classes="compact t2" Text="Snapshots stored" />
+              <TextBlock Grid.Row="2" Grid.Column="1" Classes="data t1" Text="{Binding SnapshotsStored}" />
+              <TextBlock Grid.Row="3" Classes="compact t2" Text="Oldest snapshot" />
+              <TextBlock Grid.Row="3" Grid.Column="1" Classes="data t1" Text="{Binding OldestSnapshot}" />
+            </Grid>
+          </StackPanel>
+        </Border>
+        <Border Classes="panel" Padding="14,12">
+          <StackPanel Spacing="10">
+            <TextBlock Classes="eyebrow" Text="WATCHED ITEMS · 7 DAYS" />
+            <TextBlock Classes="compact t3" Text="Watch items to follow their price here." IsVisible="{Binding !WatchedChanges.Count}" />
+            <ItemsControl ItemsSource="{Binding WatchedChanges}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Spacing="8" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:WatchChangeViewModel">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Classes="compact t1" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="1" Classes="data" Text="{Binding Change}" Foreground="{Binding ChangeBrushKey, Converter={x:Static v:Converters.Brush}}" />
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+        <Border Classes="panel" Padding="14,12" IsVisible="{Binding !!Slowing.Count}">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="eyebrow" Text="SLOWING DOWN" />
+            <TextBlock Classes="compact t3" TextWrapping="Wrap" Text="Farms that sold under 5 a day in each of the last three sweeps:" />
+            <ItemsControl ItemsSource="{Binding Slowing}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                  <TextBlock Classes="compact t2" Text="{Binding}" TextWrapping="Wrap" Margin="0,2" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+      </StackPanel>
+    </Grid>
+  </StackPanel>
 </UserControl>
