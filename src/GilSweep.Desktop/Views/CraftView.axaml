@@ -1,7 +1,97 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:GilSweep.Desktop.Controls"
              xmlns:vm="using:GilSweep.Desktop.ViewModels"
              x:Class="GilSweep.Desktop.Views.CraftView"
              x:DataType="vm:CraftViewModel">
-  <TextBlock Classes="page-title" Text="Craft" />
+  <StackPanel>
+    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,18">
+      <StackPanel Spacing="4">
+        <TextBlock Classes="page-title" Text="Craft" />
+        <TextBlock Classes="compact t2" TextWrapping="Wrap"
+                   Text="Is a gathered material worth more after processing? Uses your crafter levels from Settings." />
+      </StackPanel>
+      <ListBox Grid.Column="1" Theme="{StaticResource Segmented}" ItemsSource="{Binding Filters}" SelectedItem="{Binding Filter}"
+               VerticalAlignment="Top" AutomationProperties.Name="Show recipes" />
+    </Grid>
+
+    <c:EmptyState IsVisible="{Binding !HasCrafts}" Icon="Hammer" Title="{Binding EmptyTitle}" Description="{Binding EmptyDescription}" />
+
+    <ItemsControl ItemsSource="{Binding Cards}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate><StackPanel Spacing="12" /></ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="vm:CraftCardViewModel">
+          <Border Classes="panel lg" ClipToBounds="True" Classes.locked="{Binding Locked}">
+            <Border.Styles>
+              <Style Selector="Border.locked">
+                <Setter Property="Opacity" Value="0.6" />
+              </Style>
+            </Border.Styles>
+            <Grid ColumnDefinitions="*,300">
+              <StackPanel Margin="18,14" Spacing="12">
+                <WrapPanel>
+                  <Button Theme="{StaticResource LinkButton}" Foreground="{StaticResource Text1}" Margin="0,0,8,0"
+                          Command="{Binding $parent[UserControl].((vm:CraftViewModel)DataContext).OpenCommand}" CommandParameter="{Binding RawId}"
+                          ToolTip.Tip="Open the material on the Market screen">
+                    <TextBlock Classes="card-title" Text="{Binding Title}" />
+                  </Button>
+                  <TextBlock Classes="compact t3" Text="{Binding JobLine}" VerticalAlignment="Center" Margin="0,0,8,0" />
+                  <c:Pill Classes="sm" Icon="Lock" Label="{Binding LockReason}" Tone="Unknown" IsVisible="{Binding Locked}" VerticalAlignment="Center" />
+                </WrapPanel>
+                <ItemsControl ItemsSource="{Binding Steps}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:CraftStepViewModel">
+                      <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                        <Border MinWidth="150" Padding="12,10" CornerRadius="6" Background="{StaticResource Bg2}" BorderThickness="1"
+                                BorderBrush="{StaticResource Border2}" Classes.highlight="{Binding Highlight}">
+                          <Border.Styles>
+                            <Style Selector="Border.highlight">
+                              <Setter Property="BorderBrush" Value="{StaticResource HealthyBorder}" />
+                            </Style>
+                          </Border.Styles>
+                          <StackPanel Spacing="3">
+                            <TextBlock Classes="eyebrow" Text="{Binding Stage}" />
+                            <TextBlock Classes="body-strong t1" Text="{Binding Name}" />
+                            <TextBlock Classes="data t2" Text="{Binding Value}" />
+                          </StackPanel>
+                        </Border>
+                        <TextBlock Text="→" FontFamily="{StaticResource MonoFont}" FontSize="14" Foreground="{StaticResource Text3}"
+                                   VerticalAlignment="Center" Margin="10,0" IsVisible="{Binding Arrow}" />
+                      </StackPanel>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+              <Border Grid.Column="1" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Border1}" BorderThickness="1,0,0,0" Padding="18,14">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6" VerticalAlignment="Center">
+                  <TextBlock Classes="compact t3" Text="Sell raw" />
+                  <TextBlock Grid.Column="1" Classes="data-value t1" Text="{Binding SellRaw}" HorizontalAlignment="Right" />
+                  <TextBlock Grid.Row="1" Classes="compact t3" Text="Processed" />
+                  <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="6" HorizontalAlignment="Right">
+                    <c:Pill Classes="sm" Label="HQ" Tone="Info" IsVisible="{Binding Hq}" ToolTip.Tip="The high-quality market trades more, so this is the HQ price" />
+                    <TextBlock Classes="data-value t1" Text="{Binding Processed}" />
+                  </StackPanel>
+                  <TextBlock Grid.Row="2" Classes="compact t3" Text="Other materials" />
+                  <TextBlock Grid.Row="2" Grid.Column="1" Classes="data-value t2" Text="{Binding OtherMaterials}" HorizontalAlignment="Right" />
+                  <Border Grid.Row="3" Grid.ColumnSpan="2" Height="1" Background="{StaticResource Border2}" Margin="0,2,0,0" />
+                  <TextBlock Grid.Row="4" Classes="compact t1" Text="{Binding Verdict}" />
+                  <TextBlock Grid.Row="4" Grid.Column="1" Classes="data-value" Text="{Binding Difference}" HorizontalAlignment="Right"
+                             Foreground="{Binding DifferenceTone, Converter={x:Static c:ToneConverters.Text}}" />
+                  <TextBlock Grid.Row="5" Grid.ColumnSpan="2" Classes="compact t3" Text="{Binding Basis}" TextWrapping="Wrap" />
+                </Grid>
+              </Border>
+            </Grid>
+          </Border>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <TextBlock Classes="compact t3" Margin="0,12,0,0" TextWrapping="Wrap"
+               Text="Material costs use the cheapest listings at the last sweep, crystals included; an ingredient you can craft from its own materials more cheaply is costed that way. Crafting time and HQ rates are not estimated." />
+  </StackPanel>
 </UserControl>
