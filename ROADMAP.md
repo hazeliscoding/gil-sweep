@@ -22,6 +22,8 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - **2026-10-06** — Craft shows one card per farmed material (its best recipe), since a material like aethersand feeds a hundred recipes and the question is what to do with the material.
 - **2026-10-06** — First-run answers default to v1's onboarding (Miner 90, Botanist 90, Dawntrail).
 - **2026-10-06** — v1 doesn't update itself to v2; the README tells v1 users to install v2 with Setup, which imports their data.
+- **2026-10-06** — Gear stats gate only on the game's own minimums: Perception on node items, Craftsmanship and Control on recipes (XIVAPI's `GatheringItem` and `Recipe` sheets). Level alone overstates what a character can gather or craft. No GP or CP, success-rate estimates or HQ checks: the game data has no minimum for them, and estimating would break the no-estimates rule.
+- **2026-10-06** — Perception is entered per gatherer; one Craftsmanship and Control covers every crafter, since crafters share armor and only the tools differ. A blank stat isn't checked, so level-only behavior and v1 parity stay.
 
 ## v2.0 — Native rewrite
 
@@ -45,6 +47,17 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - [ ] **Release** — merge `rewrite/dotnet-avalonia` into `main`, tag `v2.0.0`, publish the draft release.
   Done when: Setup from the release installs, finds a later test release and updates in place.
 
+## v2.1 — Gear stats
+
+- [ ] **Requirement data** — `items.json` gains each item's minimum Perception and `crafts.json` each recipe's minimum Craftsmanship and Control, from XIVAPI; a script in `scripts/` regenerates them after a patch. Items added in Settings get their Perception the same way. 77 bundled recipes don't match XIVAPI by result item and need their recipe rows found.
+  Done when: tests read Dense Aluminum Ore's 5,090 Perception and Gold Ingot's 391 Craftsmanship and 374 Control from recorded XIVAPI responses.
+- [ ] **Gear locks in Core** — optional Miner and Botanist Perception and crafter Craftsmanship and Control in settings. An item below its Perception minimum locks ("Needs 5,090 Perception (you have 4,800)"); a recipe below either minimum locks the same way. Listed under "Changes from v1" in `docs/opportunity-scoring.md`.
+  Done when: with blank stats every v1 characterization test passes unchanged, and lock tests cover below, at and blank.
+- [ ] **Settings and screens** — the stat fields in the Character and Crafters cards, in the mockup's existing style; locked rows and craft cards show the shortfall. First run doesn't ask for stats.
+  Done when: the screenshots include a Perception lock and a Craftsmanship lock.
+- [ ] **Release** — tag `v2.1.0` and publish. It doubles as the later test release v2.0's Release item waits on.
+  Done when: v2.0.0 installed from Setup updates itself to v2.1.0.
+
 ## Later
 
 - Discord webhooks for price alerts and the weekly summary (the app must be running to send).
@@ -52,9 +65,11 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - Live watch over the Universalis websocket for faster crash and undercut alerts.
 - Gil per scrip for the scrip vendors.
 - Sortable columns and CSV export on every table.
+- Price Craft at NQ when your stats can't reach max quality (needs a crafting simulator).
 
 ## Not planned
 
 - A web build or hosted backend, accounts, cloud sync, telemetry.
 - Discord bot, multi-character profiles, cross-DC arbitrage, macOS builds, localized item names.
 - Route planning or gil/hour estimates without yield and travel data.
+- Gathering success-rate estimates: the game data has no formula for them.
