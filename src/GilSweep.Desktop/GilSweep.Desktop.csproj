@@ -34,6 +34,17 @@
     <AvaloniaResource Include="..\..\docs\brand\app-icon-256.png" Link="Assets\app-icon-256.png" />
   </ItemGroup>
 
+  <!--
+    A single-file build carries everything inside GilSweep.exe; the native libraries' symbol files
+    (tens of MB) would otherwise ship beside it and end up in the update packages.
+  -->
+  <Target Name="DropSymbolsBesideSingleFile" AfterTargets="Publish" Condition="'$(PublishSingleFile)' == 'true'">
+    <ItemGroup>
+      <SymbolsBesideExe Include="$(PublishDir)*.pdb" />
+    </ItemGroup>
+    <Delete Files="@(SymbolsBesideExe)" />
+  </Target>
+
   <ItemGroup>
     <InternalsVisibleTo Include="GilSweep.Tests" />
     <InternalsVisibleTo Include="GilSweep.Screenshots" />
