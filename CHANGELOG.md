@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.0.0] — Unreleased
+## [2.0.0] — 2026-10-06
 
 A native rewrite (.NET 10 and Avalonia) around one question: what should I farm for gil right now?
 
