@@ -8,6 +8,9 @@ public interface IAppEnvironment
 
     /// <summary>Where v1 (the Electron app) kept its files: %APPDATA%\gil-sweep.</summary>
     string LegacyDataDirectory { get; }
+
+    /// <summary>The data folder as shown on screen, without the Windows user name.</summary>
+    string DataDirectoryLabel => DataDirectory;
 }
 
 public sealed class SystemAppEnvironment : IAppEnvironment
@@ -28,4 +31,7 @@ public sealed class SystemAppEnvironment : IAppEnvironment
     public string DataDirectory { get; }
 
     public string LegacyDataDirectory { get; }
+
+    public string DataDirectoryLabel =>
+        string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(HomeVariable)) ? @"%AppData%\GilSweep" : DataDirectory;
 }

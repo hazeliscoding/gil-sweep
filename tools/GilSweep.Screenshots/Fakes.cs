@@ -13,6 +13,8 @@ internal sealed class FakeEnvironment(string root) : IAppEnvironment
     public string DataDirectory { get; } = Path.Combine(root, "GilSweep");
 
     public string LegacyDataDirectory { get; } = Path.Combine(root, "gil-sweep");
+
+    public string DataDirectoryLabel => @"%AppData%\GilSweep";
 }
 
 /// <summary>A settable clock, so sweeps can be made "in the past" and shown from a fixed "now".</summary>

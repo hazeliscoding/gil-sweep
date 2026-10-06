@@ -197,10 +197,7 @@
               <Border Classes="divider" />
               <Grid ColumnDefinitions="*,Auto">
                 <TextBlock Classes="compact t2" Text="Opportunity score" />
-                <TextBlock Grid.Column="1" Classes="data-value t1">
-                  <Run Text="{Binding Item.Score}" />
-                  <Run Text=" / 100" />
-                </TextBlock>
+                <TextBlock Grid.Column="1" Classes="data-value t1" Text="{Binding Item.ScoreText}" />
               </Grid>
             </StackPanel>
           </Border>

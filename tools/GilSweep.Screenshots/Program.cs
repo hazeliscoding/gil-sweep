@@ -51,6 +51,7 @@ internal static class Program
         Shot(window, "settings");
         world.Updater.Latest = "2.1.0";
         Run(services.GetRequiredService<UpdatesViewModel>().CheckNowCommand.ExecuteAsync(null));
+        ScrollToEnd(window);
         Shot(window, "settings-update");
 
         // Universalis goes down two hours later: the cached sweep stays on screen with a banner.
@@ -115,6 +116,12 @@ internal static class Program
             AvaloniaHeadlessPlatform.ForceRenderTimerTick();
             Thread.Sleep(15);
         }
+    }
+
+    private static void ScrollToEnd(Window window)
+    {
+        window.FindControl<ScrollViewer>("PageScroller")?.ScrollToEnd();
+        Settle(TimeSpan.FromMilliseconds(300));
     }
 
     private static void Shot(Window window, string name)

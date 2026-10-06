@@ -443,6 +443,6 @@ public sealed partial class SettingsViewModel : PageViewModel
     private void LoadStats()
     {
         var stats = _store.Stats();
-        DataLine = $"{stats.Count} snapshots · {stats.Bytes / 1048576.0:0.0} MB · {DataFolder}";
+        DataLine = $"{stats.Count} snapshots · {stats.Bytes / 1048576.0:0.0} MB · {_environment.DataDirectoryLabel}";
     }
 }

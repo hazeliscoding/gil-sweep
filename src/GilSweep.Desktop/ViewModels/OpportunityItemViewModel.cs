@@ -101,7 +101,10 @@ public sealed partial class OpportunityItemViewModel(int itemId) : ObservableObj
     public partial string Countdown { get; private set; } = "";
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ScoreText))]
     public partial int Score { get; private set; }
+
+    public string ScoreText => $"{Score} / 100";
 
     [ObservableProperty]
     public partial IReadOnlyList<ReasonViewModel> Reasons { get; private set; } = [];
