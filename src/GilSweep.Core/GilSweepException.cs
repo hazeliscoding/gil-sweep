@@ -6,6 +6,9 @@ public enum GilSweepErrorKind
     InvalidSettings,
     MarketUnavailable,
     NoMarketData,
+
+    /// <summary>A file in the data folder couldn't be written (locked, read-only, disk full).</summary>
+    StorageFailed,
 }
 
 /// <summary>A failure with a message written for the user.</summary>

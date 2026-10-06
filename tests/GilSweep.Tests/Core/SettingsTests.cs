@@ -107,6 +107,21 @@ public sealed class SettingsTests
     }
 
     [Fact]
+    public void A_settings_file_that_cannot_be_written_is_reported_not_thrown_raw()
+    {
+        using var host = new CoreHost();
+        var settings = host.Get<ISettingsService>();
+
+        // A folder where config.json should be: the rename can never succeed.
+        Directory.CreateDirectory(Path.Combine(host.Environment.DataDirectory, "config.json"));
+        var error = Assert.Throws<GilSweepException>(() => settings.Update(s => s.World = "Siren"));
+
+        Assert.Equal(GilSweepErrorKind.StorageFailed, error.Kind);
+        Assert.StartsWith("Settings could not be saved", error.Message, StringComparison.Ordinal);
+        Assert.Equal("Cactuar", settings.Current.World);
+    }
+
+    [Fact]
     public void The_first_run_ends_when_settings_are_saved()
     {
         using var host = new CoreHost();

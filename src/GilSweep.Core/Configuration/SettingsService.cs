@@ -61,7 +61,16 @@ public sealed class SettingsService : ISettingsService
         {
             var next = Current.Clone();
             change(next);
-            _store.Save(next);
+            try
+            {
+                _store.Save(next);
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                // A sync tool or antivirus holding config.json must not take the app down.
+                throw new GilSweepException(GilSweepErrorKind.StorageFailed, $"Settings could not be saved ({ex.Message}). Your change wasn't kept; try again.", ex);
+            }
+
             Current = next;
             IsFirstRun = false;
             LoadError = null;

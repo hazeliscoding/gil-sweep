@@ -83,11 +83,18 @@ public sealed class ItemVerifier : IItemVerifier
             cancellationToken).ConfigureAwait(false);
         var item = document.Item ?? new GarlandItem();
         var nodeIds = (item.Nodes ?? []).Select(node => node.ToString(CultureInfo.InvariantCulture)).ToHashSet();
-        var nodes = (document.Partials ?? [])
-            .Where(partial => partial.Type == "node" && nodeIds.Contains(partial.Id.ToString()))
-            .Select(partial => partial.Obj.Deserialize(VerifierJsonContext.Default.GarlandNode))
-            .OfType<GarlandNode>()
-            .ToList();
+        List<GarlandNode> nodes;
+        try
+        {
+            nodes = [.. (document.Partials ?? [])
+                .Where(partial => partial.Type == "node" && nodeIds.Contains(partial.Id.ToString()))
+                .Select(partial => partial.Obj.Deserialize(VerifierJsonContext.Default.GarlandNode))
+                .OfType<GarlandNode>()];
+        }
+        catch (Exception ex) when (ex is JsonException or InvalidOperationException)
+        {
+            throw new GilSweepException(GilSweepErrorKind.MarketUnavailable, "Garland Tools sent node data Gil Sweep couldn't read.", ex);
+        }
 
         if (nodes.Count > 0)
         {

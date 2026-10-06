@@ -124,7 +124,15 @@ public sealed class ItemCatalog : IItemCatalog
 
     private void SaveCustom()
     {
-        AtomicFile.WriteAllText(_customPath, JsonSerializer.Serialize(_custom, GilSweepJsonContext.Default.ListCatalogItem));
+        try
+        {
+            AtomicFile.WriteAllText(_customPath, JsonSerializer.Serialize(_custom, GilSweepJsonContext.Default.ListCatalogItem));
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            throw new GilSweepException(GilSweepErrorKind.StorageFailed, $"Tracked items could not be saved ({ex.Message}).", ex);
+        }
+
         _items = Combine();
         Changed?.Invoke(this, EventArgs.Empty);
     }
