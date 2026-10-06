@@ -61,6 +61,8 @@ public sealed class DesktopTestHost : IDisposable
     public T Get<T>()
         where T : notnull => _provider.GetRequiredService<T>();
 
+    public IServiceProvider Services => _provider;
+
     public AppSession Session => Get<AppSession>();
 
     /// <summary>An endgame Miner and Botanist on Cactuar, past the first run.</summary>
