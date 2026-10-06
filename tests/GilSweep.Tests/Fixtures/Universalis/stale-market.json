@@ -1,0 +1,211 @@
+{
+ "itemID": 19860,
+ "worldID": 79,
+ "worldName": "Cactuar",
+ "lastUploadTime": 1790710028239,
+ "stackSizeHistogram": {
+  "6": 2,
+  "13": 1,
+  "16": 2,
+  "20": 2,
+  "26": 1,
+  "49": 1
+ },
+ "listingsCount": 9,
+ "recentHistoryCount": 20,
+ "unitsForSale": 172,
+ "unitsSold": 297,
+ "nqSaleVelocity": 0,
+ "hqSaleVelocity": 0,
+ "regularSaleVelocity": 0,
+ "averagePrice": 58.2,
+ "minPrice": 2,
+ "hasData": true,
+ "listings": [
+  {
+   "pricePerUnit": 2,
+   "quantity": 6,
+   "hq": false,
+   "retainerName": "Yvo",
+   "lastReviewTime": 1790710028
+  },
+  {
+   "pricePerUnit": 4,
+   "quantity": 6,
+   "hq": false,
+   "retainerName": "Xiojn",
+   "lastReviewTime": 1790710028
+  },
+  {
+   "pricePerUnit": 5,
+   "quantity": 16,
+   "hq": false,
+   "retainerName": "Kaelynn",
+   "lastReviewTime": 1790710028
+  },
+  {
+   "pricePerUnit": 6,
+   "quantity": 20,
+   "hq": false,
+   "retainerName": "Kori-king",
+   "lastReviewTime": 1790710028
+  },
+  {
+   "pricePerUnit": 6,
+   "quantity": 20,
+   "hq": false,
+   "retainerName": "Kori-king",
+   "lastReviewTime": 1790710028
+  },
+  {
+   "pricePerUnit": 75,
+   "quantity": 49,
+   "hq": false,
+   "retainerName": "Luloo",
+   "lastReviewTime": 1790710028
+  },
+  {
+   "pricePerUnit": 105,
+   "quantity": 16,
+   "hq": false,
+   "retainerName": "Dilfe",
+   "lastReviewTime": 1790710028
+  },
+  {
+   "pricePerUnit": 200,
+   "quantity": 13,
+   "hq": false,
+   "retainerName": "Hodorhodor",
+   "lastReviewTime": 1790710028
+  },
+  {
+   "pricePerUnit": 200,
+   "quantity": 26,
+   "hq": false,
+   "retainerName": "Farisgaard",
+   "lastReviewTime": 1790710028
+  }
+ ],
+ "recentHistory": [
+  {
+   "pricePerUnit": 25,
+   "quantity": 7,
+   "hq": false,
+   "timestamp": 1789097577
+  },
+  {
+   "pricePerUnit": 200,
+   "quantity": 16,
+   "hq": false,
+   "timestamp": 1787520754
+  },
+  {
+   "pricePerUnit": 199,
+   "quantity": 6,
+   "hq": false,
+   "timestamp": 1787364722
+  },
+  {
+   "pricePerUnit": 30,
+   "quantity": 5,
+   "hq": false,
+   "timestamp": 1787358683
+  },
+  {
+   "pricePerUnit": 100,
+   "quantity": 28,
+   "hq": false,
+   "timestamp": 1787206666
+  },
+  {
+   "pricePerUnit": 111,
+   "quantity": 16,
+   "hq": false,
+   "timestamp": 1787110447
+  },
+  {
+   "pricePerUnit": 165,
+   "quantity": 5,
+   "hq": false,
+   "timestamp": 1786809774
+  },
+  {
+   "pricePerUnit": 21,
+   "quantity": 6,
+   "hq": false,
+   "timestamp": 1786809773
+  },
+  {
+   "pricePerUnit": 10,
+   "quantity": 2,
+   "hq": false,
+   "timestamp": 1786809772
+  },
+  {
+   "pricePerUnit": 9,
+   "quantity": 10,
+   "hq": false,
+   "timestamp": 1786809771
+  },
+  {
+   "pricePerUnit": 10,
+   "quantity": 12,
+   "hq": false,
+   "timestamp": 1786809770
+  },
+  {
+   "pricePerUnit": 99,
+   "quantity": 30,
+   "hq": false,
+   "timestamp": 1785716736
+  },
+  {
+   "pricePerUnit": 20,
+   "quantity": 6,
+   "hq": false,
+   "timestamp": 1785690896
+  },
+  {
+   "pricePerUnit": 20,
+   "quantity": 43,
+   "hq": false,
+   "timestamp": 1785643000
+  },
+  {
+   "pricePerUnit": 50,
+   "quantity": 15,
+   "hq": false,
+   "timestamp": 1785544628
+  },
+  {
+   "pricePerUnit": 15,
+   "quantity": 10,
+   "hq": false,
+   "timestamp": 1785544627
+  },
+  {
+   "pricePerUnit": 45,
+   "quantity": 19,
+   "hq": false,
+   "timestamp": 1785544626
+  },
+  {
+   "pricePerUnit": 15,
+   "quantity": 29,
+   "hq": false,
+   "timestamp": 1785544625
+  },
+  {
+   "pricePerUnit": 14,
+   "quantity": 20,
+   "hq": false,
+   "timestamp": 1785544624
+  },
+  {
+   "pricePerUnit": 6,
+   "quantity": 12,
+   "hq": false,
+   "timestamp": 1785434838
+  }
+ ]
+}

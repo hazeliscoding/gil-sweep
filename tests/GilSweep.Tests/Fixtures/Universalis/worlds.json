@@ -1,0 +1,514 @@
+[
+ {
+  "id": 21,
+  "name": "Ravana"
+ },
+ {
+  "id": 22,
+  "name": "Bismarck"
+ },
+ {
+  "id": 23,
+  "name": "Asura"
+ },
+ {
+  "id": 24,
+  "name": "Belias"
+ },
+ {
+  "id": 28,
+  "name": "Pandaemonium"
+ },
+ {
+  "id": 29,
+  "name": "Shinryu"
+ },
+ {
+  "id": 30,
+  "name": "Unicorn"
+ },
+ {
+  "id": 31,
+  "name": "Yojimbo"
+ },
+ {
+  "id": 32,
+  "name": "Zeromus"
+ },
+ {
+  "id": 33,
+  "name": "Twintania"
+ },
+ {
+  "id": 34,
+  "name": "Brynhildr"
+ },
+ {
+  "id": 35,
+  "name": "Famfrit"
+ },
+ {
+  "id": 36,
+  "name": "Lich"
+ },
+ {
+  "id": 37,
+  "name": "Mateus"
+ },
+ {
+  "id": 39,
+  "name": "Omega"
+ },
+ {
+  "id": 40,
+  "name": "Jenova"
+ },
+ {
+  "id": 41,
+  "name": "Zalera"
+ },
+ {
+  "id": 42,
+  "name": "Zodiark"
+ },
+ {
+  "id": 43,
+  "name": "Alexander"
+ },
+ {
+  "id": 44,
+  "name": "Anima"
+ },
+ {
+  "id": 45,
+  "name": "Carbuncle"
+ },
+ {
+  "id": 46,
+  "name": "Fenrir"
+ },
+ {
+  "id": 47,
+  "name": "Hades"
+ },
+ {
+  "id": 48,
+  "name": "Ixion"
+ },
+ {
+  "id": 49,
+  "name": "Kujata"
+ },
+ {
+  "id": 50,
+  "name": "Typhon"
+ },
+ {
+  "id": 51,
+  "name": "Ultima"
+ },
+ {
+  "id": 52,
+  "name": "Valefor"
+ },
+ {
+  "id": 53,
+  "name": "Exodus"
+ },
+ {
+  "id": 54,
+  "name": "Faerie"
+ },
+ {
+  "id": 55,
+  "name": "Lamia"
+ },
+ {
+  "id": 56,
+  "name": "Phoenix"
+ },
+ {
+  "id": 57,
+  "name": "Siren"
+ },
+ {
+  "id": 58,
+  "name": "Garuda"
+ },
+ {
+  "id": 59,
+  "name": "Ifrit"
+ },
+ {
+  "id": 60,
+  "name": "Ramuh"
+ },
+ {
+  "id": 61,
+  "name": "Titan"
+ },
+ {
+  "id": 62,
+  "name": "Diabolos"
+ },
+ {
+  "id": 63,
+  "name": "Gilgamesh"
+ },
+ {
+  "id": 64,
+  "name": "Leviathan"
+ },
+ {
+  "id": 65,
+  "name": "Midgardsormr"
+ },
+ {
+  "id": 66,
+  "name": "Odin"
+ },
+ {
+  "id": 67,
+  "name": "Shiva"
+ },
+ {
+  "id": 68,
+  "name": "Atomos"
+ },
+ {
+  "id": 69,
+  "name": "Bahamut"
+ },
+ {
+  "id": 70,
+  "name": "Chocobo"
+ },
+ {
+  "id": 71,
+  "name": "Moogle"
+ },
+ {
+  "id": 72,
+  "name": "Tonberry"
+ },
+ {
+  "id": 73,
+  "name": "Adamantoise"
+ },
+ {
+  "id": 74,
+  "name": "Coeurl"
+ },
+ {
+  "id": 75,
+  "name": "Malboro"
+ },
+ {
+  "id": 76,
+  "name": "Tiamat"
+ },
+ {
+  "id": 77,
+  "name": "Ultros"
+ },
+ {
+  "id": 78,
+  "name": "Behemoth"
+ },
+ {
+  "id": 79,
+  "name": "Cactuar"
+ },
+ {
+  "id": 80,
+  "name": "Cerberus"
+ },
+ {
+  "id": 81,
+  "name": "Goblin"
+ },
+ {
+  "id": 82,
+  "name": "Mandragora"
+ },
+ {
+  "id": 83,
+  "name": "Louisoix"
+ },
+ {
+  "id": 85,
+  "name": "Spriggan"
+ },
+ {
+  "id": 86,
+  "name": "Sephirot"
+ },
+ {
+  "id": 87,
+  "name": "Sophia"
+ },
+ {
+  "id": 88,
+  "name": "Zurvan"
+ },
+ {
+  "id": 90,
+  "name": "Aegis"
+ },
+ {
+  "id": 91,
+  "name": "Balmung"
+ },
+ {
+  "id": 92,
+  "name": "Durandal"
+ },
+ {
+  "id": 93,
+  "name": "Excalibur"
+ },
+ {
+  "id": 94,
+  "name": "Gungnir"
+ },
+ {
+  "id": 95,
+  "name": "Hyperion"
+ },
+ {
+  "id": 96,
+  "name": "Masamune"
+ },
+ {
+  "id": 97,
+  "name": "Ragnarok"
+ },
+ {
+  "id": 98,
+  "name": "Ridill"
+ },
+ {
+  "id": 99,
+  "name": "Sargatanas"
+ },
+ {
+  "id": 400,
+  "name": "Sagittarius"
+ },
+ {
+  "id": 401,
+  "name": "Phantom"
+ },
+ {
+  "id": 402,
+  "name": "Alpha"
+ },
+ {
+  "id": 403,
+  "name": "Raiden"
+ },
+ {
+  "id": 404,
+  "name": "Marilith"
+ },
+ {
+  "id": 405,
+  "name": "Seraph"
+ },
+ {
+  "id": 406,
+  "name": "Halicarnassus"
+ },
+ {
+  "id": 407,
+  "name": "Maduin"
+ },
+ {
+  "id": 408,
+  "name": "Cuchulainn"
+ },
+ {
+  "id": 409,
+  "name": "Kraken"
+ },
+ {
+  "id": 410,
+  "name": "Rafflesia"
+ },
+ {
+  "id": 411,
+  "name": "Golem"
+ },
+ {
+  "id": 3000,
+  "name": "Cloudtest01"
+ },
+ {
+  "id": 3001,
+  "name": "Cloudtest02"
+ },
+ {
+  "id": 1167,
+  "name": "\u7ea2\u7389\u6d77"
+ },
+ {
+  "id": 1081,
+  "name": "\u795e\u610f\u4e4b\u5730"
+ },
+ {
+  "id": 1042,
+  "name": "\u62c9\u8bfa\u897f\u4e9a"
+ },
+ {
+  "id": 1044,
+  "name": "\u5e7b\u5f71\u7fa4\u5c9b"
+ },
+ {
+  "id": 1060,
+  "name": "\u840c\u82bd\u6c60"
+ },
+ {
+  "id": 1173,
+  "name": "\u5b87\u5b99\u548c\u97f3"
+ },
+ {
+  "id": 1174,
+  "name": "\u6c83\u4ed9\u66e6\u67d3"
+ },
+ {
+  "id": 1175,
+  "name": "\u6668\u66e6\u738b\u5ea7"
+ },
+ {
+  "id": 1172,
+  "name": "\u767d\u94f6\u4e61"
+ },
+ {
+  "id": 1076,
+  "name": "\u767d\u91d1\u5e7b\u8c61"
+ },
+ {
+  "id": 1171,
+  "name": "\u795e\u62f3\u75d5"
+ },
+ {
+  "id": 1170,
+  "name": "\u6f6e\u98ce\u4ead"
+ },
+ {
+  "id": 1113,
+  "name": "\u65c5\u4eba\u6808\u6865"
+ },
+ {
+  "id": 1121,
+  "name": "\u62c2\u6653\u4e4b\u95f4"
+ },
+ {
+  "id": 1166,
+  "name": "\u9f99\u5de2\u795e\u6bbf"
+ },
+ {
+  "id": 1176,
+  "name": "\u68a6\u7fbd\u5b9d\u5883"
+ },
+ {
+  "id": 1043,
+  "name": "\u7d2b\u6c34\u6808\u6865"
+ },
+ {
+  "id": 1169,
+  "name": "\u5ef6\u590f"
+ },
+ {
+  "id": 1106,
+  "name": "\u9759\u8bed\u5e84\u56ed"
+ },
+ {
+  "id": 1045,
+  "name": "\u6469\u675c\u7eb3"
+ },
+ {
+  "id": 1177,
+  "name": "\u6d77\u732b\u8336\u5c4b"
+ },
+ {
+  "id": 1178,
+  "name": "\u67d4\u98ce\u6d77\u6e7e"
+ },
+ {
+  "id": 1179,
+  "name": "\u7425\u73c0\u539f"
+ },
+ {
+  "id": 1192,
+  "name": "\u6c34\u6676\u5854"
+ },
+ {
+  "id": 1183,
+  "name": "\u94f6\u6cea\u6e56"
+ },
+ {
+  "id": 1180,
+  "name": "\u592a\u9633\u6d77\u5cb8"
+ },
+ {
+  "id": 1186,
+  "name": "\u4f0a\u4fee\u52a0\u5fb7"
+ },
+ {
+  "id": 1201,
+  "name": "\u7ea2\u8336\u5ddd"
+ },
+ {
+  "id": 2075,
+  "name": "\uce74\ubc99\ud074"
+ },
+ {
+  "id": 2076,
+  "name": "\ucd08\ucf54\ubcf4"
+ },
+ {
+  "id": 2077,
+  "name": "\ubaa8\uadf8\ub9ac"
+ },
+ {
+  "id": 2078,
+  "name": "\ud1a4\ubca0\ub9ac"
+ },
+ {
+  "id": 2080,
+  "name": "\ud39c\ub9ac\ub974"
+ },
+ {
+  "id": 4028,
+  "name": "\u4f0a\u5f17\u5229\u7279"
+ },
+ {
+  "id": 4029,
+  "name": "\u8fe6\u6a13\u7f85"
+ },
+ {
+  "id": 4030,
+  "name": "\u5229\u7dad\u5766"
+ },
+ {
+  "id": 4031,
+  "name": "\u9cf3\u51f0"
+ },
+ {
+  "id": 4032,
+  "name": "\u5967\u6c40"
+ },
+ {
+  "id": 4033,
+  "name": "\u5df4\u54c8\u59c6\u7279"
+ },
+ {
+  "id": 4034,
+  "name": "\u62c9\u59c6"
+ },
+ {
+  "id": 4035,
+  "name": "\u6cf0\u5766"
+ }
+]

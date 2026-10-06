@@ -1,0 +1,292 @@
+{
+ "itemID": 18,
+ "worldID": 79,
+ "worldName": "Cactuar",
+ "lastUploadTime": 1791253341368,
+ "stackSizeHistogram": {
+  "1227": 1,
+  "2000": 2,
+  "2500": 1,
+  "3000": 16,
+  "5000": 2,
+  "6000": 1,
+  "6019": 1,
+  "8000": 1,
+  "8500": 1,
+  "9999": 12
+ },
+ "listingsCount": 20,
+ "recentHistoryCount": 20,
+ "unitsForSale": 96242,
+ "unitsSold": 53206,
+ "nqSaleVelocity": 7600.857,
+ "hqSaleVelocity": 0,
+ "regularSaleVelocity": 7600.857,
+ "averagePrice": 54.6,
+ "minPrice": 54,
+ "hasData": true,
+ "listings": [
+  {
+   "pricePerUnit": 54,
+   "quantity": 2000,
+   "hq": false,
+   "retainerName": "Davidye",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 54,
+   "quantity": 2000,
+   "hq": false,
+   "retainerName": "Davidye",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 60,
+   "quantity": 1227,
+   "hq": false,
+   "retainerName": "Fa'ruby",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 61,
+   "quantity": 2500,
+   "hq": false,
+   "retainerName": "Dragonnheart",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 61,
+   "quantity": 9999,
+   "hq": false,
+   "retainerName": "Dazel-roseland",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 63,
+   "quantity": 5000,
+   "hq": false,
+   "retainerName": "Sophelia",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 99,
+   "quantity": 9999,
+   "hq": false,
+   "retainerName": "Monroesanders",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 99,
+   "quantity": 9999,
+   "hq": false,
+   "retainerName": "Monroesanders",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 99,
+   "quantity": 9999,
+   "hq": false,
+   "retainerName": "Monroesanders",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 117,
+   "quantity": 8500,
+   "hq": false,
+   "retainerName": "Leah-xaxz",
+   "lastReviewTime": 1791253339
+  },
+  {
+   "pricePerUnit": 117,
+   "quantity": 5000,
+   "hq": false,
+   "retainerName": "Jessica-xaxz",
+   "lastReviewTime": 1791253340
+  },
+  {
+   "pricePerUnit": 117,
+   "quantity": 3000,
+   "hq": false,
+   "retainerName": "Jessica-xaxz",
+   "lastReviewTime": 1791253340
+  },
+  {
+   "pricePerUnit": 117,
+   "quantity": 3000,
+   "hq": false,
+   "retainerName": "Jessica-xaxz",
+   "lastReviewTime": 1791253340
+  },
+  {
+   "pricePerUnit": 117,
+   "quantity": 3000,
+   "hq": false,
+   "retainerName": "Jessica-xaxz",
+   "lastReviewTime": 1791253340
+  },
+  {
+   "pricePerUnit": 117,
+   "quantity": 3000,
+   "hq": false,
+   "retainerName": "Jessica-xaxz",
+   "lastReviewTime": 1791253340
+  },
+  {
+   "pricePerUnit": 117,
+   "quantity": 3000,
+   "hq": false,
+   "retainerName": "Jessica-xaxz",
+   "lastReviewTime": 1791253340
+  },
+  {
+   "pricePerUnit": 117,
+   "quantity": 3000,
+   "hq": false,
+   "retainerName": "Jessica-xaxz",
+   "lastReviewTime": 1791253340
+  },
+  {
+   "pricePerUnit": 117,
+   "quantity": 3000,
+   "hq": false,
+   "retainerName": "Jessica-xaxz",
+   "lastReviewTime": 1791253340
+  },
+  {
+   "pricePerUnit": 175,
+   "quantity": 3000,
+   "hq": false,
+   "retainerName": "Emma-xaxz",
+   "lastReviewTime": 1791253340
+  },
+  {
+   "pricePerUnit": 175,
+   "quantity": 6019,
+   "hq": false,
+   "retainerName": "Emma-xaxz",
+   "lastReviewTime": 1791253340
+  }
+ ],
+ "recentHistory": [
+  {
+   "pricePerUnit": 54,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1791251950
+  },
+  {
+   "pricePerUnit": 59,
+   "quantity": 9999,
+   "hq": false,
+   "timestamp": 1791146948
+  },
+  {
+   "pricePerUnit": 56,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1791096232
+  },
+  {
+   "pricePerUnit": 56,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1791096230
+  },
+  {
+   "pricePerUnit": 40,
+   "quantity": 670,
+   "hq": false,
+   "timestamp": 1791096228
+  },
+  {
+   "pricePerUnit": 56,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1791071056
+  },
+  {
+   "pricePerUnit": 69,
+   "quantity": 3810,
+   "hq": false,
+   "timestamp": 1790999267
+  },
+  {
+   "pricePerUnit": 58,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1790973021
+  },
+  {
+   "pricePerUnit": 41,
+   "quantity": 374,
+   "hq": false,
+   "timestamp": 1790959475
+  },
+  {
+   "pricePerUnit": 58,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1790959474
+  },
+  {
+   "pricePerUnit": 60,
+   "quantity": 3333,
+   "hq": false,
+   "timestamp": 1790914593
+  },
+  {
+   "pricePerUnit": 60,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1790880591
+  },
+  {
+   "pricePerUnit": 59,
+   "quantity": 3000,
+   "hq": false,
+   "timestamp": 1790873343
+  },
+  {
+   "pricePerUnit": 58,
+   "quantity": 3000,
+   "hq": false,
+   "timestamp": 1790871644
+  },
+  {
+   "pricePerUnit": 57,
+   "quantity": 1000,
+   "hq": false,
+   "timestamp": 1790871643
+  },
+  {
+   "pricePerUnit": 57,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1790862941
+  },
+  {
+   "pricePerUnit": 57,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1790825961
+  },
+  {
+   "pricePerUnit": 46,
+   "quantity": 4000,
+   "hq": false,
+   "timestamp": 1790760864
+  },
+  {
+   "pricePerUnit": 46,
+   "quantity": 4020,
+   "hq": false,
+   "timestamp": 1790749360
+  },
+  {
+   "pricePerUnit": 45,
+   "quantity": 2000,
+   "hq": false,
+   "timestamp": 1790737310
+  }
+ ]
+}

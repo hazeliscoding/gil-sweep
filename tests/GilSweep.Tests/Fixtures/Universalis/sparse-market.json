@@ -1,0 +1,150 @@
+{
+ "itemID": 19916,
+ "worldID": 79,
+ "worldName": "Cactuar",
+ "lastUploadTime": 1791134230915,
+ "stackSizeHistogram": {
+  "15": 1
+ },
+ "listingsCount": 1,
+ "recentHistoryCount": 20,
+ "unitsForSale": 15,
+ "unitsSold": 364,
+ "nqSaleVelocity": 3.5714285,
+ "hqSaleVelocity": 0,
+ "regularSaleVelocity": 3.5714285,
+ "averagePrice": 1900.85,
+ "minPrice": 5004,
+ "hasData": true,
+ "listings": [
+  {
+   "pricePerUnit": 5004,
+   "quantity": 15,
+   "hq": false,
+   "retainerName": "Shenara",
+   "lastReviewTime": 1791134224
+  }
+ ],
+ "recentHistory": [
+  {
+   "pricePerUnit": 324,
+   "quantity": 25,
+   "hq": false,
+   "timestamp": 1791133746
+  },
+  {
+   "pricePerUnit": 5003,
+   "quantity": 2,
+   "hq": false,
+   "timestamp": 1789962188
+  },
+  {
+   "pricePerUnit": 5000,
+   "quantity": 4,
+   "hq": false,
+   "timestamp": 1789962186
+  },
+  {
+   "pricePerUnit": 2904,
+   "quantity": 2,
+   "hq": false,
+   "timestamp": 1789705234
+  },
+  {
+   "pricePerUnit": 5004,
+   "quantity": 2,
+   "hq": false,
+   "timestamp": 1787879870
+  },
+  {
+   "pricePerUnit": 1400,
+   "quantity": 2,
+   "hq": false,
+   "timestamp": 1787879869
+  },
+  {
+   "pricePerUnit": 1498,
+   "quantity": 36,
+   "hq": false,
+   "timestamp": 1787349049
+  },
+  {
+   "pricePerUnit": 1200,
+   "quantity": 2,
+   "hq": false,
+   "timestamp": 1786456650
+  },
+  {
+   "pricePerUnit": 1500,
+   "quantity": 1,
+   "hq": false,
+   "timestamp": 1785968618
+  },
+  {
+   "pricePerUnit": 1496,
+   "quantity": 1,
+   "hq": false,
+   "timestamp": 1785854004
+  },
+  {
+   "pricePerUnit": 1498,
+   "quantity": 59,
+   "hq": false,
+   "timestamp": 1785854001
+  },
+  {
+   "pricePerUnit": 1497,
+   "quantity": 99,
+   "hq": false,
+   "timestamp": 1785853995
+  },
+  {
+   "pricePerUnit": 1400,
+   "quantity": 2,
+   "hq": false,
+   "timestamp": 1785607244
+  },
+  {
+   "pricePerUnit": 1395,
+   "quantity": 1,
+   "hq": false,
+   "timestamp": 1785607242
+  },
+  {
+   "pricePerUnit": 1499,
+   "quantity": 2,
+   "hq": false,
+   "timestamp": 1785214478
+  },
+  {
+   "pricePerUnit": 1904,
+   "quantity": 5,
+   "hq": false,
+   "timestamp": 1784173030
+  },
+  {
+   "pricePerUnit": 600,
+   "quantity": 17,
+   "hq": false,
+   "timestamp": 1783839297
+  },
+  {
+   "pricePerUnit": 600,
+   "quantity": 99,
+   "hq": false,
+   "timestamp": 1783839294
+  },
+  {
+   "pricePerUnit": 1901,
+   "quantity": 1,
+   "hq": false,
+   "timestamp": 1783805063
+  },
+  {
+   "pricePerUnit": 394,
+   "quantity": 2,
+   "hq": false,
+   "timestamp": 1781658968
+  }
+ ]
+}

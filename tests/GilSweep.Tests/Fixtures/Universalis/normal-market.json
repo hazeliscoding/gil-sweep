@@ -1,0 +1,291 @@
+{
+ "itemID": 12531,
+ "worldID": 79,
+ "worldName": "Cactuar",
+ "lastUploadTime": 1791260018186,
+ "stackSizeHistogram": {
+  "1": 1,
+  "2": 1,
+  "3": 1,
+  "21": 1,
+  "25": 6,
+  "40": 1,
+  "50": 7,
+  "96": 1,
+  "99": 81
+ },
+ "listingsCount": 20,
+ "recentHistoryCount": 20,
+ "unitsForSale": 1485,
+ "unitsSold": 763,
+ "nqSaleVelocity": 109,
+ "hqSaleVelocity": 0,
+ "regularSaleVelocity": 109,
+ "averagePrice": 274.1,
+ "minPrice": 198,
+ "hasData": true,
+ "listings": [
+  {
+   "pricePerUnit": 198,
+   "quantity": 21,
+   "hq": false,
+   "retainerName": "Sakoyo",
+   "lastReviewTime": 1791260015
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 25,
+   "hq": false,
+   "retainerName": "Sakoyo",
+   "lastReviewTime": 1791260015
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 198,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Hyacinthia",
+   "lastReviewTime": 1791260014
+  },
+  {
+   "pricePerUnit": 200,
+   "quantity": 3,
+   "hq": false,
+   "retainerName": "Spleen",
+   "lastReviewTime": 1791260015
+  },
+  {
+   "pricePerUnit": 232,
+   "quantity": 2,
+   "hq": false,
+   "retainerName": "Jfhgd",
+   "lastReviewTime": 1791260015
+  },
+  {
+   "pricePerUnit": 252,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Bozzit",
+   "lastReviewTime": 1791260015
+  },
+  {
+   "pricePerUnit": 252,
+   "quantity": 99,
+   "hq": false,
+   "retainerName": "Bozzit",
+   "lastReviewTime": 1791260015
+  },
+  {
+   "pricePerUnit": 252,
+   "quantity": 50,
+   "hq": false,
+   "retainerName": "Bozzit",
+   "lastReviewTime": 1791260015
+  },
+  {
+   "pricePerUnit": 252,
+   "quantity": 50,
+   "hq": false,
+   "retainerName": "Bozzit",
+   "lastReviewTime": 1791260015
+  },
+  {
+   "pricePerUnit": 253,
+   "quantity": 50,
+   "hq": false,
+   "retainerName": "Bozzit",
+   "lastReviewTime": 1791260015
+  },
+  {
+   "pricePerUnit": 257,
+   "quantity": 96,
+   "hq": false,
+   "retainerName": "Snepperton",
+   "lastReviewTime": 1791260015
+  }
+ ],
+ "recentHistory": [
+  {
+   "pricePerUnit": 232,
+   "quantity": 23,
+   "hq": false,
+   "timestamp": 1791240939
+  },
+  {
+   "pricePerUnit": 254,
+   "quantity": 39,
+   "hq": false,
+   "timestamp": 1791175680
+  },
+  {
+   "pricePerUnit": 260,
+   "quantity": 12,
+   "hq": false,
+   "timestamp": 1791161722
+  },
+  {
+   "pricePerUnit": 279,
+   "quantity": 99,
+   "hq": false,
+   "timestamp": 1791158395
+  },
+  {
+   "pricePerUnit": 289,
+   "quantity": 50,
+   "hq": false,
+   "timestamp": 1791155952
+  },
+  {
+   "pricePerUnit": 299,
+   "quantity": 8,
+   "hq": false,
+   "timestamp": 1791152196
+  },
+  {
+   "pricePerUnit": 280,
+   "quantity": 5,
+   "hq": false,
+   "timestamp": 1791152183
+  },
+  {
+   "pricePerUnit": 280,
+   "quantity": 5,
+   "hq": false,
+   "timestamp": 1791152111
+  },
+  {
+   "pricePerUnit": 268,
+   "quantity": 25,
+   "hq": false,
+   "timestamp": 1791149135
+  },
+  {
+   "pricePerUnit": 268,
+   "quantity": 25,
+   "hq": false,
+   "timestamp": 1791149132
+  },
+  {
+   "pricePerUnit": 270,
+   "quantity": 35,
+   "hq": false,
+   "timestamp": 1791139821
+  },
+  {
+   "pricePerUnit": 278,
+   "quantity": 99,
+   "hq": false,
+   "timestamp": 1791132766
+  },
+  {
+   "pricePerUnit": 279,
+   "quantity": 99,
+   "hq": false,
+   "timestamp": 1791126049
+  },
+  {
+   "pricePerUnit": 279,
+   "quantity": 99,
+   "hq": false,
+   "timestamp": 1791126048
+  },
+  {
+   "pricePerUnit": 279,
+   "quantity": 99,
+   "hq": false,
+   "timestamp": 1791126045
+  },
+  {
+   "pricePerUnit": 278,
+   "quantity": 25,
+   "hq": false,
+   "timestamp": 1791123293
+  },
+  {
+   "pricePerUnit": 280,
+   "quantity": 5,
+   "hq": false,
+   "timestamp": 1791123119
+  },
+  {
+   "pricePerUnit": 280,
+   "quantity": 5,
+   "hq": false,
+   "timestamp": 1791096965
+  },
+  {
+   "pricePerUnit": 280,
+   "quantity": 5,
+   "hq": false,
+   "timestamp": 1791096964
+  },
+  {
+   "pricePerUnit": 270,
+   "quantity": 1,
+   "hq": false,
+   "timestamp": 1791086841
+  }
+ ]
+}

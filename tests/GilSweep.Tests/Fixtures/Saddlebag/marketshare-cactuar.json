@@ -1,0 +1,1804 @@
+{
+ "data": [
+  {
+   "name": "Crystal of Divine Light",
+   "itemID": "35792",
+   "avg": 934373,
+   "median": 659899,
+   "quantitySold": 30,
+   "state": "spiking",
+   "percentChange": 435.12
+  },
+  {
+   "name": "Turali Pigment",
+   "itemID": "49227",
+   "avg": 4220,
+   "median": 4000,
+   "quantitySold": 2023,
+   "state": "stable",
+   "percentChange": -5.21
+  },
+  {
+   "name": "Darksteel Ore",
+   "itemID": "5121",
+   "avg": 528,
+   "median": 539,
+   "quantitySold": 9653,
+   "state": "stable",
+   "percentChange": -5.3
+  },
+  {
+   "name": "Double Duraluminum Ingot",
+   "itemID": "49214",
+   "avg": 17794,
+   "median": 19850,
+   "quantitySold": 267,
+   "state": "decreasing",
+   "percentChange": -43.8
+  },
+  {
+   "name": "Rose Garnet",
+   "itemID": "49215",
+   "avg": 21261,
+   "median": 19998,
+   "quantitySold": 213,
+   "state": "out of stock",
+   "percentChange": 10000
+  },
+  {
+   "name": "Black Star",
+   "itemID": "44012",
+   "avg": 1648,
+   "median": 800,
+   "quantitySold": 1792,
+   "state": "decreasing",
+   "percentChange": -51.64
+  },
+  {
+   "name": "Phonograph Plate",
+   "itemID": "36629",
+   "avg": 1652000,
+   "median": 1652000,
+   "quantitySold": 2,
+   "state": "stable",
+   "percentChange": 0.18
+  },
+  {
+   "name": "Ra'Kaznar Ingot",
+   "itemID": "44001",
+   "avg": 1505,
+   "median": 899,
+   "quantitySold": 1511,
+   "state": "decreasing",
+   "percentChange": -55.02
+  },
+  {
+   "name": "Pure Titanium Ore",
+   "itemID": "26531",
+   "avg": 8661,
+   "median": 8498,
+   "quantitySold": 339,
+   "state": "stable",
+   "percentChange": -4.18
+  },
+  {
+   "name": "Enchanted Elm Lumber",
+   "itemID": "27977",
+   "avg": 297207,
+   "median": 372832,
+   "quantitySold": 10,
+   "state": "increasing",
+   "percentChange": 34.59
+  },
+  {
+   "name": "Weatherproof Plywood",
+   "itemID": "52632",
+   "avg": 1006511,
+   "median": 1006767,
+   "quantitySold": 3,
+   "state": "increasing",
+   "percentChange": 17.83
+  },
+  {
+   "name": "Ancestral Alloy Ingot",
+   "itemID": "50972",
+   "avg": 45882,
+   "median": 37999,
+   "quantitySold": 65,
+   "state": "spiking",
+   "percentChange": 125.58
+  },
+  {
+   "name": "Desert Lapis",
+   "itemID": "46250",
+   "avg": 26647,
+   "median": 19807,
+   "quantitySold": 126,
+   "state": "increasing",
+   "percentChange": 50.11
+  },
+  {
+   "name": "Hades's Auracite",
+   "itemID": "28631",
+   "avg": 567398,
+   "median": 575995,
+   "quantitySold": 5,
+   "state": "stable",
+   "percentChange": 0.46
+  },
+  {
+   "name": "Ut'ohmu Siderite",
+   "itemID": "46852",
+   "avg": 188666,
+   "median": 189999,
+   "quantitySold": 15,
+   "state": "stable",
+   "percentChange": 6.01
+  },
+  {
+   "name": "Electrum Ingot",
+   "itemID": "5066",
+   "avg": 1692,
+   "median": 1000,
+   "quantitySold": 2412,
+   "state": "decreasing",
+   "percentChange": -54.2
+  },
+  {
+   "name": "Cobalt Ore",
+   "itemID": "5116",
+   "avg": 246,
+   "median": 223,
+   "quantitySold": 10502,
+   "state": "increasing",
+   "percentChange": 62.2
+  },
+  {
+   "name": "Cryptomeria Log",
+   "itemID": "26529",
+   "avg": 8772,
+   "median": 8993,
+   "quantitySold": 272,
+   "state": "stable",
+   "percentChange": 2.53
+  },
+  {
+   "name": "Darksteel Ingot",
+   "itemID": "5060",
+   "avg": 4594,
+   "median": 4000,
+   "quantitySold": 455,
+   "state": "increasing",
+   "percentChange": 52.35
+  },
+  {
+   "name": "Cobalt Ingot",
+   "itemID": "5059",
+   "avg": 772,
+   "median": 750,
+   "quantitySold": 2922,
+   "state": "stable",
+   "percentChange": -13.21
+  },
+  {
+   "name": "Mythrite Ore",
+   "itemID": "12534",
+   "avg": 367,
+   "median": 400,
+   "quantitySold": 5621,
+   "state": "decreasing",
+   "percentChange": -18.8
+  },
+  {
+   "name": "Octahedrite Nugget",
+   "itemID": "45975",
+   "avg": 8240,
+   "median": 4996,
+   "quantitySold": 197,
+   "state": "decreasing",
+   "percentChange": -22.4
+  },
+  {
+   "name": "Chondrite Ingot",
+   "itemID": "36172",
+   "avg": 2062,
+   "median": 1400,
+   "quantitySold": 884,
+   "state": "stable",
+   "percentChange": -3.01
+  },
+  {
+   "name": "Monarch Whetstone",
+   "itemID": "50970",
+   "avg": 787250,
+   "median": 787250,
+   "quantitySold": 2,
+   "state": "stable",
+   "percentChange": 1.59
+  },
+  {
+   "name": "White Granite",
+   "itemID": "39587",
+   "avg": 174927,
+   "median": 174927,
+   "quantitySold": 9,
+   "state": "stable",
+   "percentChange": 0.0
+  },
+  {
+   "name": "Rhodochrosite",
+   "itemID": "45976",
+   "avg": 4200,
+   "median": 229,
+   "quantitySold": 211,
+   "state": "crashing",
+   "percentChange": -97.62
+  },
+  {
+   "name": "Mountain Chromite Ingot",
+   "itemID": "43997",
+   "avg": 1342,
+   "median": 996,
+   "quantitySold": 1051,
+   "state": "increasing",
+   "percentChange": 15.87
+  },
+  {
+   "name": "Approved Grade 4 Skybuilders' Umbral Galewood Branch",
+   "itemID": "32001",
+   "avg": 743,
+   "median": 607,
+   "quantitySold": 2150,
+   "state": "spiking",
+   "percentChange": 101.88
+  },
+  {
+   "name": "Mythril Ore",
+   "itemID": "5114",
+   "avg": 244,
+   "median": 259,
+   "quantitySold": 6075,
+   "state": "decreasing",
+   "percentChange": -24.18
+  },
+  {
+   "name": "Claro Walnut Lumber",
+   "itemID": "44023",
+   "avg": 1726,
+   "median": 945,
+   "quantitySold": 993,
+   "state": "decreasing",
+   "percentChange": -45.31
+  },
+  {
+   "name": "Ametrine",
+   "itemID": "36182",
+   "avg": 1547,
+   "median": 1302,
+   "quantitySold": 305,
+   "state": "stable",
+   "percentChange": -9.7
+  },
+  {
+   "name": "Sphalerite",
+   "itemID": "13750",
+   "avg": 443,
+   "median": 420,
+   "quantitySold": 3167,
+   "state": "stable",
+   "percentChange": -5.19
+  },
+  {
+   "name": "Cobalt Tungsten Ingot",
+   "itemID": "43999",
+   "avg": 5093,
+   "median": 5992,
+   "quantitySold": 241,
+   "state": "increasing",
+   "percentChange": 17.79
+  },
+  {
+   "name": "Rose Garnet Ore",
+   "itemID": "49209",
+   "avg": 491,
+   "median": 504,
+   "quantitySold": 2808,
+   "state": "decreasing",
+   "percentChange": -17.92
+  },
+  {
+   "name": "Mythrite Ingot",
+   "itemID": "12519",
+   "avg": 2381,
+   "median": 2200,
+   "quantitySold": 473,
+   "state": "crashing",
+   "percentChange": -79.04
+  },
+  {
+   "name": "Magnesia Powder",
+   "itemID": "44007",
+   "avg": 270,
+   "median": 239,
+   "quantitySold": 4611,
+   "state": "decreasing",
+   "percentChange": -35.19
+  },
+  {
+   "name": "Star Quartz",
+   "itemID": "36186",
+   "avg": 1637,
+   "median": 998,
+   "quantitySold": 310,
+   "state": "decreasing",
+   "percentChange": -45.75
+  },
+  {
+   "name": "Approved Grade 4 Skybuilders' Umbral Levinsand",
+   "itemID": "32004",
+   "avg": 628,
+   "median": 607,
+   "quantitySold": 1681,
+   "state": "increasing",
+   "percentChange": 42.99
+  },
+  {
+   "name": "Silver Ore",
+   "itemID": "5113",
+   "avg": 264,
+   "median": 200,
+   "quantitySold": 4027,
+   "state": "decreasing",
+   "percentChange": -45.08
+  },
+  {
+   "name": "Dense Aluminum Ore",
+   "itemID": "49208",
+   "avg": 559,
+   "median": 489,
+   "quantitySold": 1854,
+   "state": "decreasing",
+   "percentChange": -46.51
+  },
+  {
+   "name": "Ra'Kaznar Ore",
+   "itemID": "43996",
+   "avg": 225,
+   "median": 173,
+   "quantitySold": 4180,
+   "state": "spiking",
+   "percentChange": 117.78
+  },
+  {
+   "name": "Titanium Ore",
+   "itemID": "12537",
+   "avg": 400,
+   "median": 442,
+   "quantitySold": 2396,
+   "state": "stable",
+   "percentChange": -4.0
+  },
+  {
+   "name": "Softsilver Ingot",
+   "itemID": "39718",
+   "avg": 11082,
+   "median": 11996,
+   "quantitySold": 96,
+   "state": "spiking",
+   "percentChange": 1253.54
+  },
+  {
+   "name": "Magnesia Whetstone",
+   "itemID": "44013",
+   "avg": 1502,
+   "median": 1191,
+   "quantitySold": 472,
+   "state": "increasing",
+   "percentChange": 32.89
+  },
+  {
+   "name": "Neo Abrasive",
+   "itemID": "45986",
+   "avg": 2149,
+   "median": 2001,
+   "quantitySold": 423,
+   "state": "stable",
+   "percentChange": 2.47
+  },
+  {
+   "name": "Steel Ingot",
+   "itemID": "5058",
+   "avg": 470,
+   "median": 200,
+   "quantitySold": 1844,
+   "state": "spiking",
+   "percentChange": 102.13
+  },
+  {
+   "name": "Platinum Ore",
+   "itemID": "5120",
+   "avg": 671,
+   "median": 690,
+   "quantitySold": 1381,
+   "state": "decreasing",
+   "percentChange": -50.37
+  },
+  {
+   "name": "Titanium Ingot",
+   "itemID": "12525",
+   "avg": 2697,
+   "median": 2500,
+   "quantitySold": 383,
+   "state": "decreasing",
+   "percentChange": -25.7
+  },
+  {
+   "name": "Oroshigane Ingot",
+   "itemID": "19943",
+   "avg": 1770,
+   "median": 1550,
+   "quantitySold": 374,
+   "state": "spiking",
+   "percentChange": 69.49
+  },
+  {
+   "name": "Vanadinite",
+   "itemID": "37828",
+   "avg": 705,
+   "median": 697,
+   "quantitySold": 1223,
+   "state": "stable",
+   "percentChange": -3.55
+  },
+  {
+   "name": "Mythrite Sand",
+   "itemID": "12531",
+   "avg": 346,
+   "median": 289,
+   "quantitySold": 2438,
+   "state": "decreasing",
+   "percentChange": -42.49
+  },
+  {
+   "name": "Darksteel Nugget",
+   "itemID": "5061",
+   "avg": 3346,
+   "median": 3000,
+   "quantitySold": 204,
+   "state": "decreasing",
+   "percentChange": -33.59
+  },
+  {
+   "name": "Tincalconite",
+   "itemID": "14933",
+   "avg": 68635,
+   "median": 65000,
+   "quantitySold": 12,
+   "state": "spiking",
+   "percentChange": 9999
+  },
+  {
+   "name": "Mythril Ingot",
+   "itemID": "5065",
+   "avg": 534,
+   "median": 425,
+   "quantitySold": 1334,
+   "state": "decreasing",
+   "percentChange": -43.82
+  },
+  {
+   "name": "Mythril Rivets",
+   "itemID": "5099",
+   "avg": 1026,
+   "median": 999,
+   "quantitySold": 789,
+   "state": "out of stock",
+   "percentChange": 10000
+  },
+  {
+   "name": "Cordia Lumber",
+   "itemID": "45974",
+   "avg": 15692,
+   "median": 15999,
+   "quantitySold": 49,
+   "state": "decreasing",
+   "percentChange": -36.27
+  },
+  {
+   "name": "Approved Grade 4 Skybuilders' Umbral Flarerock",
+   "itemID": "32003",
+   "avg": 452,
+   "median": 295,
+   "quantitySold": 2037,
+   "state": "spiking",
+   "percentChange": 298.23
+  },
+  {
+   "name": "Lar Ingot",
+   "itemID": "44008",
+   "avg": 1592,
+   "median": 1498,
+   "quantitySold": 552,
+   "state": "decreasing",
+   "percentChange": -58.86
+  },
+  {
+   "name": "Mountain Chromite Ore",
+   "itemID": "43992",
+   "avg": 409,
+   "median": 540,
+   "quantitySold": 1532,
+   "state": "increasing",
+   "percentChange": 35.7
+  },
+  {
+   "name": "Silver Ingot",
+   "itemID": "5064",
+   "avg": 1340,
+   "median": 750,
+   "quantitySold": 732,
+   "state": "spiking",
+   "percentChange": 86.49
+  },
+  {
+   "name": "Titanium Gold Nugget",
+   "itemID": "44000",
+   "avg": 1728,
+   "median": 1066,
+   "quantitySold": 690,
+   "state": "decreasing",
+   "percentChange": -47.28
+  },
+  {
+   "name": "Ilmenite",
+   "itemID": "37820",
+   "avg": 2977,
+   "median": 2903,
+   "quantitySold": 223,
+   "state": "stable",
+   "percentChange": 0.27
+  },
+  {
+   "name": "Bismuth Ore",
+   "itemID": "36164",
+   "avg": 371,
+   "median": 441,
+   "quantitySold": 1696,
+   "state": "increasing",
+   "percentChange": 19.68
+  },
+  {
+   "name": "Voidcast Pauldron",
+   "itemID": "40752",
+   "avg": 91999,
+   "median": 50000,
+   "quantitySold": 8,
+   "state": "decreasing",
+   "percentChange": -18.48
+  },
+  {
+   "name": "Celestine",
+   "itemID": "12912",
+   "avg": 7611,
+   "median": 7683,
+   "quantitySold": 79,
+   "state": "increasing",
+   "percentChange": 16.77
+  },
+  {
+   "name": "Dark Mahogany Log",
+   "itemID": "44016",
+   "avg": 375,
+   "median": 400,
+   "quantitySold": 1702,
+   "state": "increasing",
+   "percentChange": 20.0
+  },
+  {
+   "name": "Spruce Log",
+   "itemID": "5395",
+   "avg": 577,
+   "median": 480,
+   "quantitySold": 1100,
+   "state": "decreasing",
+   "percentChange": -17.16
+  },
+  {
+   "name": "Peacock Ore",
+   "itemID": "5119",
+   "avg": 294,
+   "median": 294,
+   "quantitySold": 1835,
+   "state": "stable",
+   "percentChange": 8.84
+  },
+  {
+   "name": "Ancient Lumber",
+   "itemID": "7606",
+   "avg": 7969,
+   "median": 8750,
+   "quantitySold": 78,
+   "state": "decreasing",
+   "percentChange": -37.26
+  },
+  {
+   "name": "Manganese Ingot",
+   "itemID": "36171",
+   "avg": 3475,
+   "median": 2000,
+   "quantitySold": 280,
+   "state": "increasing",
+   "percentChange": 44.26
+  },
+  {
+   "name": "Electrum Ore",
+   "itemID": "5115",
+   "avg": 294,
+   "median": 296,
+   "quantitySold": 1894,
+   "state": "decreasing",
+   "percentChange": -32.31
+  },
+  {
+   "name": "Aqueous Whetstone",
+   "itemID": "5261",
+   "avg": 436,
+   "median": 385,
+   "quantitySold": 1395,
+   "state": "decreasing",
+   "percentChange": -15.14
+  },
+  {
+   "name": "Mythrite Nugget",
+   "itemID": "12518",
+   "avg": 1765,
+   "median": 1495,
+   "quantitySold": 272,
+   "state": "decreasing",
+   "percentChange": -15.01
+  },
+  {
+   "name": "Fulgurpine Lumber",
+   "itemID": "49213",
+   "avg": 15538,
+   "median": 16000,
+   "quantitySold": 33,
+   "state": "stable",
+   "percentChange": 6.18
+  },
+  {
+   "name": "Red Pine Lumber",
+   "itemID": "36198",
+   "avg": 2474,
+   "median": 2398,
+   "quantitySold": 201,
+   "state": "stable",
+   "percentChange": -7.03
+  },
+  {
+   "name": "Approved Grade 4 Skybuilders' Gold Sand",
+   "itemID": "31979",
+   "avg": 578,
+   "median": 569,
+   "quantitySold": 888,
+   "state": "stable",
+   "percentChange": 3.63
+  },
+  {
+   "name": "Walnut Lumber",
+   "itemID": "5371",
+   "avg": 1291,
+   "median": 1498,
+   "quantitySold": 377,
+   "state": "decreasing",
+   "percentChange": -26.49
+  },
+  {
+   "name": "Iron Ore",
+   "itemID": "5111",
+   "avg": 117,
+   "median": 98,
+   "quantitySold": 3877,
+   "state": "decreasing",
+   "percentChange": -57.26
+  },
+  {
+   "name": "Granite",
+   "itemID": "7008",
+   "avg": 375,
+   "median": 417,
+   "quantitySold": 1320,
+   "state": "stable",
+   "percentChange": 4.27
+  },
+  {
+   "name": "Garlond Steel",
+   "itemID": "12913",
+   "avg": 14216,
+   "median": 14500,
+   "quantitySold": 34,
+   "state": "decreasing",
+   "percentChange": -21.85
+  },
+  {
+   "name": "Knight Core",
+   "itemID": "48145",
+   "avg": 61624,
+   "median": 54999,
+   "quantitySold": 8,
+   "state": "stable",
+   "percentChange": 5.48
+  },
+  {
+   "name": "Gold Ore",
+   "itemID": "5118",
+   "avg": 97,
+   "median": 79,
+   "quantitySold": 4748,
+   "state": "spiking",
+   "percentChange": 84.54
+  },
+  {
+   "name": "Rose Gold Nugget",
+   "itemID": "5068",
+   "avg": 1040,
+   "median": 1089,
+   "quantitySold": 367,
+   "state": "decreasing",
+   "percentChange": -32.69
+  },
+  {
+   "name": "Perfect Firewood",
+   "itemID": "9511",
+   "avg": 69892,
+   "median": 69892,
+   "quantitySold": 7,
+   "state": "stable",
+   "percentChange": 0.0
+  },
+  {
+   "name": "Titanium Nugget",
+   "itemID": "12524",
+   "avg": 2064,
+   "median": 1964,
+   "quantitySold": 208,
+   "state": "stable",
+   "percentChange": -2.86
+  },
+  {
+   "name": "Pewter Ingot",
+   "itemID": "36183",
+   "avg": 4940,
+   "median": 1747,
+   "quantitySold": 206,
+   "state": "decreasing",
+   "percentChange": -63.6
+  },
+  {
+   "name": "Molybdenum Ingot",
+   "itemID": "19947",
+   "avg": 1543,
+   "median": 1599,
+   "quantitySold": 738,
+   "state": "increasing",
+   "percentChange": 16.59
+  },
+  {
+   "name": "Chromite Ore",
+   "itemID": "19959",
+   "avg": 4249,
+   "median": 5000,
+   "quantitySold": 148,
+   "state": "decreasing",
+   "percentChange": -43.52
+  },
+  {
+   "name": "Bismuth Ingot",
+   "itemID": "36170",
+   "avg": 1630,
+   "median": 1500,
+   "quantitySold": 296,
+   "state": "increasing",
+   "percentChange": 22.7
+  },
+  {
+   "name": "Ruthenium Ingot",
+   "itemID": "43998",
+   "avg": 727,
+   "median": 729,
+   "quantitySold": 506,
+   "state": "decreasing",
+   "percentChange": -17.47
+  },
+  {
+   "name": "High Durium Ingot",
+   "itemID": "36169",
+   "avg": 1066,
+   "median": 1000,
+   "quantitySold": 366,
+   "state": "stable",
+   "percentChange": -6.19
+  },
+  {
+   "name": "Walnut Log",
+   "itemID": "5388",
+   "avg": 476,
+   "median": 449,
+   "quantitySold": 877,
+   "state": "decreasing",
+   "percentChange": -15.13
+  },
+  {
+   "name": "Steel Rivets",
+   "itemID": "5093",
+   "avg": 849,
+   "median": 999,
+   "quantitySold": 765,
+   "state": "stable",
+   "percentChange": 14.49
+  },
+  {
+   "name": "Ceiba Lumber",
+   "itemID": "44020",
+   "avg": 1588,
+   "median": 1413,
+   "quantitySold": 308,
+   "state": "decreasing",
+   "percentChange": -44.14
+  },
+  {
+   "name": "Dark Chestnut Log",
+   "itemID": "12578",
+   "avg": 622,
+   "median": 498,
+   "quantitySold": 924,
+   "state": "crashing",
+   "percentChange": -68.17
+  },
+  {
+   "name": "Spruce Lumber",
+   "itemID": "5378",
+   "avg": 3710,
+   "median": 3798,
+   "quantitySold": 123,
+   "state": "stable",
+   "percentChange": -11.05
+  },
+  {
+   "name": "High Durium Nugget",
+   "itemID": "36168",
+   "avg": 1991,
+   "median": 1500,
+   "quantitySold": 262,
+   "state": "spiking",
+   "percentChange": 151.08
+  },
+  {
+   "name": "Hardsilver Sand",
+   "itemID": "12532",
+   "avg": 345,
+   "median": 329,
+   "quantitySold": 1279,
+   "state": "decreasing",
+   "percentChange": -27.54
+  },
+  {
+   "name": "Chromite Ingot",
+   "itemID": "19949",
+   "avg": 6716,
+   "median": 8443,
+   "quantitySold": 67,
+   "state": "decreasing",
+   "percentChange": -25.4
+  },
+  {
+   "name": "Galvanized Garlond Steel",
+   "itemID": "14935",
+   "avg": 14588,
+   "median": 12000,
+   "quantitySold": 29,
+   "state": "increasing",
+   "percentChange": 37.09
+  },
+  {
+   "name": "Darksteel Rivets",
+   "itemID": "5095",
+   "avg": 7988,
+   "median": 7989,
+   "quantitySold": 51,
+   "state": "decreasing",
+   "percentChange": -44.93
+  },
+  {
+   "name": "Vivianite",
+   "itemID": "12224",
+   "avg": 298,
+   "median": 316,
+   "quantitySold": 1334,
+   "state": "decreasing",
+   "percentChange": -29.87
+  },
+  {
+   "name": "Claro Walnut Log",
+   "itemID": "44018",
+   "avg": 151,
+   "median": 118,
+   "quantitySold": 3342,
+   "state": "increasing",
+   "percentChange": 64.9
+  },
+  {
+   "name": "Approved Grade 4 Skybuilders' Ragstone",
+   "itemID": "31980",
+   "avg": 995,
+   "median": 996,
+   "quantitySold": 397,
+   "state": "stable",
+   "percentChange": -1.51
+  },
+  {
+   "name": "Integral Log",
+   "itemID": "36194",
+   "avg": 593,
+   "median": 593,
+   "quantitySold": 577,
+   "state": "spiking",
+   "percentChange": 68.47
+  },
+  {
+   "name": "Aurum Regis Sand",
+   "itemID": "12533",
+   "avg": 229,
+   "median": 221,
+   "quantitySold": 1547,
+   "state": "increasing",
+   "percentChange": 63.76
+  },
+  {
+   "name": "Ginseng Lumber",
+   "itemID": "44019",
+   "avg": 1543,
+   "median": 1455,
+   "quantitySold": 215,
+   "state": "crashing",
+   "percentChange": -95.66
+  },
+  {
+   "name": "Dark Mahogany Lumber",
+   "itemID": "44021",
+   "avg": 2718,
+   "median": 2105,
+   "quantitySold": 148,
+   "state": "decreasing",
+   "percentChange": -30.1
+  },
+  {
+   "name": "Integral Lumber",
+   "itemID": "36200",
+   "avg": 1521,
+   "median": 1698,
+   "quantitySold": 249,
+   "state": "decreasing",
+   "percentChange": -34.98
+  },
+  {
+   "name": "White Gold Ingot",
+   "itemID": "44011",
+   "avg": 965,
+   "median": 806,
+   "quantitySold": 423,
+   "state": "crashing",
+   "percentChange": -68.91
+  },
+  {
+   "name": "Lignum Vitae Log",
+   "itemID": "27687",
+   "avg": 171,
+   "median": 171,
+   "quantitySold": 2105,
+   "state": "increasing",
+   "percentChange": 46.2
+  },
+  {
+   "name": "Molybdenum Ore",
+   "itemID": "19957",
+   "avg": 503,
+   "median": 502,
+   "quantitySold": 694,
+   "state": "decreasing",
+   "percentChange": -22.07
+  },
+  {
+   "name": "Crag Heart",
+   "itemID": "6163",
+   "avg": 21718,
+   "median": 24990,
+   "quantitySold": 16,
+   "state": "increasing",
+   "percentChange": 38.13
+  },
+  {
+   "name": "Raw Rhodochrosite",
+   "itemID": "45970",
+   "avg": 491,
+   "median": 489,
+   "quantitySold": 718,
+   "state": "decreasing",
+   "percentChange": -59.27
+  },
+  {
+   "name": "Cassia Lumber",
+   "itemID": "12232",
+   "avg": 5233,
+   "median": 3000,
+   "quantitySold": 52,
+   "state": "decreasing",
+   "percentChange": -26.43
+  },
+  {
+   "name": "Wolfram Ingot",
+   "itemID": "7607",
+   "avg": 5828,
+   "median": 5996,
+   "quantitySold": 54,
+   "state": "stable",
+   "percentChange": 2.76
+  },
+  {
+   "name": "Kamacite Ore",
+   "itemID": "25008",
+   "avg": 408,
+   "median": 400,
+   "quantitySold": 804,
+   "state": "stable",
+   "percentChange": 8.82
+  },
+  {
+   "name": "Approved Grade 4 Artisanal Skybuilders' Silex",
+   "itemID": "31999",
+   "avg": 335,
+   "median": 299,
+   "quantitySold": 990,
+   "state": "decreasing",
+   "percentChange": -25.67
+  },
+  {
+   "name": "Shattered Arc",
+   "itemID": "46260",
+   "avg": 110322,
+   "median": 115000,
+   "quantitySold": 3,
+   "state": "stable",
+   "percentChange": 8.77
+  },
+  {
+   "name": "Acacia Lumber",
+   "itemID": "44022",
+   "avg": 388,
+   "median": 325,
+   "quantitySold": 758,
+   "state": "stable",
+   "percentChange": -12.37
+  },
+  {
+   "name": "Rhodonite",
+   "itemID": "19967",
+   "avg": 4274,
+   "median": 3000,
+   "quantitySold": 80,
+   "state": "increasing",
+   "percentChange": 40.38
+  },
+  {
+   "name": "Cedar Log",
+   "itemID": "5384",
+   "avg": 282,
+   "median": 295,
+   "quantitySold": 1064,
+   "state": "decreasing",
+   "percentChange": -29.08
+  },
+  {
+   "name": "Dwarven Mythril Ingot",
+   "itemID": "27714",
+   "avg": 1883,
+   "median": 1200,
+   "quantitySold": 203,
+   "state": "decreasing",
+   "percentChange": -62.88
+  },
+  {
+   "name": "Ilmenite Ingot",
+   "itemID": "37833",
+   "avg": 3348,
+   "median": 3331,
+   "quantitySold": 94,
+   "state": "increasing",
+   "percentChange": 49.34
+  },
+  {
+   "name": "Annite",
+   "itemID": "36181",
+   "avg": 193,
+   "median": 150,
+   "quantitySold": 1847,
+   "state": "spiking",
+   "percentChange": 81.35
+  },
+  {
+   "name": "Pearl of Flames",
+   "itemID": "39583",
+   "avg": 65749,
+   "median": 69500,
+   "quantitySold": 5,
+   "state": "decreasing",
+   "percentChange": -31.56
+  },
+  {
+   "name": "Raw Topaz",
+   "itemID": "5149",
+   "avg": 1049,
+   "median": 1001,
+   "quantitySold": 307,
+   "state": "stable",
+   "percentChange": -4.67
+  },
+  {
+   "name": "Mempisang Log",
+   "itemID": "36195",
+   "avg": 1724,
+   "median": 1724,
+   "quantitySold": 103,
+   "state": "out of stock",
+   "percentChange": 10000
+  },
+  {
+   "name": "Beech Lumber",
+   "itemID": "19925",
+   "avg": 1281,
+   "median": 1200,
+   "quantitySold": 184,
+   "state": "stable",
+   "percentChange": 5.31
+  },
+  {
+   "name": "Lignum Vitae Lumber",
+   "itemID": "27693",
+   "avg": 1234,
+   "median": 999,
+   "quantitySold": 238,
+   "state": "stable",
+   "percentChange": 4.86
+  },
+  {
+   "name": "Scheelite",
+   "itemID": "7597",
+   "avg": 1680,
+   "median": 1889,
+   "quantitySold": 217,
+   "state": "stable",
+   "percentChange": 12.86
+  },
+  {
+   "name": "Octahedrite",
+   "itemID": "45969",
+   "avg": 304,
+   "median": 253,
+   "quantitySold": 875,
+   "state": "decreasing",
+   "percentChange": -17.76
+  },
+  {
+   "name": "Cloud Mica",
+   "itemID": "12539",
+   "avg": 274,
+   "median": 248,
+   "quantitySold": 1050,
+   "state": "decreasing",
+   "percentChange": -28.47
+  },
+  {
+   "name": "High Mythrite Ingot",
+   "itemID": "14146",
+   "avg": 4472,
+   "median": 4000,
+   "quantitySold": 66,
+   "state": "stable",
+   "percentChange": 7.33
+  },
+  {
+   "name": "Ironwood Lumber",
+   "itemID": "36199",
+   "avg": 2449,
+   "median": 2000,
+   "quantitySold": 107,
+   "state": "decreasing",
+   "percentChange": -18.37
+  },
+  {
+   "name": "Dwarven Mythril Nugget",
+   "itemID": "27715",
+   "avg": 1273,
+   "median": 1220,
+   "quantitySold": 192,
+   "state": "spiking",
+   "percentChange": 135.66
+  },
+  {
+   "name": "Bluespirit Tile",
+   "itemID": "27711",
+   "avg": 3014,
+   "median": 3400,
+   "quantitySold": 84,
+   "state": "decreasing",
+   "percentChange": -17.05
+  },
+  {
+   "name": "Cobalt Rivets",
+   "itemID": "5094",
+   "avg": 3855,
+   "median": 3700,
+   "quantitySold": 82,
+   "state": "decreasing",
+   "percentChange": -24.85
+  },
+  {
+   "name": "Amdapori Stone",
+   "itemID": "7037",
+   "avg": 19426,
+   "median": 19000,
+   "quantitySold": 14,
+   "state": "increasing",
+   "percentChange": 54.43
+  },
+  {
+   "name": "High Durium Sand",
+   "itemID": "36162",
+   "avg": 414,
+   "median": 382,
+   "quantitySold": 630,
+   "state": "increasing",
+   "percentChange": 44.93
+  },
+  {
+   "name": "Lar Ore",
+   "itemID": "44002",
+   "avg": 272,
+   "median": 286,
+   "quantitySold": 912,
+   "state": "stable",
+   "percentChange": -2.94
+  },
+  {
+   "name": "Oak Lumber",
+   "itemID": "5373",
+   "avg": 785,
+   "median": 699,
+   "quantitySold": 374,
+   "state": "crashing",
+   "percentChange": -89.81
+  },
+  {
+   "name": "Prismatic Ingot",
+   "itemID": "27717",
+   "avg": 2546,
+   "median": 1500,
+   "quantitySold": 121,
+   "state": "decreasing",
+   "percentChange": -64.65
+  },
+  {
+   "name": "Limestone",
+   "itemID": "5230",
+   "avg": 223,
+   "median": 200,
+   "quantitySold": 1100,
+   "state": "increasing",
+   "percentChange": 29.15
+  },
+  {
+   "name": "Ironwood Log",
+   "itemID": "36193",
+   "avg": 231,
+   "median": 255,
+   "quantitySold": 952,
+   "state": "spiking",
+   "percentChange": 158.87
+  },
+  {
+   "name": "Jadeite",
+   "itemID": "5196",
+   "avg": 4307,
+   "median": 2800,
+   "quantitySold": 150,
+   "state": "decreasing",
+   "percentChange": -21.06
+  },
+  {
+   "name": "Phrygian Gold Ingot",
+   "itemID": "36184",
+   "avg": 2793,
+   "median": 1899,
+   "quantitySold": 108,
+   "state": "decreasing",
+   "percentChange": -31.97
+  },
+  {
+   "name": "Adamantite Nugget",
+   "itemID": "12526",
+   "avg": 1141,
+   "median": 997,
+   "quantitySold": 205,
+   "state": "spiking",
+   "percentChange": 74.85
+  },
+  {
+   "name": "Pearl of Winds",
+   "itemID": "38675",
+   "avg": 79999,
+   "median": 79999,
+   "quantitySold": 3,
+   "state": "stable",
+   "percentChange": -6.25
+  },
+  {
+   "name": "Onyx",
+   "itemID": "27725",
+   "avg": 3088,
+   "median": 3202,
+   "quantitySold": 72,
+   "state": "spiking",
+   "percentChange": 1502.98
+  },
+  {
+   "name": "Rhodium Ingot",
+   "itemID": "36187",
+   "avg": 2403,
+   "median": 1962,
+   "quantitySold": 91,
+   "state": "spiking",
+   "percentChange": 108.03
+  },
+  {
+   "name": "Stonegold Nugget",
+   "itemID": "27707",
+   "avg": 1303,
+   "median": 1275,
+   "quantitySold": 167,
+   "state": "stable",
+   "percentChange": -7.98
+  },
+  {
+   "name": "Stonegold Ingot",
+   "itemID": "27709",
+   "avg": 1651,
+   "median": 942,
+   "quantitySold": 182,
+   "state": "crashing",
+   "percentChange": -81.1
+  },
+  {
+   "name": "Titanbronze Ingot",
+   "itemID": "27713",
+   "avg": 771,
+   "median": 800,
+   "quantitySold": 257,
+   "state": "increasing",
+   "percentChange": 29.7
+  },
+  {
+   "name": "Brass Ingot",
+   "itemID": "5063",
+   "avg": 289,
+   "median": 290,
+   "quantitySold": 710,
+   "state": "decreasing",
+   "percentChange": -32.53
+  },
+  {
+   "name": "Fulgurite",
+   "itemID": "45973",
+   "avg": 322,
+   "median": 300,
+   "quantitySold": 668,
+   "state": "increasing",
+   "percentChange": 39.44
+  },
+  {
+   "name": "Diamond Tear",
+   "itemID": "9378",
+   "avg": 19731,
+   "median": 22000,
+   "quantitySold": 11,
+   "state": "decreasing",
+   "percentChange": -34.11
+  },
+  {
+   "name": "Pine Lumber",
+   "itemID": "5372",
+   "avg": 1882,
+   "median": 1789,
+   "quantitySold": 136,
+   "state": "stable",
+   "percentChange": -4.41
+  },
+  {
+   "name": "Aurum Regis Nugget",
+   "itemID": "12522",
+   "avg": 2731,
+   "median": 1103,
+   "quantitySold": 166,
+   "state": "decreasing",
+   "percentChange": -63.53
+  },
+  {
+   "name": "Ceiba Log",
+   "itemID": "44015",
+   "avg": 519,
+   "median": 200,
+   "quantitySold": 744,
+   "state": "decreasing",
+   "percentChange": -47.59
+  },
+  {
+   "name": "Approved Grade 4 Skybuilders' Electrum Ore",
+   "itemID": "31976",
+   "avg": 412,
+   "median": 396,
+   "quantitySold": 507,
+   "state": "stable",
+   "percentChange": -6.55
+  },
+  {
+   "name": "Annite Whetstone",
+   "itemID": "36189",
+   "avg": 1114,
+   "median": 700,
+   "quantitySold": 172,
+   "state": "crashing",
+   "percentChange": -70.11
+  },
+  {
+   "name": "Approved Grade 2 Artisanal Skybuilders' Aurum Regis Sand",
+   "itemID": "29888",
+   "avg": 284,
+   "median": 203,
+   "quantitySold": 679,
+   "state": "out of stock",
+   "percentChange": 10000
+  },
+  {
+   "name": "Mahogany Lumber",
+   "itemID": "5374",
+   "avg": 427,
+   "median": 190,
+   "quantitySold": 545,
+   "state": "decreasing",
+   "percentChange": -64.64
+  },
+  {
+   "name": "Large Levin Orb",
+   "itemID": "8020",
+   "avg": 20886,
+   "median": 19996,
+   "quantitySold": 10,
+   "state": "increasing",
+   "percentChange": 19.69
+  },
+  {
+   "name": "Dark Cherry Log",
+   "itemID": "39705",
+   "avg": 1249,
+   "median": 1249,
+   "quantitySold": 112,
+   "state": "out of stock",
+   "percentChange": 10000
+  },
+  {
+   "name": "Black Limestone",
+   "itemID": "10092",
+   "avg": 685,
+   "median": 677,
+   "quantitySold": 296,
+   "state": "stable",
+   "percentChange": 2.19
+  },
+  {
+   "name": "Raw Amber",
+   "itemID": "5143",
+   "avg": 525,
+   "median": 400,
+   "quantitySold": 329,
+   "state": "decreasing",
+   "percentChange": -34.67
+  },
+  {
+   "name": "Clinker Bricks",
+   "itemID": "7014",
+   "avg": 820,
+   "median": 650,
+   "quantitySold": 222,
+   "state": "stable",
+   "percentChange": 9.63
+  },
+  {
+   "name": "Cobalt Plate",
+   "itemID": "5074",
+   "avg": 2591,
+   "median": 2999,
+   "quantitySold": 81,
+   "state": "stable",
+   "percentChange": 11.93
+  },
+  {
+   "name": "Deepgold Ingot",
+   "itemID": "27708",
+   "avg": 2216,
+   "median": 1499,
+   "quantitySold": 284,
+   "state": "stable",
+   "percentChange": -0.72
+  },
+  {
+   "name": "Unaspected Crystal",
+   "itemID": "10099",
+   "avg": 234,
+   "median": 132,
+   "quantitySold": 799,
+   "state": "decreasing",
+   "percentChange": -25.64
+  },
+  {
+   "name": "Manganese Ore",
+   "itemID": "36165",
+   "avg": 488,
+   "median": 360,
+   "quantitySold": 444,
+   "state": "decreasing",
+   "percentChange": -27.25
+  },
+  {
+   "name": "Siltstone",
+   "itemID": "5231",
+   "avg": 498,
+   "median": 198,
+   "quantitySold": 691,
+   "state": "decreasing",
+   "percentChange": -61.24
+  },
+  {
+   "name": "Lunar Adamantite Ingot",
+   "itemID": "36173",
+   "avg": 2395,
+   "median": 2400,
+   "quantitySold": 74,
+   "state": "spiking",
+   "percentChange": 313.36
+  },
+  {
+   "name": "Raw Tourmaline",
+   "itemID": "5142",
+   "avg": 4000,
+   "median": 4000,
+   "quantitySold": 48,
+   "state": "decreasing",
+   "percentChange": -50.0
+  },
+  {
+   "name": "Cypress Log",
+   "itemID": "9518",
+   "avg": 1031,
+   "median": 994,
+   "quantitySold": 172,
+   "state": "decreasing",
+   "percentChange": -32.1
+  },
+  {
+   "name": "Spodumene",
+   "itemID": "39719",
+   "avg": 12522,
+   "median": 12253,
+   "quantitySold": 13,
+   "state": "out of stock",
+   "percentChange": 10000
+  },
+  {
+   "name": "Hardsilver Ingot",
+   "itemID": "12521",
+   "avg": 2249,
+   "median": 2500,
+   "quantitySold": 82,
+   "state": "stable",
+   "percentChange": -11.07
+  },
+  {
+   "name": "Larch Lumber",
+   "itemID": "19926",
+   "avg": 1350,
+   "median": 1000,
+   "quantitySold": 53,
+   "state": "decreasing",
+   "percentChange": -40.74
+  },
+  {
+   "name": "Pink Beryl",
+   "itemID": "44010",
+   "avg": 1170,
+   "median": 468,
+   "quantitySold": 166,
+   "state": "decreasing",
+   "percentChange": -31.62
+  },
+  {
+   "name": "Deep-green Crystal",
+   "itemID": "12227",
+   "avg": 3750,
+   "median": 3750,
+   "quantitySold": 39,
+   "state": "increasing",
+   "percentChange": 33.33
+  },
+  {
+   "name": "Rose Gold Ingot",
+   "itemID": "5067",
+   "avg": 84,
+   "median": 83,
+   "quantitySold": 1732,
+   "state": "decreasing",
+   "percentChange": -64.29
+  },
+  {
+   "name": "Treated Spruce Lumber",
+   "itemID": "5379",
+   "avg": 8016,
+   "median": 8002,
+   "quantitySold": 21,
+   "state": "stable",
+   "percentChange": -0.2
+  },
+  {
+   "name": "Holy Cedar Lumber",
+   "itemID": "12580",
+   "avg": 3253,
+   "median": 3099,
+   "quantitySold": 46,
+   "state": "decreasing",
+   "percentChange": -29.33
+  },
+  {
+   "name": "Mythrite Rivets",
+   "itemID": "12528",
+   "avg": 1306,
+   "median": 700,
+   "quantitySold": 103,
+   "state": "increasing",
+   "percentChange": 27.49
+  },
+  {
+   "name": "Darksteel Plate",
+   "itemID": "5075",
+   "avg": 4312,
+   "median": 3374,
+   "quantitySold": 43,
+   "state": "stable",
+   "percentChange": -7.21
+  },
+  {
+   "name": "Brashgold Plate",
+   "itemID": "30483",
+   "avg": 7999,
+   "median": 7999,
+   "quantitySold": 19,
+   "state": "spiking",
+   "percentChange": 199.74
+  },
+  {
+   "name": "Red Pine Log",
+   "itemID": "36192",
+   "avg": 155,
+   "median": 199,
+   "quantitySold": 745,
+   "state": "increasing",
+   "percentChange": 29.03
+  },
+  {
+   "name": "Rosewood Lumber",
+   "itemID": "5376",
+   "avg": 418,
+   "median": 145,
+   "quantitySold": 1107,
+   "state": "decreasing",
+   "percentChange": -46.17
+  },
+  {
+   "name": "Cut Stone",
+   "itemID": "7009",
+   "avg": 1361,
+   "median": 1000,
+   "quantitySold": 97,
+   "state": "decreasing",
+   "percentChange": -42.98
+  },
+  {
+   "name": "Ginseng Log",
+   "itemID": "44014",
+   "avg": 504,
+   "median": 500,
+   "quantitySold": 335,
+   "state": "stable",
+   "percentChange": -4.37
+  },
+  {
+   "name": "Koppranickel Sand",
+   "itemID": "19950",
+   "avg": 365,
+   "median": 111,
+   "quantitySold": 251,
+   "state": "increasing",
+   "percentChange": 63.01
+  },
+  {
+   "name": "Hardsilver Nugget",
+   "itemID": "12520",
+   "avg": 1495,
+   "median": 1500,
+   "quantitySold": 109,
+   "state": "increasing",
+   "percentChange": 33.78
+  },
+  {
+   "name": "Cobalt Joint Plate",
+   "itemID": "7023",
+   "avg": 2252,
+   "median": 1275,
+   "quantitySold": 58,
+   "state": "spiking",
+   "percentChange": 152.89
+  },
+  {
+   "name": "Raw Larimar",
+   "itemID": "12551",
+   "avg": 562,
+   "median": 612,
+   "quantitySold": 219,
+   "state": "increasing",
+   "percentChange": 15.12
+  },
+  {
+   "name": "Dark Chestnut Lumber",
+   "itemID": "12581",
+   "avg": 1705,
+   "median": 1003,
+   "quantitySold": 89,
+   "state": "decreasing",
+   "percentChange": -41.35
+  },
+  {
+   "name": "Cordia Log",
+   "itemID": "45968",
+   "avg": 468,
+   "median": 547,
+   "quantitySold": 302,
+   "state": "stable",
+   "percentChange": -8.12
+  },
+  {
+   "name": "Truegold Sand",
+   "itemID": "27696",
+   "avg": 246,
+   "median": 189,
+   "quantitySold": 474,
+   "state": "decreasing",
+   "percentChange": -58.54
+  },
+  {
+   "name": "Cobalt Tungsten Ore",
+   "itemID": "43994",
+   "avg": 114,
+   "median": 99,
+   "quantitySold": 1127,
+   "state": "increasing",
+   "percentChange": 31.58
+  }
+ ]
+}

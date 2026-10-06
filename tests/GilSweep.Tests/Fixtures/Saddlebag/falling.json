@@ -1,0 +1,112 @@
+{
+ "data": [
+  {
+   "name": "Double Duraluminum Ingot",
+   "itemID": "49214",
+   "avg": 17794,
+   "median": 19850,
+   "quantitySold": 267,
+   "state": "decreasing",
+   "percentChange": -43.8
+  },
+  {
+   "name": "Black Star",
+   "itemID": "44012",
+   "avg": 1648,
+   "median": 800,
+   "quantitySold": 1792,
+   "state": "decreasing",
+   "percentChange": -51.64
+  },
+  {
+   "name": "Ra'Kaznar Ingot",
+   "itemID": "44001",
+   "avg": 1505,
+   "median": 899,
+   "quantitySold": 1511,
+   "state": "decreasing",
+   "percentChange": -55.02
+  },
+  {
+   "name": "Electrum Ingot",
+   "itemID": "5066",
+   "avg": 1692,
+   "median": 1000,
+   "quantitySold": 2412,
+   "state": "decreasing",
+   "percentChange": -54.2
+  },
+  {
+   "name": "Mythrite Ore",
+   "itemID": "12534",
+   "avg": 367,
+   "median": 400,
+   "quantitySold": 5621,
+   "state": "decreasing",
+   "percentChange": -18.8
+  },
+  {
+   "name": "Octahedrite Nugget",
+   "itemID": "45975",
+   "avg": 8240,
+   "median": 4996,
+   "quantitySold": 197,
+   "state": "decreasing",
+   "percentChange": -22.4
+  },
+  {
+   "name": "Rhodochrosite",
+   "itemID": "45976",
+   "avg": 4200,
+   "median": 229,
+   "quantitySold": 211,
+   "state": "crashing",
+   "percentChange": -97.62
+  },
+  {
+   "name": "Mythril Ore",
+   "itemID": "5114",
+   "avg": 244,
+   "median": 259,
+   "quantitySold": 6075,
+   "state": "decreasing",
+   "percentChange": -24.18
+  },
+  {
+   "name": "Claro Walnut Lumber",
+   "itemID": "44023",
+   "avg": 1726,
+   "median": 945,
+   "quantitySold": 993,
+   "state": "decreasing",
+   "percentChange": -45.31
+  },
+  {
+   "name": "Rose Garnet Ore",
+   "itemID": "49209",
+   "avg": 491,
+   "median": 504,
+   "quantitySold": 2808,
+   "state": "decreasing",
+   "percentChange": -17.92
+  },
+  {
+   "name": "Mythrite Ingot",
+   "itemID": "12519",
+   "avg": 2381,
+   "median": 2200,
+   "quantitySold": 473,
+   "state": "crashing",
+   "percentChange": -79.04
+  },
+  {
+   "name": "Magnesia Powder",
+   "itemID": "44007",
+   "avg": 270,
+   "median": 239,
+   "quantitySold": 4611,
+   "state": "decreasing",
+   "percentChange": -35.19
+  }
+ ]
+}

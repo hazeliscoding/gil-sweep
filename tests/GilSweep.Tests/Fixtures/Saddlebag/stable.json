@@ -1,0 +1,112 @@
+{
+ "data": [
+  {
+   "name": "Turali Pigment",
+   "itemID": "49227",
+   "avg": 4220,
+   "median": 4000,
+   "quantitySold": 2023,
+   "state": "stable",
+   "percentChange": -5.21
+  },
+  {
+   "name": "Darksteel Ore",
+   "itemID": "5121",
+   "avg": 528,
+   "median": 539,
+   "quantitySold": 9653,
+   "state": "stable",
+   "percentChange": -5.3
+  },
+  {
+   "name": "Phonograph Plate",
+   "itemID": "36629",
+   "avg": 1652000,
+   "median": 1652000,
+   "quantitySold": 2,
+   "state": "stable",
+   "percentChange": 0.18
+  },
+  {
+   "name": "Pure Titanium Ore",
+   "itemID": "26531",
+   "avg": 8661,
+   "median": 8498,
+   "quantitySold": 339,
+   "state": "stable",
+   "percentChange": -4.18
+  },
+  {
+   "name": "Hades's Auracite",
+   "itemID": "28631",
+   "avg": 567398,
+   "median": 575995,
+   "quantitySold": 5,
+   "state": "stable",
+   "percentChange": 0.46
+  },
+  {
+   "name": "Ut'ohmu Siderite",
+   "itemID": "46852",
+   "avg": 188666,
+   "median": 189999,
+   "quantitySold": 15,
+   "state": "stable",
+   "percentChange": 6.01
+  },
+  {
+   "name": "Cryptomeria Log",
+   "itemID": "26529",
+   "avg": 8772,
+   "median": 8993,
+   "quantitySold": 272,
+   "state": "stable",
+   "percentChange": 2.53
+  },
+  {
+   "name": "Cobalt Ingot",
+   "itemID": "5059",
+   "avg": 772,
+   "median": 750,
+   "quantitySold": 2922,
+   "state": "stable",
+   "percentChange": -13.21
+  },
+  {
+   "name": "Chondrite Ingot",
+   "itemID": "36172",
+   "avg": 2062,
+   "median": 1400,
+   "quantitySold": 884,
+   "state": "stable",
+   "percentChange": -3.01
+  },
+  {
+   "name": "Monarch Whetstone",
+   "itemID": "50970",
+   "avg": 787250,
+   "median": 787250,
+   "quantitySold": 2,
+   "state": "stable",
+   "percentChange": 1.59
+  },
+  {
+   "name": "White Granite",
+   "itemID": "39587",
+   "avg": 174927,
+   "median": 174927,
+   "quantitySold": 9,
+   "state": "stable",
+   "percentChange": 0.0
+  },
+  {
+   "name": "Ametrine",
+   "itemID": "36182",
+   "avg": 1547,
+   "median": 1302,
+   "quantitySold": 305,
+   "state": "stable",
+   "percentChange": -9.7
+  }
+ ]
+}

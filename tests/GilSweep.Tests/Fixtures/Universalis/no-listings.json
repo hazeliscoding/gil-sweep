@@ -1,0 +1,140 @@
+{
+ "itemID": 32955,
+ "worldID": 79,
+ "worldName": "Cactuar",
+ "lastUploadTime": 1791248475335,
+ "stackSizeHistogram": {},
+ "listingsCount": 0,
+ "recentHistoryCount": 20,
+ "unitsForSale": 0,
+ "unitsSold": 502,
+ "nqSaleVelocity": 10.142858,
+ "hqSaleVelocity": 0,
+ "regularSaleVelocity": 10.142858,
+ "averagePrice": 763.35,
+ "minPrice": 0,
+ "hasData": true,
+ "listings": [],
+ "recentHistory": [
+  {
+   "pricePerUnit": 989,
+   "quantity": 32,
+   "hq": false,
+   "timestamp": 1791236407
+  },
+  {
+   "pricePerUnit": 1005,
+   "quantity": 39,
+   "hq": false,
+   "timestamp": 1791096471
+  },
+  {
+   "pricePerUnit": 1205,
+   "quantity": 31,
+   "hq": false,
+   "timestamp": 1790026549
+  },
+  {
+   "pricePerUnit": 729,
+   "quantity": 46,
+   "hq": false,
+   "timestamp": 1790026547
+  },
+  {
+   "pricePerUnit": 400,
+   "quantity": 50,
+   "hq": false,
+   "timestamp": 1790025179
+  },
+  {
+   "pricePerUnit": 45,
+   "quantity": 33,
+   "hq": false,
+   "timestamp": 1789787534
+  },
+  {
+   "pricePerUnit": 500,
+   "quantity": 15,
+   "hq": false,
+   "timestamp": 1789606619
+  },
+  {
+   "pricePerUnit": 500,
+   "quantity": 31,
+   "hq": false,
+   "timestamp": 1789504071
+  },
+  {
+   "pricePerUnit": 499,
+   "quantity": 30,
+   "hq": false,
+   "timestamp": 1789219356
+  },
+  {
+   "pricePerUnit": 495,
+   "quantity": 19,
+   "hq": false,
+   "timestamp": 1789219351
+  },
+  {
+   "pricePerUnit": 500,
+   "quantity": 7,
+   "hq": false,
+   "timestamp": 1789134164
+  },
+  {
+   "pricePerUnit": 497,
+   "quantity": 5,
+   "hq": false,
+   "timestamp": 1789134161
+  },
+  {
+   "pricePerUnit": 729,
+   "quantity": 48,
+   "hq": false,
+   "timestamp": 1788412206
+  },
+  {
+   "pricePerUnit": 776,
+   "quantity": 6,
+   "hq": false,
+   "timestamp": 1788067375
+  },
+  {
+   "pricePerUnit": 1500,
+   "quantity": 12,
+   "hq": false,
+   "timestamp": 1787581003
+  },
+  {
+   "pricePerUnit": 1498,
+   "quantity": 10,
+   "hq": false,
+   "timestamp": 1787414886
+  },
+  {
+   "pricePerUnit": 1400,
+   "quantity": 15,
+   "hq": false,
+   "timestamp": 1787361482
+  },
+  {
+   "pricePerUnit": 1350,
+   "quantity": 9,
+   "hq": false,
+   "timestamp": 1786389992
+  },
+  {
+   "pricePerUnit": 300,
+   "quantity": 48,
+   "hq": false,
+   "timestamp": 1786159320
+  },
+  {
+   "pricePerUnit": 350,
+   "quantity": 16,
+   "hq": false,
+   "timestamp": 1785873725
+  }
+ ]
+}

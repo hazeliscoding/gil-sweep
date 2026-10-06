@@ -1,0 +1,112 @@
+{
+ "data": [
+  {
+   "name": "Crystal of Divine Light",
+   "itemID": "35792",
+   "avg": 934373,
+   "median": 659899,
+   "quantitySold": 30,
+   "state": "spiking",
+   "percentChange": 435.12
+  },
+  {
+   "name": "Enchanted Elm Lumber",
+   "itemID": "27977",
+   "avg": 297207,
+   "median": 372832,
+   "quantitySold": 10,
+   "state": "increasing",
+   "percentChange": 34.59
+  },
+  {
+   "name": "Weatherproof Plywood",
+   "itemID": "52632",
+   "avg": 1006511,
+   "median": 1006767,
+   "quantitySold": 3,
+   "state": "increasing",
+   "percentChange": 17.83
+  },
+  {
+   "name": "Ancestral Alloy Ingot",
+   "itemID": "50972",
+   "avg": 45882,
+   "median": 37999,
+   "quantitySold": 65,
+   "state": "spiking",
+   "percentChange": 125.58
+  },
+  {
+   "name": "Desert Lapis",
+   "itemID": "46250",
+   "avg": 26647,
+   "median": 19807,
+   "quantitySold": 126,
+   "state": "increasing",
+   "percentChange": 50.11
+  },
+  {
+   "name": "Cobalt Ore",
+   "itemID": "5116",
+   "avg": 246,
+   "median": 223,
+   "quantitySold": 10502,
+   "state": "increasing",
+   "percentChange": 62.2
+  },
+  {
+   "name": "Darksteel Ingot",
+   "itemID": "5060",
+   "avg": 4594,
+   "median": 4000,
+   "quantitySold": 455,
+   "state": "increasing",
+   "percentChange": 52.35
+  },
+  {
+   "name": "Mountain Chromite Ingot",
+   "itemID": "43997",
+   "avg": 1342,
+   "median": 996,
+   "quantitySold": 1051,
+   "state": "increasing",
+   "percentChange": 15.87
+  },
+  {
+   "name": "Approved Grade 4 Skybuilders' Umbral Galewood Branch",
+   "itemID": "32001",
+   "avg": 743,
+   "median": 607,
+   "quantitySold": 2150,
+   "state": "spiking",
+   "percentChange": 101.88
+  },
+  {
+   "name": "Cobalt Tungsten Ingot",
+   "itemID": "43999",
+   "avg": 5093,
+   "median": 5992,
+   "quantitySold": 241,
+   "state": "increasing",
+   "percentChange": 17.79
+  },
+  {
+   "name": "Approved Grade 4 Skybuilders' Umbral Levinsand",
+   "itemID": "32004",
+   "avg": 628,
+   "median": 607,
+   "quantitySold": 1681,
+   "state": "increasing",
+   "percentChange": 42.99
+  },
+  {
+   "name": "Ra'Kaznar Ore",
+   "itemID": "43996",
+   "avg": 225,
+   "median": 173,
+   "quantitySold": 4180,
+   "state": "spiking",
+   "percentChange": 117.78
+  }
+ ]
+}
