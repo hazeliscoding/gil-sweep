@@ -14,20 +14,25 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - **2026-10-05** — Typography follows XIV Vault: IBM Plex Sans and IBM Plex Mono, bundled. The approved mockup's Quorum tokens with a gold accent (`#D9A94A`) used sparingly; green and red only for market movement, always with an arrow or word.
 - **2026-10-05** — Velopack per-user Setup with in-app update and restart, plus a portable zip. An update never installs during a sweep.
 - **2026-10-05** — The old plan for a v2 web build is dropped; see Not planned.
+- **2026-10-05** — Competition comes from the stack-size histogram of current listings: Universalis's listingsCount and unitsForSale only count the listings a request returns. Current listings are fetched 20 items at a time; larger batches time out (504).
+- **2026-10-05** — The trend baseline is the newest snapshot at least 5 days old, else the oldest at least 20 hours old; hourly sweeps are too close together to show a trend. Movers and price alerts keep v1's change since the previous sweep.
+- **2026-10-05** — Snapshots from the last 48 hours are all kept, older days keep their newest, and history older than 90 days is deleted (imported v1 history is kept in full). Only the newest snapshot keeps craft margins.
+- **2026-10-05** — Node reminders arrive 5 minutes before a watched window opens by default; 0 restores v1's alert on opening.
+- **2026-10-05** — Toasts register Gil Sweep's AppUserModelID under HKCU (removed on uninstall), so the Desktop project targets the Windows 10 SDK.
 
 ## v2.0 — Native rewrite
 
-- [ ] **Foundation** — solution, central package versions, DI, logging, config, theme tokens, app shell with the six-item sidebar and Eorzea clock.
+- [x] **Foundation** — solution, central package versions, DI, logging, config, theme tokens, app shell with the six-item sidebar and Eorzea clock.
   Done when: `dotnet build`, `dotnet test` and `dotnet format --verify-no-changes` pass and the window opens.
-- [ ] **Domain models** — catalog, nodes and spawn windows, snapshots, opportunities, watch entries; persisted shapes round-trip, v1 snapshots read.
+- [x] **Domain models** — catalog, nodes and spawn windows, snapshots, opportunities, watch entries; persisted shapes round-trip, v1 snapshots read.
   Done when: serialization tests pass against v1 files.
-- [ ] **Market integrations** — Universalis and Saddlebag behind interfaces, fixtures for normal, sparse, stale, empty and high-volume markets, retries and partial failure.
+- [x] **Market integrations** — Universalis and Saddlebag behind interfaces, fixtures for normal, sparse, stale, empty and high-volume markets, retries and partial failure.
   Done when: every adapter test runs offline.
-- [ ] **Sweep engine** — v1 ranking ported with characterization tests against outputs captured from the v1 TypeScript; opportunity score on top.
+- [x] **Sweep engine** — v1 ranking ported with characterization tests against outputs captured from the v1 TypeScript; opportunity score on top.
   Done when: v2 matches v1 on the fixtures except for the documented changes.
-- [ ] **Eorzea scheduling** — clock, windows, next spawn, countdowns, feeding the score.
+- [x] **Eorzea scheduling** — clock, windows, next spawn, countdowns, feeding the score.
   Done when: timed-node tests cover wrap-around and multiple spawns.
-- [ ] **First vertical slice** — launch → load config → sweep → ranked recommendations with reasons → open an item.
+- [x] **First vertical slice** — launch → load config → sweep → ranked recommendations with reasons → open an item.
   Done when: it works against live Universalis and against fixtures.
 - [ ] **Market, Craft, Watchlist, History, Settings** — in that order, each on tested view models.
 - [ ] **Notifications** — node windows, price spikes and crashes, undercuts; Windows toasts; tray with the spawn clock.
