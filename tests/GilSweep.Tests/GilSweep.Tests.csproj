@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\GilSweep.Core\GilSweep.Core.csproj" />
+    <ProjectReference Include="..\..\src\GilSweep.Desktop\GilSweep.Desktop.csproj" />
   </ItemGroup>
 
   <ItemGroup>
