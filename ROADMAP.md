@@ -19,6 +19,9 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - **2026-10-05** — Snapshots from the last 48 hours are all kept, older days keep their newest, and history older than 90 days is deleted (imported v1 history is kept in full). Only the newest snapshot keeps craft margins.
 - **2026-10-05** — Node reminders arrive 5 minutes before a watched window opens by default; 0 restores v1's alert on opening.
 - **2026-10-05** — Toasts register Gil Sweep's AppUserModelID under HKCU (removed on uninstall), so the Desktop project targets the Windows 10 SDK.
+- **2026-10-06** — Craft shows one card per farmed material (its best recipe), since a material like aethersand feeds a hundred recipes and the question is what to do with the material.
+- **2026-10-06** — First-run answers default to v1's onboarding (Miner 90, Botanist 90, Dawntrail).
+- **2026-10-06** — v1 doesn't update itself to v2; the README tells v1 users to install v2 with Setup, which imports their data.
 
 ## v2.0 — Native rewrite
 
@@ -34,11 +37,13 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
   Done when: timed-node tests cover wrap-around and multiple spawns.
 - [x] **First vertical slice** — launch → load config → sweep → ranked recommendations with reasons → open an item.
   Done when: it works against live Universalis and against fixtures.
-- [ ] **Market, Craft, Watchlist, History, Settings** — in that order, each on tested view models.
-- [ ] **Notifications** — node windows, price spikes and crashes, undercuts; Windows toasts; tray with the spawn clock.
-- [ ] **Packaging and updates** — Velopack Setup, update check and restart, portable zip, release workflow with checksums.
-- [ ] **Screenshots** — deterministic screenshots of every screen and state from fake data; README rewritten.
-- [ ] **Cutover** — gate passed, `legacy/` and Node files removed, branch merged, v2.0.0 tagged.
+- [x] **Market, Craft, Watchlist, History, Settings** — in that order, each on tested view models.
+- [x] **Notifications** — node windows, price spikes and crashes, undercuts; Windows toasts; tray with the spawn clock.
+- [x] **Packaging and updates** — Velopack Setup, update check and restart, portable zip, release workflow with checksums.
+- [x] **Screenshots** — deterministic screenshots of every screen and state from fake data; README rewritten.
+- [x] **Cutover** — gate passed (2026-10-06, see `docs/migration-v2.md`), `legacy/` and the Node files removed.
+- [ ] **Release** — merge `rewrite/dotnet-avalonia` into `main`, tag `v2.0.0`, publish the draft release.
+  Done when: Setup from the release installs, finds a later test release and updates in place.
 
 ## Later
 
