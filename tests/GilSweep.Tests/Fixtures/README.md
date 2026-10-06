@@ -20,6 +20,10 @@ Real responses for **Cactuar**, recorded on 2026-10-05 by `legacy/characterize/c
 | `Saddlebag/marketshare-cactuar.json` | Saddlebag Exchange market share, 200 rows |
 | `Saddlebag/rising.json`, `falling.json`, `stable.json` | Rows from that response grouped by trend state |
 
+## Verify/
+
+Real XIVAPI search and Garland Tools item responses for the verify-and-track tests: Zinc Ore and Cloud Mica (gatherable), Raw Imperial Jade (timed), Mythrite Ingot (crafted, with ingredient nodes only), Distilled Water and Imperial Jade (crafted), Grade 8 Dark Matter (vendor), Darksteel Ore (already tracked), and Garland's zone names for those nodes.
+
 ## V1/
 
 What the v1 (Electron/Angular) code produced from the responses above. `legacy/characterize/harness.ts` runs the v1 TypeScript unchanged under Node with `fetch` answering from these files, and writes:
@@ -31,6 +35,7 @@ What the v1 (Electron/Angular) code produced from the responses above. `legacy/c
 | `expected-eorzea.json` | `eorzea.ts` (renderer and main process) at 187 moments, including each window's opening and closing millisecond |
 | `expected-market.json` | `marketDetail`, the drill-down's selling hours (UTC) and `retainerPlan` for all 104 items |
 | `expected-history.json` | `digest`, `history`, `backfill` and `pruneSnapshots` over `archive/` |
+| `expected-verify.json` | `verifyItem` over `Verify/` (from `legacy/characterize/verify.ts`) |
 | `archive/` | The snapshot archive the history outputs were computed from |
 | `seed-snapshot.json` | v1's bundled first-boot snapshot (a real Cactuar sweep, 2026-07-19) |
 

@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.0.0] — Unreleased
+
+A native rewrite (.NET 10 and Avalonia) around one question: what should I farm for gil right now?
+
+- **Sweep** puts the best farm you can gather this minute at the top, with its price, sales, competition, trend and node, and the reasons it ranks there. More opportunities, what is open now and what opens soon, the daily map pick and a craft worth processing sit below. A **Farm Session** (15 minutes to "Chill") queues what to gather now, the timed nodes opening while you play, and a fallback; travel and yield are never guessed.
+- Recommendations are ranked by an **opportunity score**: v1's market throughput, adjusted for days of stock on the market board, the week's price trend and the Eorzea clock. There is no gil per hour. With those adjustments set aside the order is exactly v1's (`docs/opportunity-scoring.md`).
+- **Market** replaces the drill-down panel and the Retainers page: live listings and sales, two weeks of prices, selling hours, days of stock, where and when to gather, who buys it, and what to list it at.
+- **Craft** answers sell raw or process first, per material you farm, with locked recipes shown against your crafter levels.
+- **Watchlist** replaces stars: per item, a reminder before its node opens (5 minutes by default, or on opening as in v1), price spikes and crashes, undercuts of your retainers, and favorites. Alerts are Windows toasts and stay in a short log.
+- **History** replaces Trends: past sweeps, the week's movers, a summary, watched items over seven days, CSV export. Sweeps from the last two days are all kept, then one a day, for 90 days by default.
+- **Settings** gains retainer names, hourly sweeps, an optional Saddlebag source and history retention; levels and story progress move here from the dashboard sliders.
+- Sweeps now read listing depth from current listings, run every hour while the app is open, and survive a provider failing part-way. When Universalis is down, the last sweep stays on screen with a banner and a retry.
+- Your v1 settings, watched items, tracked items and sweep history are imported on first start.
+- Installed with Velopack: per-user Setup with a Start menu entry, update and restart from Settings (never during a sweep), and a portable zip. v1 doesn't update itself to v2.
+
 ## [1.0.0] — 2026-07-19
 
 - NSIS installer alongside the portable exe. Installed builds auto-update from GitHub releases; the portable exe skips update checks (re-download to update).
