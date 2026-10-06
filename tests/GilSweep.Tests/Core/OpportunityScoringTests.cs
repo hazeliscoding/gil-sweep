@@ -160,6 +160,25 @@ public sealed class OpportunityScoringTests
     }
 
     [Fact]
+    public void A_long_session_reaches_nodes_opening_beyond_half_an_hour()
+    {
+        var snapshot = RecordedSweep();
+        var reachedFar = false;
+        for (var minute = 0; minute < 70; minute++)
+        {
+            var board = OpportunityBoard.Build(snapshot, null, Endgame, Now.AddMinutes(minute));
+            foreach (var step in board.Session(TimeSpan.FromHours(3)).Where(step => step.Timing == SessionTiming.Later))
+            {
+                // Judged by the market, before the closed-node multiplier.
+                Assert.True(step.Opportunity.Score.BaseGrade >= OpportunityGrade.Fair);
+                reachedFar |= step.StartsIn > TimeSpan.FromMinutes(30);
+            }
+        }
+
+        Assert.True(reachedFar, "A three-hour session never queued a node opening more than 30 minutes out.");
+    }
+
+    [Fact]
     public void A_longer_session_reaches_further_ahead()
     {
         var board = OpportunityBoard.Build(RecordedSweep(), null, Endgame, Now);

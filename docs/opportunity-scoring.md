@@ -101,7 +101,7 @@ From the recorded Cactuar sweep in the test fixtures (2026-10-05), for a level 1
 - **More opportunities**: every ranked item, best first; closed timed nodes show their countdown.
 - **Available now**: open timed nodes, best first, then the two best regular nodes.
 - **Soon**: the next three timed nodes to open.
-- **Farm Session** (15 min, 30 min, 1 hour, Chill = 3 hours): now, the best open timed node of at least Fair grade (or the best regular node); then up to two (three for an hour or more) Fair-or-better timed nodes that open within the session; then the best regular node as a fallback.
+- **Farm Session** (15 min, 30 min, 1 hour, Chill = 3 hours): now, the best open timed node of at least Fair grade (or the best regular node); then the best timed-node markets that open within the session (up to two, three for an hour, five for Chill), graded before the node multiplier and at least Fair, listed in the order they open (the multiplier keeps a closed node out of "right now", not out of a session that reaches it); then the best regular node as a fallback.
 
 Every ranked item carries its five signals with points and the facts behind them, and short reasons with a glyph (↑ ↓ → ● ○) so nothing depends on color.
 

@@ -166,12 +166,19 @@ public sealed record OpportunityBoard(
             steps.Add(new SessionStep(SessionTiming.Now, TimeSpan.Zero, always[0], "Strong, always-available market"));
         }
 
+        // A node that opens later is judged by its market (the grade before the node multiplier):
+        // the multiplier keeps a closed node out of "right now", not out of a session that reaches it.
+        // The best markets opening within the session make the queue, listed in the order they open;
+        // the soonest few would always be the next half hour's, however long the session.
+        var stops = length >= TimeSpan.FromHours(3) ? 5 : length >= TimeSpan.FromHours(1) ? 3 : 2;
         var later = Ranked
-            .Where(opportunity => opportunity.Node.State == NodeState.Closed && opportunity.Node.RealRemaining <= length && opportunity.Grade >= OpportunityGrade.Fair)
-            .OrderBy(opportunity => opportunity.Node.EtMinutes)
-            .Take(length >= TimeSpan.FromHours(1) ? 3 : 2);
+            .Where(opportunity => opportunity.Node.State == NodeState.Closed && opportunity.Node.RealRemaining <= length && opportunity.Score.BaseGrade >= OpportunityGrade.Fair)
+            .OrderByDescending(opportunity => opportunity.Score.Base)
+            .ThenBy(opportunity => opportunity.Node.EtMinutes)
+            .Take(stops)
+            .OrderBy(opportunity => opportunity.Node.EtMinutes);
         steps.AddRange(later.Select(opportunity => new SessionStep(SessionTiming.Later, opportunity.Node.RealRemaining, opportunity,
-            $"Timed node opens, {opportunity.Grade.ToString().ToLowerInvariant()} market")));
+            $"Timed node opens, {opportunity.Score.BaseGrade.ToString().ToLowerInvariant()} market")));
 
         if (always.FirstOrDefault(candidate => steps.All(step => step.Opportunity.ItemId != candidate.ItemId)) is { } fallback)
         {

@@ -104,10 +104,12 @@ public sealed record ScoreSignal(SignalKind Kind, string Label, double Points, d
 }
 
 /// <param name="Total">0–100: (market + competition + trend) × availability, rounded.</param>
+/// <param name="Base">The same before the node multiplier: how good the market is, whenever you get there.</param>
 /// <param name="Market">0–70 from gil changing hands per day (sales × price).</param>
 /// <param name="Availability">1 when the node can be gathered now; less while a timed node is closed.</param>
 public sealed record OpportunityScore(
     int Total,
+    int Base,
     double Market,
     double Sales,
     double Price,
@@ -115,7 +117,11 @@ public sealed record OpportunityScore(
     double Trend,
     double Availability,
     OpportunityGrade Grade,
-    IReadOnlyList<ScoreSignal> Signals);
+    IReadOnlyList<ScoreSignal> Signals)
+{
+    /// <summary>The market's grade before the node multiplier.</summary>
+    public OpportunityGrade BaseGrade => OpportunityScorer.GradeOf(Base);
+}
 
 /// <summary>A short reason for or against an item, such as "↑ Selling quickly".</summary>
 public sealed record Reason(string Glyph, string Text, ReasonTone Tone);

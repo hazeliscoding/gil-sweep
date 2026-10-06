@@ -83,6 +83,7 @@ public static class OpportunityScorer
         var competitionPoints = CompetitionPoints(competition);
         var trendPoints = TrendPoints(trend);
         var availability = AvailabilityFactor(node);
+        var baseScore = (int)Math.Round(market + competitionPoints + trendPoints, MidpointRounding.AwayFromZero);
         var total = (int)Math.Round((market + competitionPoints + trendPoints) * availability, MidpointRounding.AwayFromZero);
         var signals = new List<ScoreSignal>
         {
@@ -92,7 +93,7 @@ public static class OpportunityScorer
             new(SignalKind.Trend, "Trend", trendPoints, TrendMax, TrendDetail(trend)),
             new(SignalKind.Node, "Node availability", availability * 10, 10, NodeDetail(node, availability)),
         };
-        return new OpportunityScore(total, market, sales, price, competitionPoints, trendPoints, availability, GradeOf(total), signals);
+        return new OpportunityScore(total, baseScore, market, sales, price, competitionPoints, trendPoints, availability, GradeOf(total), signals);
     }
 
     public static string SalesWord(double velDay) => velDay >= 100 ? "Selling quickly" : velDay >= 30 ? "Sells steadily" : "Sells slowly";
