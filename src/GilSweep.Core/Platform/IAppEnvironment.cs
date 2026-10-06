@@ -12,9 +12,20 @@ public interface IAppEnvironment
 
 public sealed class SystemAppEnvironment : IAppEnvironment
 {
-    private static readonly string RoamingAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+    /// <summary>Points Gil Sweep at another data folder, for a second profile or trying a build without touching your own.</summary>
+    public const string HomeVariable = "GIL_SWEEP_HOME";
 
-    public string DataDirectory { get; } = Path.Combine(RoamingAppData, "GilSweep");
+    public SystemAppEnvironment()
+    {
+        var roaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        var home = Environment.GetEnvironmentVariable(HomeVariable);
+        DataDirectory = string.IsNullOrWhiteSpace(home) ? Path.Combine(roaming, "GilSweep") : Path.GetFullPath(home);
 
-    public string LegacyDataDirectory { get; } = Path.Combine(RoamingAppData, "gil-sweep");
+        // With a home of its own, nothing is imported from v1.
+        LegacyDataDirectory = string.IsNullOrWhiteSpace(home) ? Path.Combine(roaming, "gil-sweep") : Path.Combine(DataDirectory, "v1");
+    }
+
+    public string DataDirectory { get; }
+
+    public string LegacyDataDirectory { get; }
 }

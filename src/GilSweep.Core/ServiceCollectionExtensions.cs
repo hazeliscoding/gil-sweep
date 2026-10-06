@@ -11,6 +11,7 @@ using GilSweep.Core.Sweep;
 using GilSweep.Core.Watchlist;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace GilSweep.Core;
 
@@ -22,7 +23,8 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddGilSweepCore(this IServiceCollection services)
     {
-        services.AddLogging();
+        // Every market request is logged by HttpClient at Information; only its problems are worth keeping.
+        services.AddLogging(logging => logging.AddFilter("System.Net.Http.HttpClient", LogLevel.Warning));
         services.TryAddSingleton<IAppEnvironment, SystemAppEnvironment>();
         services.TryAddSingleton(TimeProvider.System);
         services.TryAddSingleton<MarketHttpOptions>();
