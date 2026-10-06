@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using GilSweep.Core.Alerts;
 using GilSweep.Core.Catalog;
 using GilSweep.Core.Configuration;
 using GilSweep.Core.History;
@@ -7,6 +8,7 @@ using GilSweep.Core.Market.Saddlebag;
 using GilSweep.Core.Market.Universalis;
 using GilSweep.Core.Platform;
 using GilSweep.Core.Sweep;
+using GilSweep.Core.Watchlist;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -29,10 +31,15 @@ public static class ServiceCollectionExtensions
         services.AddHttpClient<ISaddlebagClient, SaddlebagClient>(client => Configure(client, null));
 
         services.TryAddSingleton<IConfigStore, ConfigStore>();
+        services.TryAddSingleton<LegacyImporter>();
+        services.TryAddSingleton<ISettingsService, SettingsService>();
         services.TryAddSingleton<IItemCatalog, ItemCatalog>();
         services.TryAddSingleton<IMarketSnapshotStore, MarketSnapshotStore>();
         services.TryAddSingleton<IHistoryService, HistoryService>();
         services.TryAddSingleton<ISweepEngine, SweepEngine>();
+        services.TryAddSingleton<ISweepService, SweepService>();
+        services.TryAddSingleton<IWatchlistService, WatchlistService>();
+        services.TryAddSingleton<IAlertService, AlertService>();
         return services;
     }
 

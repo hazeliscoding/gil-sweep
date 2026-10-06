@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GilSweep.Core.Alerts;
 using GilSweep.Core.Catalog;
 using GilSweep.Core.Configuration;
 using GilSweep.Core.History;
@@ -20,6 +21,7 @@ namespace GilSweep.Core.Serialization;
 [JsonSerializable(typeof(Dictionary<string, DemandSignals>))]
 [JsonSerializable(typeof(MarketSnapshot))]
 [JsonSerializable(typeof(BackfillFile))]
+[JsonSerializable(typeof(List<AlertEvent>))]
 internal sealed partial class GilSweepJsonContext : JsonSerializerContext
 {
     private static GilSweepJsonContext? _compact;
