@@ -55,8 +55,21 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
   Done when: with blank stats every v1 characterization test passes unchanged, and lock tests cover below, at and blank.
 - [ ] **Settings and screens** — the stat fields in the Character and Crafters cards, in the mockup's existing style; locked rows and craft cards show the shortfall. First run doesn't ask for stats.
   Done when: the screenshots include a Perception lock and a Craftsmanship lock.
+- [ ] **Copy diagnostics** — a Settings button copies the version, Windows version, recent errors and the log folder for a bug report. Nothing is sent anywhere.
+  Done when: the copied text names the data folder as `%AppData%\GilSweep` and contains no username or other private path.
+- [ ] **Code signing** — the release workflow signs `GilSweep.exe` and Setup through SignPath Foundation (free for open source).
+  Done when: both files carry a valid signature and SmartScreen no longer shows "Unknown publisher".
 - [ ] **Release** — tag `v2.1.0` and publish. It doubles as the later test release v2.0's Release item waits on.
   Done when: v2.0.0 installed from Setup updates itself to v2.1.0.
+
+## v2.2 — Better answers
+
+- [ ] **Wider catalog** — a weekly scan prices every gatherable item the character can reach, from game data, not only the 104 tracked items; the ones that trade on the world join the ranking. The tracked list stays as the base, along with its trap items.
+  Done when: on recorded data, a scan ranks a gatherable missing from `items.json`, with its node and any spawn window, within Universalis's request limits.
+- [ ] **Not interested** — hide an item from recommendations from its card; it stays on Market and can be restored in Settings.
+  Done when: a hidden item leaves Sweep and the Farm Session, and returns when restored.
+- [ ] **Prices after tax** — sale proceeds and craft margins subtract the market tax of the retainers' city (Universalis tax rates). Listed under "Changes from v1".
+  Done when: margins on recorded data are net of the recorded tax rate, and the scoring doc's worked example matches.
 
 ## Later
 
@@ -66,6 +79,14 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - Gil per scrip for the scrip vendors.
 - Sortable columns and CSV export on every table.
 - Price Craft at NQ when your stats can't reach max quality (needs a crafting simulator).
+- Retainer venture advisor: the best venture for each retainer, from the game's venture quantities by retainer stats.
+- Best time to list: the hours an item usually sells on your world.
+- Back up and restore the data folder, for moving to a new PC.
+- Ctrl+K to jump to any item's Market page.
+- An accessibility pass with Narrator and keyboard only.
+- A winget package.
+- Import job levels from the Lodestone (needs a decision: it adds a network source and scrapes pages that can change).
+- A Linux build for Steam Deck and XLCore players (needs a decision: toasts, tray and installs are Windows-only today).
 
 ## Not planned
 
