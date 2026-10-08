@@ -63,7 +63,7 @@ Paths on the left are v1 (`desktop/...` at tag `electron-final`).
 
 ### Defer
 
-Not part of v2.0; tracked in `ROADMAP.md` under Later.
+Not part of v2.0; tracked in `ROADMAP.md` under Later or Not planned.
 
 - Discord webhooks (v1.1 on the old roadmap, never shipped).
 - In-game item icons, a crafter-level slider, sortable columns everywhere.
