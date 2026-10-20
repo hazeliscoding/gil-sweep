@@ -1,8 +1,16 @@
 name: Release
 
+# A pushed v* tag builds, signs and creates a draft GitHub Release. Run it by hand to build the same
+# files unsigned, with no delta package and no release.
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to build (nothing is signed or published, and no delta package is made)
+        required: true
+        default: 0.0.1
 
 permissions:
   contents: read
@@ -10,9 +18,16 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+    # Tag builds run in the release environment, whose variables let this job sign in to Azure Artifact Signing.
+    # Manual runs have no environment, so they build unsigned.
+    environment: ${{ github.ref_type == 'tag' && 'release' || '' }}
+    permissions:
+      contents: read
+      id-token: write
     env:
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
+      SIGN: ${{ vars.AZURE_CLIENT_ID != '' && vars.ARTIFACT_SIGNING_ENDPOINT != '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -20,11 +35,13 @@ jobs:
         with:
           global-json-file: global.json
 
-      - name: Version from tag
+      - name: Version
         shell: pwsh
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
-          $version = '${{ github.ref_name }}'.TrimStart('v')
-          if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$') { throw "Tag ${{ github.ref_name }} is not a version" }
+          $version = if ($env:GITHUB_REF_TYPE -eq 'tag') { $env:GITHUB_REF_NAME.TrimStart('v') } else { $env:INPUT_VERSION }
+          if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$') { throw "$version is not a version" }
           "VERSION=$version" >> $env:GITHUB_ENV
 
       - name: Test
@@ -33,15 +50,38 @@ jobs:
       - name: Publish
         run: dotnet publish src/GilSweep.Desktop -p:PublishProfile=win-x64 -p:Version=${{ env.VERSION }}
 
+      - name: Sign in to Azure for code signing
+        if: env.SIGN == 'true'
+        uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Write the Artifact Signing metadata
+        if: env.SIGN == 'true'
+        shell: pwsh
+        env:
+          ENDPOINT: ${{ vars.ARTIFACT_SIGNING_ENDPOINT }}
+          ACCOUNT: ${{ vars.ARTIFACT_SIGNING_ACCOUNT }}
+          PROFILE: ${{ vars.ARTIFACT_SIGNING_PROFILE }}
+        run: |
+          [ordered]@{ Endpoint = $env:ENDPOINT; CodeSigningAccountName = $env:ACCOUNT; CertificateProfileName = $env:PROFILE } |
+            ConvertTo-Json | Out-File -Encoding utf8NoBOM "$env:RUNNER_TEMP/signing.json"
+
       # Setup.exe and the update packages installed copies download. The previous Velopack release
       # is fetched first so vpk can add a small delta update from it; v1 releases have none.
       - name: Installer and updates
         shell: pwsh
         run: |
           dotnet tool restore
-          dotnet vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ github.token }} --outputDir artifacts/velopack
-          if ($LASTEXITCODE -ne 0) { Write-Host 'No earlier Velopack release to build a delta from'; $global:LASTEXITCODE = 0 }
-          dotnet vpk pack --runtime win-x64 --packId GilSweep --packVersion ${{ env.VERSION }} --packTitle "Gil Sweep" --packAuthors "Hazel Granados" --packDir artifacts/publish/GilSweep.Desktop --mainExe GilSweep.exe --icon docs/brand/gil-sweep.ico --shortcuts StartMenuRoot --noPortable --outputDir artifacts/velopack
+          # Only tag builds make deltas: a manual run's version may be below the latest release, which vpk refuses.
+          if ($env:GITHUB_REF_TYPE -eq 'tag') {
+            dotnet vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ github.token }} --outputDir artifacts/velopack
+            if ($LASTEXITCODE -ne 0) { Write-Host 'No earlier Velopack release to build a delta from'; $global:LASTEXITCODE = 0 }
+          }
+          $sign = if ($env:SIGN -eq 'true') { '--azureTrustedSignFile', "$env:RUNNER_TEMP/signing.json" } else { @() }
+          dotnet vpk pack --runtime win-x64 --packId GilSweep --packVersion ${{ env.VERSION }} --packTitle "Gil Sweep" --packAuthors "Hazel Granados" --packDir artifacts/publish/GilSweep.Desktop --mainExe GilSweep.exe --icon docs/brand/gil-sweep.ico --shortcuts StartMenuRoot --noPortable --outputDir artifacts/velopack @sign
           if ($LASTEXITCODE -ne 0) { throw 'vpk pack failed' }
 
       - name: Package
@@ -50,7 +90,10 @@ jobs:
           $out = New-Item -ItemType Directory -Force artifacts/release
           $docs = 'README.md', 'LICENSE', 'NOTICE', 'THIRD-PARTY-NOTICES.md', 'CHANGELOG.md'
           $stage = New-Item -ItemType Directory -Force artifacts/stage/portable
-          Copy-Item artifacts/publish/GilSweep.Desktop/GilSweep.exe $stage
+          # vpk signs its own copy of the app, not the publish folder, so take the exe from the full package.
+          $full = [IO.Compression.ZipFile]::OpenRead("$PWD/artifacts/velopack/GilSweep-${{ env.VERSION }}-full.nupkg")
+          [IO.Compression.ZipFileExtensions]::ExtractToFile($full.GetEntry('lib/app/GilSweep.exe'), "$stage/GilSweep.exe")
+          $full.Dispose()
           Copy-Item $docs $stage
           Compress-Archive -Path "$stage/*" -DestinationPath "$out/gil-sweep-portable-win-x64.zip" -Force
           # This version's update packages and the feed. The feed also lists older versions,
@@ -66,6 +109,17 @@ jobs:
           [IO.File]::WriteAllText("$out/SHA256SUMS", ($sums -join "`n") + "`n")
           Get-Content "$out/SHA256SUMS"
 
+      - name: Check the signatures
+        if: env.SIGN == 'true'
+        shell: pwsh
+        run: |
+          $signtool = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin" -Recurse -Filter signtool.exe |
+            Where-Object FullName -like '*\x64\*' | Sort-Object FullName -Descending | Select-Object -First 1
+          foreach ($file in 'artifacts/release/gil-sweep-setup-win-x64.exe', 'artifacts/stage/portable/GilSweep.exe') {
+            & $signtool.FullName verify /pa /v $file
+            if ($LASTEXITCODE -ne 0) { throw "$file isn't signed" }
+          }
+
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release
@@ -75,6 +129,7 @@ jobs:
   # The only job with write access. It runs no repository code, only the GitHub CLI.
   release:
     needs: build
+    if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
     permissions:
       contents: write
