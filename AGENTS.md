@@ -35,6 +35,7 @@ These are the working rules for agents in this repo. Gil Sweep (Apache-2.0) is a
 ## Working style
 
 - **Commits:** [Conventional Commits](https://www.conventionalcommits.org/), atomic, with a scope when it helps (`feat(sweep): …`).
+- **Branches:** `main` takes changes only by pull request, rebase-merged after the CI `build` check passes, so every commit on it has built and tested. Work on a branch; pushes to `main` are refused.
 - **No AI attribution** in commits or PRs: no `Co-Authored-By` trailers, no "Generated with" lines, no session links.
 - **Tests first for Core.** New fixtures are real recorded responses, trimmed to the fields Gil Sweep reads.
 - **Docs:** short. Prefer editing `ROADMAP.md` over new planning documents.
