@@ -26,11 +26,12 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - **2026-10-06** — Perception is entered per gatherer; one Craftsmanship and Control covers every crafter, since crafters share armor and only the tools differ. A blank stat isn't checked, so level-only behavior and v1 parity stay.
 - **2026-10-08** — Audited against Dalamud plugins and out-of-game tools (Teamcraft, Universalis, Saddlebag Exchange, Garland Bell). Every shipped feature stays: Gil Sweep is the option without client mods, with alerts outside the game and a gatherer score built on days of stock, node windows and gating. Undercut alerts overlap Saddlebag Exchange and Allagan Market the most, so they get no further work. Ideas another tool already covers are Not planned.
 - **2026-10-08** — Reuse before building: the wider catalog's nodes and spawn windows come from Teamcraft's open data (MIT); any crafting solver comes from Raphael.Net or Craftimizer's solver (both MIT). The Universalis client stays our own: the official `Universalis.Client` targets .NET 8 with Newtonsoft.Json and would replace tested, source-generated code for nothing.
-- **2026-10-11** — The next release, v2.0.1, is accessibility and UI polish only: keyboard, Narrator, contrast and fidelity to the approved mockup. No new features; Gear stats follows it.
+- **2026-10-11** — The next release, v2.0.1, is accessibility and UI polish only: keyboard, Narrator, contrast and fidelity to the approved mockup. No new features; Gear stats follows it. *Superseded 2026-10-20: this work moves to v2.0.2.*
 - **2026-10-11** — Craft separates solo recipes from Free Company workshop projects. Not everyone is in an FC with a workshop, so a workshop project only counts when Settings says you have access; otherwise it shows locked.
 - **2026-10-11** — Releases are signed with Azure Trusted Signing, the owner's existing account, instead of SignPath Foundation.
 - **2026-10-20** — The release workflow signs in to Artifact Signing through OIDC from a `release` environment that only `v*` tags can deploy to, so no secret is stored and manual runs or forks build unsigned. Signing lands with v2.0.1, ahead of its v2.1 item, which stays open until a signed tag meets its "Done when".
 - **2026-10-20** — `main` takes changes only by rebase-merged pull request with CI green, and release tags can't be moved or deleted, as in Prompuff. This gives up pushing small doc commits straight to `main`.
+- **2026-10-20** — v2.0.1 is 2.0.0 rebuilt and signed, with nothing else changed, so the first signed release and the self-update test v2.0's Release item waits on don't wait for the accessibility work. Accessibility and polish move to v2.0.2. This gives up a first point release users can see a difference in.
 
 ## v2.0 — Native rewrite
 
@@ -54,7 +55,12 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - [ ] **Release** — merge `rewrite/dotnet-avalonia` into `main`, tag `v2.0.0`, publish the draft release.
   Done when: Setup from the release installs, finds a later test release and updates in place.
 
-## v2.0.1 — Accessibility and polish
+## v2.0.1 — Signed build
+
+- [ ] **Release** — tag `v2.0.1` and publish: 2.0.0 rebuilt and code-signed. It doubles as the later test release v2.0's Release item waits on.
+  Done when: v2.0.0 installed from Setup updates itself to v2.0.1, and Setup and `GilSweep.exe` carry a valid signature.
+
+## v2.0.2 — Accessibility and polish
 
 - [ ] **Keyboard** — every screen and first run work without a mouse: a visible focus ring on every control, a tab order that follows the layout, Escape closes dialogs and the Farm Session, and nothing traps focus.
   Done when: each of the six screens and first run can be completed with the keyboard alone.
@@ -64,8 +70,8 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
   Done when: a test checks every text and background token pair, and the screenshots at 200% show no clipped or overlapping text.
 - [ ] **Polish** — every screen checked against the approved mockup and drift fixed: spacing, alignment, truncation, empty, loading and error states. No redesign.
   Done when: the screenshots match the mockup, including a worst-case set (longest item name, nine-digit prices, no results).
-- [ ] **Release** — tag `v2.0.1` and publish. It doubles as the later test release v2.0's Release item waits on.
-  Done when: v2.0.0 installed from Setup updates itself to v2.0.1.
+- [ ] **Release** — tag `v2.0.2` and publish.
+  Done when: v2.0.1 installed from Setup updates itself to v2.0.2.
 
 ## v2.1 — Gear stats
 
