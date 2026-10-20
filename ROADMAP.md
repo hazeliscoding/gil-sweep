@@ -29,6 +29,8 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - **2026-10-11** — The next release, v2.0.1, is accessibility and UI polish only: keyboard, Narrator, contrast and fidelity to the approved mockup. No new features; Gear stats follows it.
 - **2026-10-11** — Craft separates solo recipes from Free Company workshop projects. Not everyone is in an FC with a workshop, so a workshop project only counts when Settings says you have access; otherwise it shows locked.
 - **2026-10-11** — Releases are signed with Azure Trusted Signing, the owner's existing account, instead of SignPath Foundation.
+- **2026-10-20** — The release workflow signs in to Artifact Signing through OIDC from a `release` environment that only `v*` tags can deploy to, so no secret is stored and manual runs or forks build unsigned. Signing lands with v2.0.1, ahead of its v2.1 item, which stays open until a signed tag meets its "Done when".
+- **2026-10-20** — `main` takes changes only by rebase-merged pull request with CI green, and release tags can't be moved or deleted, as in Prompuff. This gives up pushing small doc commits straight to `main`.
 
 ## v2.0 — Native rewrite
 
