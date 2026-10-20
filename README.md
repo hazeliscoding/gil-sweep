@@ -15,7 +15,7 @@ Download the latest release from [Releases](https://github.com/hazeliscoding/gil
 - `gil-sweep-setup-win-x64.exe` installs Gil Sweep for your Windows user, with no administrator prompt, adds it to the Start menu and keeps it up to date. Uninstall it from Windows Settings → Apps; your settings and history stay.
 - `gil-sweep-portable-win-x64.zip` is the same app as a portable copy. Unzip it anywhere and run `GilSweep.exe`. A portable copy doesn't update itself.
 
-Both are self-contained: no .NET install is needed. Check downloads against `SHA256SUMS` on the release page. The builds are not code-signed yet, so Windows SmartScreen may ask you to confirm the first run.
+Both are self-contained: no .NET install is needed. Check downloads against `SHA256SUMS` on the release page. Releases from 2.0.1 on are code-signed by Hazel Granados. Until a new release has been downloaded enough, Windows SmartScreen may still ask you to confirm the first run.
 
 **Coming from Gil Sweep 1 (the Electron app)?** Version 1 doesn't update itself to 2. Install version 2 with Setup; on first start it brings over your world, levels, watched items, tracked items and sweep history. Then uninstall version 1.
 
