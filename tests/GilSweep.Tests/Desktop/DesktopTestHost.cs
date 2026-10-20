@@ -109,9 +109,19 @@ public sealed class DesktopTestHost : IDisposable
         Environment.Dispose();
     }
 
+    // One action at a time, as on the real UI thread: sweeps report progress from the thread pool,
+    // and without the lock a progress refresh could interleave with a test's own change.
     private sealed class InlineUiThread : IUiThread
     {
-        public void Post(Action action) => action();
+        private readonly Lock _gate = new();
+
+        public void Post(Action action)
+        {
+            lock (_gate)
+            {
+                action();
+            }
+        }
     }
 
     private sealed class NoMotion : IMotionSettings
