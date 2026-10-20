@@ -546,11 +546,14 @@ public sealed class UpdateTests : IDisposable
         Assert.True(updates.HasUpdate);
 
         _host.Market.Fail(uri => uri.Host == "universalis.app", HttpStatusCode.GatewayTimeout);
+        _host.Market.Hold = new TaskCompletionSource();
         var sweeping = _host.Get<ISweepService>().RunAsync(cancellationToken: TestContext.Current.CancellationToken);
         await updates.UpdateAndRestartCommand.ExecuteAsync(null);
 
         Assert.Equal("Wait for the sweep to finish, then update.", updates.Notice);
         Assert.False(_host.Updater.Restarted);
+        _host.Market.Hold.SetResult();
+        _host.Market.Hold = null;
         await Assert.ThrowsAnyAsync<Exception>(() => sweeping);
 
         await updates.UpdateAndRestartCommand.ExecuteAsync(null);
