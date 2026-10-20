@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1] — 2026-10-20
+
+The same app as 2.0.0, now code-signed.
+
+- Setup and `GilSweep.exe` are signed by Hazel Granados, so Windows names the publisher. Until the release has been downloaded enough, SmartScreen may still ask you to confirm the first run.
+- Nothing else changed. Copies installed with Setup update to it the usual way.
+
 ## [2.0.0] — 2026-10-06
 
 A native rewrite (.NET 10 and Avalonia) around one question: what should I farm for gil right now?
