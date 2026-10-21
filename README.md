@@ -67,7 +67,7 @@ dotnet run --project src/GilSweep.Desktop            # set GIL_SWEEP_HOME to kee
 dotnet run --project tools/GilSweep.Screenshots -- docs/screenshots
 ```
 
-.NET 10 SDK, Windows. The app is Avalonia 12 with CommunityToolkit.Mvvm; all behavior is in `src/GilSweep.Core`. See [docs/architecture.md](docs/architecture.md).
+.NET 10 SDK, Windows. The app is Avalonia 12 with CommunityToolkit.Mvvm; all behavior is in `src/GilSweep.Core`. See [docs/architecture.md](docs/architecture.md). To help, start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Credits
 
