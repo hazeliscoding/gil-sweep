@@ -32,6 +32,7 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - **2026-10-20** — The release workflow signs in to Artifact Signing through OIDC from a `release` environment that only `v*` tags can deploy to, so no secret is stored and manual runs or forks build unsigned. Signing lands with v2.0.1, ahead of its v2.1 item, which stays open until a signed tag meets its "Done when".
 - **2026-10-20** — `main` takes changes only by rebase-merged pull request with CI green, and release tags can't be moved or deleted, as in Prompuff. This gives up pushing small doc commits straight to `main`.
 - **2026-10-20** — v2.0.1 is 2.0.0 rebuilt and signed, with nothing else changed, so the first signed release and the self-update test v2.0's Release item waits on don't wait for the accessibility work. Accessibility and polish move to v2.0.2. This gives up a first point release users can see a difference in.
+- **2026-10-20** — Small, self-contained tasks that can be checked offline become GitHub issues labelled `good first issue`, and the project is listed on Up For Grabs. Planning stays in this file; issues are for contributors and bug reports. Visual UI work stays off that list, because the approved mockup isn't public.
 
 ## v2.0 — Native rewrite
 
