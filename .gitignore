@@ -25,3 +25,6 @@ Thumbs.db
 # Agent guidelines are committed; this overrides the global gitignore
 !AGENTS.md
 !CLAUDE.md
+
+# Built by scripts/stage-site.sh from docs/
+site/assets/generated/

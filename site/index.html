@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Gil Sweep: what to farm for gil in FFXIV right now</title>
+  <meta name="description" content="A free, open-source Windows app for FINAL FANTASY XIV gatherers. It prices what you can gather on your world and puts the best farm right now at the top, with the reasons why.">
+  <link rel="canonical" href="https://hazeliscoding.github.io/gil-sweep/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Gil Sweep">
+  <meta property="og:title" content="Gil Sweep: what to farm for gil in FFXIV right now">
+  <meta property="og:description" content="Prices, competition, price trends and node timers for what you can gather on your world, ranked into the best farm right now. No gil-per-hour guesses.">
+  <meta property="og:url" content="https://hazeliscoding.github.io/gil-sweep/">
+  <meta property="og:image" content="https://hazeliscoding.github.io/gil-sweep/assets/generated/sweep.png">
+  <meta property="og:image:width" content="1100">
+  <meta property="og:image:height" content="720">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0a0c10">
+  <link rel="icon" href="assets/generated/mark-dark.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/generated/app-icon-256.png" type="image/png" sizes="256x256">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./" aria-label="Gil Sweep home">
+        <!-- The brand mark from docs/brand/mark-dark.svg. -->
+        <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><defs><filter id="mark-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter></defs><rect x="19" y="19" width="26" height="26" rx="2" transform="rotate(45 32 32)" fill="#D9A94A" opacity="0.5" filter="url(#mark-glow)"/><rect x="19" y="19" width="26" height="26" rx="2" transform="rotate(45 32 32)" fill="#D9A94A"/></svg>
+        Gil Sweep
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a class="wide" href="#ranking">How it ranks</a>
+        <a class="wide" href="#privacy">Privacy</a>
+        <a href="https://github.com/hazeliscoding/gil-sweep">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4 M9 18c-4.51 2-5-2-7-2"/></svg>
+          GitHub
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <h1 id="hero-title">What should you farm for gil right now?</h1>
+        <p class="lede">Gil Sweep prices the gatherables worth tracking on your FINAL FANTASY XIV world, checks <strong>how crowded each market board is</strong> and <strong>which way prices are moving</strong>, follows the <strong>Eorzea clock</strong> for timed nodes, and puts the best farm you can gather this minute at the top, <strong>with the reasons why</strong>.</p>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/hazeliscoding/gil-sweep/releases/latest/download/gil-sweep-setup-win-x64.exe">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3"/></svg>
+            Download for Windows
+          </a>
+          <a class="button" href="#ranking">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16 M18 17V9 M13 17V5 M8 17v-3"/></svg>
+            How it ranks
+          </a>
+        </div>
+        <ul class="fine" aria-label="About this download">
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Free and open source, Apache-2.0</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Signed by Hazel Granados</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No account, no telemetry</li>
+          <li><a href="https://github.com/hazeliscoding/gil-sweep/releases/latest">All downloads, including a portable copy</a></li>
+        </ul>
+
+        <figure class="window">
+          <img src="assets/generated/sweep.png" width="1100" height="720" fetchpriority="high"
+               alt="The Sweep screen. Black Star is the best farm right now, rated Excellent: 1,262 gil, 241 sold a day, few sellers, price rising 21%, and its node always available. More opportunities are ranked below it, and the nodes open now are listed beside them.">
+          <figcaption>Sweep for a level 100 Miner and Botanist on Cactuar. The prices come from a recorded sweep.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="screens" aria-labelledby="screens-title">
+      <div class="wrap">
+        <h2 id="screens-title">What does it show?</h2>
+        <p class="section-intro">Six screens, each answering a question a gatherer has. Gil Sweep runs on Windows beside the game, never inside it.</p>
+        <div class="pair">
+          <ul class="rows">
+            <li><h3>Sweep</h3><p>The best farm right now and why. More opportunities ranked below, what is open now and what opens soon, the daily map pick and a craft worth processing.</p></li>
+            <li><h3>Market</h3><p>One item in depth: live listings and recent sales, two weeks of prices, the hours it sells, days of stock, where and when to gather it, and what to list it at.</p></li>
+            <li><h3>Craft</h3><p>Sell a material raw or process it first? Each material's best recipe at current prices, with locked recipes shown against your crafter levels.</p></li>
+            <li><h3>Watchlist</h3><p>A reminder before a node opens, price spikes and crashes, and undercuts of your retainers, as Windows notifications.</p></li>
+            <li><h3>History</h3><p>Your sweeps, what topped each one, the week's movers and a CSV export.</p></li>
+            <li><h3>Settings</h3><p>World, gatherer and crafter levels, story progress, folklore books, retainer names, tracked items and updates.</p></li>
+          </ul>
+          <figure class="shot">
+            <a href="assets/generated/sweep-session.png"><img src="assets/generated/sweep-session.png" width="1100" height="720" loading="lazy" decoding="async"
+                 alt="A 30-minute Farm Session beside the ranking: Hard Water now, Urqopacha Flax in 2 minutes, Darksteel Ore in 23 minutes, then Black Star as a reliable fallback."><span class="sr-only"> (opens full size)</span></a>
+            <figcaption>A Farm Session: pick 15 minutes up to Chill, and get what to gather now, which timed nodes open while you play, and a fallback.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ranking" aria-labelledby="ranking-title">
+      <div class="wrap">
+        <h2 id="ranking-title">How does it pick a farm?</h2>
+        <p class="section-intro">Each item you can gather gets an opportunity score from 0 to 100, and every recommendation shows the facts behind it.</p>
+        <div class="pair">
+          <div>
+            <ul class="rows">
+              <li><h3>Market <span class="weight">up to 70 points</span></h3><p>How much gil changes hands for it on your world each day: the average sale price times the units sold.</p></li>
+              <li><h3>Competition <span class="weight">up to 20 points</span></h3><p>How many days the stock already on the market board would last. The fewer, the sooner your listings sell.</p></li>
+              <li><h3>Trend <span class="weight">up to 10 points</span></h3><p>Which way its average price moved since a sweep about a week old.</p></li>
+              <li><h3>Node <span class="weight">a multiplier</span></h3><p>Regular nodes and open timed nodes count in full. A timed node counts for less the longer you'd wait for it.</p></li>
+            </ul>
+            <p class="prose">Gil Sweep never shows gil per hour. It doesn't know how much a node gives, how long the trip is or how fast you gather, so it compares markets instead of pretending.</p>
+            <p class="prose">Only items you can gather are ranked. Your levels and story progress decide, and top sellers nobody gathers, like vendor flips and submarine loot, are tracked but never recommended. The <a href="https://github.com/hazeliscoding/gil-sweep/blob/main/docs/opportunity-scoring.md">full method</a> has a worked example.</p>
+          </div>
+          <figure class="shot">
+            <a href="assets/generated/market.png"><img src="assets/generated/market.png" width="1100" height="720" loading="lazy" decoding="async"
+                 alt="The Market screen for Black Star: cheapest listing 2,799 gil, 241 units sold a day, 0.3 days of supply and price up 21%, a two-week price chart, and why it ranks first, with an opportunity score of 84 out of 100."><span class="sr-only"> (opens full size)</span></a>
+            <figcaption>Market shows why an item ranks where it does.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install" aria-labelledby="install-title">
+      <div class="wrap">
+        <h2 id="install-title">How do I install it?</h2>
+        <ol class="steps">
+          <li><strong>Download Setup</strong>, <code>gil-sweep-setup-win-x64.exe</code>. It installs Gil Sweep for your Windows user, with no administrator prompt, and adds it to the Start menu.</li>
+          <li><strong>Run it.</strong> Setup is signed by Hazel Granados. While a release is new, Windows SmartScreen may still ask you to confirm it: choose <span class="ui">More info</span>, then <span class="ui">Run anyway</span>.</li>
+          <li><strong>Answer three questions:</strong> your world, your Miner and Botanist levels, and your story progress. <span class="ui">Run first sweep</span> prices your world.</li>
+        </ol>
+        <p class="prose">No .NET install is needed. Updates install only when you choose, never during a sweep. A portable copy, which doesn't update itself, is on the <a href="https://github.com/hazeliscoding/gil-sweep/releases/latest">release page</a>, with <code>SHA256SUMS</code> to check every download.</p>
+      </div>
+    </section>
+
+    <section class="section" id="privacy" aria-labelledby="privacy-title">
+      <div class="wrap">
+        <h2 id="privacy-title">What does it send, and where?</h2>
+        <p class="section-intro">No accounts, no cloud and no telemetry. Your settings, sweep history and alert log stay in <code>%AppData%\GilSweep</code>. These are the only places Gil Sweep connects to.</p>
+        <div class="calls">
+          <table>
+            <caption class="sr-only">Every network call Gil Sweep makes</caption>
+            <thead>
+              <tr><th scope="col">Service</th><th scope="col">When</th><th scope="col">What for</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href="https://universalis.app/">Universalis</a></th>
+                <td class="when">Every sweep</td>
+                <td>Prices, sales and listings on your world.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://saddlebagexchange.com/">Saddlebag Exchange</a></th>
+                <td class="when">Every sweep, unless turned off in Settings</td>
+                <td>Trend states for the items it ranks.</td>
+              </tr>
+              <tr>
+                <th scope="row">XIVAPI and Garland Tools</th>
+                <td class="when">When you add an item in Settings</td>
+                <td>Looking up the item you added.</td>
+              </tr>
+              <tr>
+                <th scope="row">GitHub</th>
+                <td class="when">When an installed copy starts, unless turned off</td>
+                <td>The public list of releases, to find an update.</td>
+              </tr>
+              <tr class="never">
+                <th scope="row">Anything about you</th>
+                <td class="when">Never</td>
+                <td>Your settings, retainer names and history stay on your PC.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="after-note">Gil Sweep doesn't touch the game: it never reads or changes the game client or its files. Found a security problem? <a href="https://github.com/hazeliscoding/gil-sweep/security/advisories/new">Report it privately</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="More questions">
+      <div class="wrap answers">
+        <div>
+          <h2 id="notifications">Notifications and the tray?</h2>
+          <p>While Gil Sweep runs, it sweeps every hour and follows the Eorzea clock. Watched items send Windows notifications. Closing the window keeps Gil Sweep in the tray, where the icon shows the Eorzea time and the next node windows.</p>
+        </div>
+        <div>
+          <h2 id="from-v1">Coming from Gil Sweep 1?</h2>
+          <p>Version 1, the Electron app, doesn't update itself to 2. Install version 2 with Setup: on first start it brings over your world, levels, watched items, tracked items and sweep history. Then uninstall version 1.</p>
+        </div>
+        <div>
+          <h2 id="help">Something went wrong?</h2>
+          <p>Open <a href="https://github.com/hazeliscoding/gil-sweep/issues/new">a new issue</a> with what you did, what happened and your version, shown at the bottom of the sidebar.</p>
+        </div>
+        <div>
+          <h2 id="contribute">Want to help?</h2>
+          <p>Issues labelled <a href="https://github.com/hazeliscoding/gil-sweep/labels/good%20first%20issue">good first issue</a> are small and can be checked offline. <a href="https://github.com/hazeliscoding/gil-sweep/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> says how to build, test and send a change.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap disclaimer">
+      <p>Gil Sweep is an independent, fan-made market tool. It is not affiliated with or endorsed by Square Enix. Market data comes from Universalis and Saddlebag Exchange, and item, node and recipe data from Garland Tools and XIVAPI.</p>
+      <p>FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd. FINAL FANTASY XIV &copy; SQUARE ENIX.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="made" href="https://github.com/hazeliscoding/gil-sweep">
+        Made with
+        <svg class="icon heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        <span class="sr-only">love</span>
+        by <strong>hazeliscoding</strong>
+      </a>
+      <ul class="footer-links">
+        <li><a href="https://github.com/hazeliscoding/gil-sweep/releases">Releases</a></li>
+        <li><a href="https://github.com/hazeliscoding/gil-sweep/blob/main/CHANGELOG.md">Changelog</a></li>
+        <li><a href="https://github.com/hazeliscoding/gil-sweep/blob/main/docs/opportunity-scoring.md">Scoring</a></li>
+        <li><a href="https://github.com/hazeliscoding/gil-sweep/blob/main/LICENSE">Apache-2.0</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>
