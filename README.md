@@ -4,7 +4,7 @@
 
 **What should I farm for gil right now?** Gil Sweep prices the gatherables worth tracking on your FINAL FANTASY XIV world, checks how crowded each market board is and which way prices are moving, follows the Eorzea clock for timed nodes, and puts the best farm you can go and gather this minute at the top, with the reasons why.
 
-It is a Windows desktop app. Everything it learns stays on your computer.
+It is a Windows desktop app. Everything it learns stays on your computer. The [website](https://hazeliscoding.github.io/gil-sweep/) has the download and a short tour.
 
 ![Sweep](docs/screenshots/sweep.png)
 

@@ -30,6 +30,7 @@ These are the working rules for agents in this repo. Gil Sweep (Apache-2.0) is a
 - `dotnet format --verify-no-changes` is the CI style check. Run `dotnet format` before committing.
 - `dotnet run --project src/GilSweep.Desktop` runs the app. Set `GIL_SWEEP_HOME` to keep your own profile out of it.
 - `dotnet run --project tools/GilSweep.Screenshots -- <folder>` renders every screen to PNG from recorded data and a fixed clock. Check UI changes with it.
+- `bash scripts/stage-site.sh` copies the screenshots into `site/assets/generated` (gitignored) so the website can be previewed; `pages.yml` runs it on deploy. The site loads nothing from other sites, and its Content-Security-Policy stays.
 - `dotnet run scripts/make-icons.cs` rebuilds `docs/brand/gil-sweep.ico`; `scripts/make-lucide-icons.mjs` regenerates the icon geometry (see its header).
 
 ## Working style
@@ -38,6 +39,6 @@ These are the working rules for agents in this repo. Gil Sweep (Apache-2.0) is a
 - **Branches:** `main` takes changes only by pull request, rebase-merged after the CI `build` check passes, so every commit on it has built and tested. Work on a branch; pushes to `main` are refused.
 - **No AI attribution** in commits or PRs: no `Co-Authored-By` trailers, no "Generated with" lines, no session links.
 - **Tests first for Core.** New fixtures are real recorded responses, trimmed to the fields Gil Sweep reads.
-- **Docs:** short. Prefer editing `ROADMAP.md` over new planning documents.
+- **Docs:** short. Prefer editing `ROADMAP.md` over new planning documents. `site/index.html` keeps to the README's facts, so a change to one updates the other.
 - **Code comments** explain why, not what. No boilerplate XML docs, no commented-out code.
 - **UI copy:** calm, short, declarative. No exclamation marks or emoji. Numbers carry units; changes are signed; color never carries meaning alone (pair it with an arrow, a dot shape or a word).
