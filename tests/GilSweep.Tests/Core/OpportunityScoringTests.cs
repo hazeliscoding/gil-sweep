@@ -83,6 +83,19 @@ public sealed class OpportunityScoringTests
     }
 
     [Theory]
+    [InlineData(29.6, "Sells steadily")]
+    [InlineData(99.6, "Selling quickly")]
+    [InlineData(29.4, "Sells slowly")]
+    [InlineData(30, "Sells steadily")]
+    [InlineData(100, "Selling quickly")]
+    public void The_sales_word_matches_the_rate_shown(double velDay, string word)
+    {
+        var row = new SnapshotRow { VelDay = velDay };
+        Assert.Equal(word, OpportunityScorer.SalesWord(velDay));
+        Assert.Equal(word, OpportunityScorer.Reasons(row, NodeAvailability.Always, CompetitionInfo.Unknown, TrendInfo.Unknown, false)[0].Text);
+    }
+
+    [Theory]
     [InlineData(80, OpportunityGrade.Excellent)]
     [InlineData(75, OpportunityGrade.Excellent)]
     [InlineData(70, OpportunityGrade.Good)]

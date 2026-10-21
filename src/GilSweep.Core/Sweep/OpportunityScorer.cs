@@ -96,15 +96,23 @@ public static class OpportunityScorer
         return new OpportunityScore(total, baseScore, market, sales, price, competitionPoints, trendPoints, availability, GradeOf(total), signals);
     }
 
-    public static string SalesWord(double velDay) => velDay >= 100 ? "Selling quickly" : velDay >= 30 ? "Sells steadily" : "Sells slowly";
+    public static string SalesWord(double velDay)
+    {
+        var shown = ShownRate(velDay);
+        return shown >= 100 ? "Selling quickly" : shown >= 30 ? "Sells steadily" : "Sells slowly";
+    }
+
+    // The words go by the velocity as Formatting.Rate shows it, so 29.6 ("30 sold per day") sells steadily.
+    private static double ShownRate(double velDay) => double.Parse(Formatting.Rate(velDay), NumberStyles.Number, CultureInfo.InvariantCulture);
 
     /// <summary>Reasons for the headline, one per signal, each with a glyph so none relies on color.</summary>
     public static List<Reason> Reasons(SnapshotRow row, NodeAvailability node, CompetitionInfo competition, TrendInfo trend, bool needsFolklore)
     {
+        var rate = ShownRate(row.VelDay);
         var reasons = new List<Reason>
         {
-            row.VelDay >= 100 ? new("↑", "Selling quickly", ReasonTone.Positive)
-                : row.VelDay >= 30 ? new("·", "Sells steadily", ReasonTone.Neutral)
+            rate >= 100 ? new("↑", "Selling quickly", ReasonTone.Positive)
+                : rate >= 30 ? new("·", "Sells steadily", ReasonTone.Neutral)
                 : new("↓", "Sells slowly", ReasonTone.Negative),
             competition switch
             {
