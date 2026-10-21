@@ -28,3 +28,7 @@ Thumbs.db
 
 # Built by scripts/stage-site.sh from docs/
 site/assets/generated/
+
+# Impeccable keeps its detector config in the repo; its cache and review captures stay local
+.impeccable/*
+!.impeccable/config.json

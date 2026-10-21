@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "site/index.html"
+        ],
+        "createdAt": "2026-10-21T14:50:56.649Z",
+        "reason": "Claude: flagged only the .calls table wrapper, whose th/td cells carry 12px 20px padding (12px 16px rows on phones), as in XIV Vault's .folder tables"
+      }
+    ]
+  }
+}
