@@ -54,12 +54,12 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - [x] **Packaging and updates** — Velopack Setup, update check and restart, portable zip, release workflow with checksums.
 - [x] **Screenshots** — deterministic screenshots of every screen and state from fake data; README rewritten.
 - [x] **Cutover** — gate passed (2026-10-06, see `docs/migration-v2.md`), `legacy/` and the Node files removed.
-- [ ] **Release** — merge `rewrite/dotnet-avalonia` into `main`, tag `v2.0.0`, publish the draft release.
+- [x] **Release** — merge `rewrite/dotnet-avalonia` into `main`, tag `v2.0.0`, publish the draft release.
   Done when: Setup from the release installs, finds a later test release and updates in place.
 
 ## v2.0.1 — Signed build
 
-- [ ] **Release** — tag `v2.0.1` and publish: 2.0.0 rebuilt and code-signed. It doubles as the later test release v2.0's Release item waits on.
+- [x] **Release** — tag `v2.0.1` and publish: 2.0.0 rebuilt and code-signed. It doubles as the later test release v2.0's Release item waits on.
   Done when: v2.0.0 installed from Setup updates itself to v2.0.1, and Setup and `GilSweep.exe` carry a valid signature.
 
 ## v2.0.2 — Accessibility and polish
