@@ -5,7 +5,7 @@ Thanks for helping. Gil Sweep answers one question for FINAL FANTASY XIV gathere
 ## Where to start
 
 - Issues labelled [good first issue](https://github.com/hazeliscoding/gil-sweep/labels/good%20first%20issue) are small, self-contained and checkable offline. Comment on one before you start, so two people don't take the same one.
-- [README.md](README.md) says what Gil Sweep does. [ROADMAP.md](ROADMAP.md) holds the decisions already made, the milestones and what's not planned. Check it before proposing a feature: decisions stand unless the owner reopens them.
+- [README.md](README.md) says what Gil Sweep does. [ROADMAP.md](ROADMAP.md) holds the decisions already made, what shipped and what's not planned. Check it before proposing a feature: decisions stand unless the owner reopens them. The planned work is in [the milestones](https://github.com/hazeliscoding/gil-sweep/milestones), and the [Gil Sweep project](https://github.com/users/hazeliscoding/projects/11) shows it on one board.
 - [docs/architecture.md](docs/architecture.md) shows how the pieces fit, and [docs/opportunity-scoring.md](docs/opportunity-scoring.md) explains how recommendations are ranked.
 - For anything bigger than a fix, open an issue first, so nobody builds something that's already decided against.
 

@@ -1,6 +1,6 @@
 # Roadmap
 
-Gil Sweep answers one question: **what should I farm for gil right now?** v1 (Electron + Angular, `v1.0.0`) shipped everything in `CHANGELOG.md`. v2 is a native rewrite; the plan and the inventory of what moves where are in `docs/migration-v2.md`.
+Gil Sweep answers one question: **what should I farm for gil right now?** v1 (Electron + Angular, `v1.0.0`) shipped everything in `CHANGELOG.md`. v2 is a native rewrite; the plan and the inventory of what moves where are in `docs/migration-v2.md`. This file holds the decisions already made, what shipped and what's out of scope. Open work is in GitHub issues; **Next** says where.
 
 ## Decisions
 
@@ -32,86 +32,30 @@ Gil Sweep answers one question: **what should I farm for gil right now?** v1 (El
 - **2026-10-20** — The release workflow signs in to Artifact Signing through OIDC from a `release` environment that only `v*` tags can deploy to, so no secret is stored and manual runs or forks build unsigned. Signing lands with v2.0.1, ahead of its v2.1 item, which stays open until a signed tag meets its "Done when".
 - **2026-10-20** — `main` takes changes only by rebase-merged pull request with CI green, and release tags can't be moved or deleted, as in Prompuff. This gives up pushing small doc commits straight to `main`.
 - **2026-10-20** — v2.0.1 is 2.0.0 rebuilt and signed, with nothing else changed, so the first signed release and the self-update test v2.0's Release item waits on don't wait for the accessibility work. Accessibility and polish move to v2.0.2. This gives up a first point release users can see a difference in.
-- **2026-10-20** — Small, self-contained tasks that can be checked offline become GitHub issues labelled `good first issue`, and the project is listed on Up For Grabs. Planning stays in this file; issues are for contributors and bug reports. Visual UI work stays off that list, because the approved mockup isn't public.
+- **2026-10-20** — Small, self-contained tasks that can be checked offline become GitHub issues labelled `good first issue`, and the project is listed on Up For Grabs. Planning stays in this file; issues are for contributors and bug reports. Visual UI work stays off that list, because the approved mockup isn't public. *Superseded in part 2026-10-21: planning moves to GitHub issues too.*
 - **2026-10-21** — A one-page website in `site/`, on GitHub Pages at hazeliscoding.github.io/gil-sweep, laid out like XIV Vault's: one column of short answers to the questions a gatherer has, in the app's tokens and IBM Plex. The README's screenshots are copied in at deploy time (`scripts/stage-site.sh`), so the site never shows older pictures than the README. Plain HTML and CSS with no script, nothing loaded from another site, and no analytics. It is a launch page, not the web build ruled out under Not planned. This gives up a user guide page and a cropped social preview (the Sweep screenshot stands in), which would need a second page to maintain and ffmpeg in the workflow.
+- **2026-10-21** — Open work moves to GitHub after 2.0, as in Prompuff (the owner's choice), so people using Gil Sweep can see what's planned and comment on it where they report bugs. Each release is a milestone whose description says what it brings and when it's done, each checklist item is an issue, and the public [Gil Sweep project](https://github.com/users/hazeliscoding/projects/11) shows them all. This file keeps the decisions, what shipped and what's not planned; the checklists as they stood are in `git show v2.0.1:ROADMAP.md`. v2.0.2 to v2.2 became #17 to #31, one issue per item plus one to cut each release, so v2.2 gains a release item and v2.1's now updates from v2.0.2. Later became #32 to #40, labelled `later`, each saying what has to be settled first. v2.1's Code signing item has no issue, because it shipped with v2.0.1. This gives up changing the plan in the same pull request as the code, and agents read it through `gh` instead of from this file.
 
-## v2.0 — Native rewrite
+## Shipped
 
-- [x] **Foundation** — solution, central package versions, DI, logging, config, theme tokens, app shell with the six-item sidebar and Eorzea clock.
-  Done when: `dotnet build`, `dotnet test` and `dotnet format --verify-no-changes` pass and the window opens.
-- [x] **Domain models** — catalog, nodes and spawn windows, snapshots, opportunities, watch entries; persisted shapes round-trip, v1 snapshots read.
-  Done when: serialization tests pass against v1 files.
-- [x] **Market integrations** — Universalis and Saddlebag behind interfaces, fixtures for normal, sparse, stale, empty and high-volume markets, retries and partial failure.
-  Done when: every adapter test runs offline.
-- [x] **Sweep engine** — v1 ranking ported with characterization tests against outputs captured from the v1 TypeScript; opportunity score on top.
-  Done when: v2 matches v1 on the fixtures except for the documented changes.
-- [x] **Eorzea scheduling** — clock, windows, next spawn, countdowns, feeding the score.
-  Done when: timed-node tests cover wrap-around and multiple spawns.
-- [x] **First vertical slice** — launch → load config → sweep → ranked recommendations with reasons → open an item.
-  Done when: it works against live Universalis and against fixtures.
-- [x] **Market, Craft, Watchlist, History, Settings** — in that order, each on tested view models.
-- [x] **Notifications** — node windows, price spikes and crashes, undercuts; Windows toasts; tray with the spawn clock.
-- [x] **Packaging and updates** — Velopack Setup, update check and restart, portable zip, release workflow with checksums.
-- [x] **Screenshots** — deterministic screenshots of every screen and state from fake data; README rewritten.
-- [x] **Cutover** — gate passed (2026-10-06, see `docs/migration-v2.md`), `legacy/` and the Node files removed.
-- [x] **Release** — merge `rewrite/dotnet-avalonia` into `main`, tag `v2.0.0`, publish the draft release.
-  Done when: Setup from the release installs, finds a later test release and updates in place.
+Each release's notes are in `CHANGELOG.md`, v1's included, and the decisions above say why.
 
-## v2.0.1 — Signed build
+| Version | Released | What it brought |
+|---|---|---|
+| [2.0.1: Signed build](https://github.com/hazeliscoding/gil-sweep/releases/tag/v2.0.1) | 2026-10-20 | 2.0.0 rebuilt and code-signed, and the first update in place from Setup |
+| [2.0: Native rewrite](https://github.com/hazeliscoding/gil-sweep/releases/tag/v2.0.0) | 2026-10-06 | .NET 10 and Avalonia 12 in place of Electron: the six screens, notifications, Setup with in-app updates, and v1's data imported |
 
-- [x] **Release** — tag `v2.0.1` and publish: 2.0.0 rebuilt and code-signed. It doubles as the later test release v2.0's Release item waits on.
-  Done when: v2.0.0 installed from Setup updates itself to v2.0.1, and Setup and `GilSweep.exe` carry a valid signature.
+## Next
 
-## v2.0.2 — Accessibility and polish
+Open work is in [GitHub issues](https://github.com/hazeliscoding/gil-sweep/issues), and the [Gil Sweep project](https://github.com/users/hazeliscoding/projects/11) shows it on one board. The current milestone is [v2.0.2](https://github.com/hazeliscoding/gil-sweep/milestone/1). The milestones come in this order:
 
-- [ ] **Keyboard** — every screen and first run work without a mouse: a visible focus ring on every control, a tab order that follows the layout, Escape closes dialogs and the Farm Session, and nothing traps focus.
-  Done when: each of the six screens and first run can be completed with the keyboard alone.
-- [ ] **Narrator** — every control and row has a name Narrator reads in full, with units and signed changes ("Dense Aluminum Ore, 12,400 gil, up 8%"); screens and cards have headings; sweep progress and alerts are announced.
-  Done when: a Narrator pass on each screen finds no unnamed control and no number read without its unit.
-- [ ] **Contrast and scaling** — text meets WCAG AA (4.5:1, 3:1 for large text, icons and focus rings) on every surface it sits on, and layouts hold from 100% to 200% display scaling.
-  Done when: a test checks every text and background token pair, and the screenshots at 200% show no clipped or overlapping text.
-- [ ] **Polish** — every screen checked against the approved mockup and drift fixed: spacing, alignment, truncation, empty, loading and error states. No redesign.
-  Done when: the screenshots match the mockup, including a worst-case set (longest item name, nine-digit prices, no results).
-- [ ] **Release** — tag `v2.0.2` and publish.
-  Done when: v2.0.1 installed from Setup updates itself to v2.0.2.
+| Milestone | What it brings |
+|---|---|
+| [v2.0.2: Accessibility and polish](https://github.com/hazeliscoding/gil-sweep/milestone/1) | Keyboard, Narrator, contrast and fidelity to the approved mockup, with no new features |
+| [v2.1: Gear stats](https://github.com/hazeliscoding/gil-sweep/milestone/2) | Locks for the items and recipes your Perception, Craftsmanship and Control can't reach yet, and diagnostics to copy into a bug report |
+| [v2.2: Better answers](https://github.com/hazeliscoding/gil-sweep/milestone/3) | Every gatherable the character can reach, Not interested, prices after tax, and workshop crafts |
 
-## v2.1 — Gear stats
-
-- [ ] **Requirement data** — `items.json` gains each item's minimum Perception and `crafts.json` each recipe's minimum Craftsmanship and Control, from XIVAPI; a script in `scripts/` regenerates them after a patch. Items added in Settings get their Perception the same way. 77 bundled recipes don't match XIVAPI by result item and need their recipe rows found.
-  Done when: tests read Dense Aluminum Ore's 5,090 Perception and Gold Ingot's 391 Craftsmanship and 374 Control from recorded XIVAPI responses.
-- [ ] **Gear locks in Core** — optional Miner and Botanist Perception and crafter Craftsmanship and Control in settings. An item below its Perception minimum locks ("Needs 5,090 Perception (you have 4,800)"); a recipe below either minimum locks the same way. Listed under "Changes from v1" in `docs/opportunity-scoring.md`.
-  Done when: with blank stats every v1 characterization test passes unchanged, and lock tests cover below, at and blank.
-- [ ] **Settings and screens** — the stat fields in the Character and Crafters cards, in the mockup's existing style; locked rows and craft cards show the shortfall. First run doesn't ask for stats.
-  Done when: the screenshots include a Perception lock and a Craftsmanship lock.
-- [ ] **Copy diagnostics** — a Settings button copies the version, Windows version, recent errors and the log folder for a bug report. Nothing is sent anywhere.
-  Done when: the copied text names the data folder as `%AppData%\GilSweep` and contains no username or other private path.
-- [ ] **Code signing** — the release workflow signs `GilSweep.exe` and Setup with Azure Trusted Signing.
-  Done when: both files carry a valid signature and SmartScreen no longer shows "Unknown publisher".
-- [ ] **Release** — tag `v2.1.0` and publish.
-  Done when: v2.0.1 installed from Setup updates itself to v2.1.0.
-
-## v2.2 — Better answers
-
-- [ ] **Wider catalog** — a weekly scan prices every gatherable item the character can reach, not only the 104 tracked items; the ones that trade on the world join the ranking. Nodes, spawn windows, levels and stars come from Teamcraft's open data, bundled and regenerated by a script after a patch. The tracked list stays as the base, along with its trap items.
-  Done when: on recorded data, a scan ranks a gatherable missing from `items.json`, with its node and any spawn window, within Universalis's request limits.
-- [ ] **Not interested** — hide an item from recommendations from its card; it stays on Market and can be restored in Settings.
-  Done when: a hidden item leaves Sweep and the Farm Session, and returns when restored.
-- [ ] **Prices after tax** — sale proceeds and craft margins subtract the market tax of the retainers' city (Universalis tax rates). The rates arrive undated from players' uploads, so Market names the city and rate used. Listed under "Changes from v1".
-  Done when: margins on recorded data are net of the recorded tax rate, and the scoring doc's worked example matches.
-- [ ] **Workshop crafts** — Craft lists Free Company workshop projects (submersible and airship parts, other company crafts) apart from solo recipes, from XIVAPI's `CompanyCraftSequence` sheet, regenerated by the same script. A Settings switch, off by default, says you have workshop access; without it they show locked ("Needs an FC workshop"), never as the best recipe.
-  Done when: on recorded data, a material whose best use is a workshop project shows it locked with the switch off and as its best recipe with it on, and with the switch off Craft matches today.
-
-## Later
-
-- In-game item icons beside names.
-- Gil per scrip for the scrip vendors.
-- Sortable columns and CSV export on every table.
-- Price Craft at NQ when your stats can't reach max quality, using Raphael.Net or Craftimizer's solver rather than our own.
-- Back up and restore the data folder, for moving to a new PC.
-- Ctrl+K to jump to any item's Market page.
-- A winget package.
-- Import job levels from the Lodestone (needs a decision: it adds a network source and scrapes pages that can change).
-- A Linux build for Steam Deck and XLCore players (needs a decision: toasts, tray and installs are Windows-only today).
+Issues labelled [`later`](https://github.com/hazeliscoding/gil-sweep/labels/later) are ideas without a milestone, and each one says what has to be settled first. Issues labelled [`good first issue`](https://github.com/hazeliscoding/gil-sweep/labels/good%20first%20issue) are kept for contributors.
 
 ## Not planned
 
