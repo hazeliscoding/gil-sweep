@@ -5,9 +5,8 @@ These are the working rules for agents in this repo. Gil Sweep (Apache-2.0) is a
 ## Sources of truth
 
 - `README.md`: what Gil Sweep does and how to use it.
-- `ROADMAP.md`: decisions already made, what shipped, and what is out of scope. Record new decisions there, dated, in the same pull request as the change that needs them. Respect existing decisions unless the owner reopens them.
-- GitHub issues hold the open work, one milestone per release, and the [Gil Sweep project](https://github.com/users/hazeliscoding/projects/11) shows all of it. Work from the open issues in the current milestone, which `ROADMAP.md` names under **Next** (`gh issue list --milestone <name>`), and don't build past it without asking. The commit that finishes an issue closes it with `Closes #N` in its body. Leave `good first issue` issues to contributors, and release issues to the owner, who cuts releases.
-- New work gets an issue in the project (`gh issue create --project "Gil Sweep"`) with a milestone, or the `later` label until it has one.
+- `ROADMAP.md`: decisions already made, what shipped, the releases still to build, and what is out of scope. Work from the next unchecked item, tick it off when done, and record new decisions there, dated, in the same pull request as the change that needs them. Respect existing decisions unless the owner reopens them, and don't build past the current release without asking. Leave Release items to the owner, who cuts releases.
+- GitHub issues are for bug reports and contributor tasks, never planned work: no issues, milestones or Project boards for roadmap items. Leave `good first issue` issues to contributors. The commit that fixes an issue closes it with `Closes #N` in its body.
 - `docs/opportunity-scoring.md`: how recommendations are ranked. Any change to ranking is listed under "Changes from v1" and covered by a test.
 - `docs/migration-v2.md`: what moved from the Electron app (v1) and the cutover gate.
 - The desktop UI implements the approved mockup (claude.ai design project "Gil Sweep"). Don't redesign it.
@@ -41,6 +40,6 @@ These are the working rules for agents in this repo. Gil Sweep (Apache-2.0) is a
 - **Branches:** `main` takes changes only by pull request, rebase-merged after the CI `build` check passes, so every commit on it has built and tested. Work on a branch; pushes to `main` are refused.
 - **No AI attribution** in commits or PRs: no `Co-Authored-By` trailers, no "Generated with" lines, no session links.
 - **Tests first for Core.** New fixtures are real recorded responses, trimmed to the fields Gil Sweep reads.
-- **Docs:** short. Track work in GitHub issues and decisions in `ROADMAP.md`, and don't add plan, spec or backlog documents. `site/index.html` keeps to the README's facts, so a change to one updates the other.
+- **Docs:** short. Track work and decisions in `ROADMAP.md`, and don't add plan, spec or backlog documents. `site/index.html` keeps to the README's facts, so a change to one updates the other.
 - **Code comments** explain why, not what. No boilerplate XML docs, no commented-out code.
 - **UI copy:** calm, short, declarative. No exclamation marks or emoji. Numbers carry units; changes are signed; color never carries meaning alone (pair it with an arrow, a dot shape or a word).
